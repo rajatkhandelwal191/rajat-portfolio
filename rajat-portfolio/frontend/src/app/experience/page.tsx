@@ -21,7 +21,7 @@ const navItems = [
   { href: "/#about", icon: "person", label: "About" },
   { href: "/projects", icon: "code_blocks", label: "Projects" },
   { href: "/experience", icon: "history_edu", label: "Experience", active: true },
-  { href: "/#contact", icon: "alternate_email", label: "Contact" },
+  { href: "/contact", icon: "alternate_email", label: "Contact" },
 ];
 
 const experienceData: ExperienceItem[] = [

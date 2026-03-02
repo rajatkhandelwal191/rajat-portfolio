@@ -13,7 +13,7 @@ const navItems = [
   { href: "#about", icon: "person", label: "About" },
   { href: "/projects", icon: "code_blocks", label: "Projects" },
   { href: "/experience", icon: "history_edu", label: "Experience" },
-  { href: "#contact", icon: "alternate_email", label: "Contact" },
+  { href: "/contact", icon: "alternate_email", label: "Contact" },
 ];
 
 const cards = [
@@ -43,7 +43,7 @@ const cards = [
   },
   {
     id: "contact",
-    href: "#contact",
+    href: "/contact",
     icon: "alternate_email",
     title: "Contact",
     description: "Let's connect. Available for freelance projects and full-time opportunities.",
