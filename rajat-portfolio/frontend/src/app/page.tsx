@@ -9,9 +9,9 @@ import ProjectCard from "../components/ProjectCard";
 type Theme = "light" | "dark";
 
 const navItems = [
-  { href: "#home", icon: "home", label: "Home" },
+  { href: "#home", icon: "home", label: "Home", active: true },
   { href: "#about", icon: "person", label: "About" },
-  { href: "#projects", icon: "code_blocks", label: "Projects" },
+  { href: "/projects", icon: "code_blocks", label: "Projects" },
   { href: "#experience", icon: "history_edu", label: "Experience" },
   { href: "#contact", icon: "alternate_email", label: "Contact" },
 ];
@@ -27,7 +27,7 @@ const cards = [
   },
   {
     id: "projects",
-    href: "#projects",
+    href: "/projects",
     icon: "code_blocks",
     title: "Projects",
     description: "Explore my open source contributions, commercial work, and experiments.",
@@ -51,6 +51,12 @@ const cards = [
   },
 ];
 
+const footerLinks = [
+  { href: "#", icon: "code", label: "GitHub" },
+  { href: "#", icon: "work", label: "LinkedIn" },
+  { href: "#", icon: "mail", label: "Email" },
+];
+
 export default function Home() {
   const [theme, setTheme] = useState<Theme>("dark");
   const isDark = theme === "dark";
@@ -68,11 +74,11 @@ export default function Home() {
       data-theme={theme}
     >
       <aside className="nav-float fixed left-6 top-1/2 z-50 hidden -translate-y-1/2 flex-col items-center gap-6 rounded-full border border-[var(--nav-border)] px-3 py-6 lg:flex">
-        {navItems.map((item, index) => (
+        {navItems.map((item) => (
           <a
             key={item.label}
-            className={`flex size-12 items-center justify-center rounded-full transition-all ${
-              index === 0
+            className={`group relative flex size-12 items-center justify-center rounded-full transition-all ${
+              item.active
                 ? "bg-[var(--primary)] text-white shadow-[0_10px_24px_var(--primary-glow)]"
                 : "text-[var(--text-muted)] hover:bg-[var(--icon-chip-bg)] hover:text-[var(--primary)]"
             }`}
@@ -80,9 +86,12 @@ export default function Home() {
           >
             <span
               className="material-symbols-outlined text-2xl"
-              style={index === 0 ? { fontVariationSettings: "'FILL' 1, 'wght' 600" } : undefined}
+              style={item.active ? { fontVariationSettings: "'FILL' 1, 'wght' 600" } : undefined}
             >
               {item.icon}
+            </span>
+            <span className="pointer-events-none absolute left-full ml-3 whitespace-nowrap rounded bg-slate-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
+              {item.label}
             </span>
           </a>
         ))}
@@ -166,31 +175,26 @@ export default function Home() {
             ))}
           </section>
 
-          <section id="chatbot">
+          <section id="contact">
             <ChatbotWindow isDark={isDark} name="Rajat" />
           </section>
         </main>
 
         <footer className="mt-auto border-t border-[var(--footer-border)] bg-[var(--footer-bg)] px-6 py-10 text-center backdrop-blur-sm">
           <div className="mb-6 flex justify-center gap-8">
-            <a
-              className="text-[var(--text-muted)] transition-all hover:scale-110 hover:text-[var(--primary)]"
-              href="#"
-            >
-              <span className="material-symbols-outlined text-2xl">hub</span>
-            </a>
-            <a
-              className="text-[var(--text-muted)] transition-all hover:scale-110 hover:text-[var(--primary)]"
-              href="#"
-            >
-              <span className="material-symbols-outlined text-2xl">brand_family</span>
-            </a>
-            <a
-              className="text-[var(--text-muted)] transition-all hover:scale-110 hover:text-[var(--primary)]"
-              href="#"
-            >
-              <span className="material-symbols-outlined text-2xl">mail</span>
-            </a>
+            {footerLinks.map((link) => (
+              <a
+                key={link.label}
+                className="group relative text-[var(--text-muted)] transition-all hover:scale-110 hover:text-[var(--primary)]"
+                href={link.href}
+                title={link.label}
+              >
+                <span className="material-symbols-outlined text-2xl">{link.icon}</span>
+                <span className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-slate-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
+                  {link.label}
+                </span>
+              </a>
+            ))}
           </div>
           <p className="text-xs text-[var(--text-muted)]">{footerText}</p>
         </footer>
@@ -198,3 +202,4 @@ export default function Home() {
     </div>
   );
 }
+
