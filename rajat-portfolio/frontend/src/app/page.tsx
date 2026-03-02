@@ -12,7 +12,7 @@ const navItems = [
   { href: "#home", icon: "home", label: "Home", active: true },
   { href: "#about", icon: "person", label: "About" },
   { href: "/projects", icon: "code_blocks", label: "Projects" },
-  { href: "#experience", icon: "history_edu", label: "Experience" },
+  { href: "/experience", icon: "history_edu", label: "Experience" },
   { href: "#contact", icon: "alternate_email", label: "Contact" },
 ];
 
@@ -35,7 +35,7 @@ const cards = [
   },
   {
     id: "experience",
-    href: "#experience",
+    href: "/experience",
     icon: "history_edu",
     title: "Experience",
     description: "A timeline of my professional career, roles, and key accomplishments.",

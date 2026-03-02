@@ -18,6 +18,7 @@
 | 2026-03-02 | Frontend | Renamed project route folder from `projects` to `project-page` | Refactor | Done | Updated all navigation links to `/project-page` |
 | 2026-03-02 | Frontend | Restructured projects route to keep `project-page.tsx` as main file under `app/projects` | Refactor | Done | `app/projects/page.tsx` now wraps and exports `./project-page` to satisfy Next.js |
 | 2026-03-02 | Frontend | Simplified projects route back to single `app/projects/page.tsx` file | Refactor | Done | Removed `project-page.tsx` per preference and kept `/projects` |
+| 2026-03-02 | Frontend | Added dedicated `/experience` timeline page with dark/light theme support | Feature | Done | Integrated glass cards, timeline bullets, nav, and theme toggle |
 
 ## Bug Fixes
 | Date | Bug | Root Cause | Fix | Status |
