@@ -17,11 +17,11 @@ type ExperienceItem = {
 };
 
 const navItems = [
-  { href: "/projects", icon: "folder_open", label: "Projects" },
-  { href: "/#about", icon: "person", label: "About" },
   { href: "/", icon: "home", label: "Home" },
-  { href: "/experience", icon: "work", label: "Experience", active: true },
-  { href: "/#contact", icon: "send", label: "Contact" },
+  { href: "/#about", icon: "person", label: "About" },
+  { href: "/projects", icon: "code_blocks", label: "Projects" },
+  { href: "/experience", icon: "history_edu", label: "Experience", active: true },
+  { href: "/#contact", icon: "alternate_email", label: "Contact" },
 ];
 
 const experienceData: ExperienceItem[] = [
@@ -88,26 +88,29 @@ export default function ExperiencePage() {
       }`}
       data-theme={theme}
     >
-      <aside className="nav-float fixed left-4 top-1/2 z-50 hidden -translate-y-1/2 md:block">
-        <div className="flex flex-col items-center gap-4 rounded-2xl border border-[var(--nav-border)] p-2">
-          {navItems.map((item) => (
-            <a
-              key={item.label}
-              aria-label={item.label}
-              className={`group relative rounded-xl p-3 transition-all ${
-                item.active
-                  ? "bg-[var(--cream-active)] text-[var(--cream-text)] shadow-lg shadow-[var(--primary-glow)]"
-                  : "text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--text-main)]"
-              }`}
-              href={item.href}
+      <aside className="nav-float fixed left-6 top-1/2 z-50 hidden -translate-y-1/2 flex-col items-center gap-6 rounded-full border border-[var(--nav-border)] px-3 py-6 lg:flex">
+        {navItems.map((item) => (
+          <a
+            key={item.label}
+            aria-label={item.label}
+            className={`group relative flex size-12 items-center justify-center rounded-full transition-all ${
+              item.active
+                ? "bg-[var(--primary)] text-white shadow-[0_10px_24px_var(--primary-glow)]"
+                : "text-[var(--text-muted)] hover:bg-[var(--icon-chip-bg)] hover:text-[var(--primary)]"
+            }`}
+            href={item.href}
+          >
+            <span
+              className="material-symbols-outlined text-2xl"
+              style={item.active ? { fontVariationSettings: "'FILL' 1, 'wght' 600" } : undefined}
             >
-              <span className="material-symbols-outlined">{item.icon}</span>
-              <span className="pointer-events-none absolute left-full ml-2 whitespace-nowrap rounded border border-white/10 bg-slate-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
-                {item.label}
-              </span>
-            </a>
-          ))}
-        </div>
+              {item.icon}
+            </span>
+            <span className="pointer-events-none absolute left-full ml-3 whitespace-nowrap rounded bg-slate-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
+              {item.label}
+            </span>
+          </a>
+        ))}
       </aside>
 
       <div className="fixed bottom-12 right-8 top-12 z-40 hidden w-2 flex-col items-center justify-between xl:flex">
