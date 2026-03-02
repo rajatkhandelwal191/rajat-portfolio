@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     api_port: int = 8000
     allowed_origins: list[str] = ["http://localhost:3000"]
 
+    groq_model: str = "llama-3.3-70b-versatile"
     groq_api_key: str = ""
     supabase_url: str = ""
     supabase_service_role_key: str = ""

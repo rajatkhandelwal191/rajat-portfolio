@@ -9,6 +9,7 @@
 | Date | Area | Change | Type | Status | Notes |
 |---|---|---|---|---|---|
 | 2026-03-02 | Repo | Initial structure scaffolded | Setup | Done | Created frontend/backend skeleton and configs |
+| 2026-03-02 | Env | Added Groq model/API key and Supabase DB URL | Config | Done | Added URL-encoded DB password in connection string |
 
 ## Bug Fixes
 | Date | Bug | Root Cause | Fix | Status |
@@ -23,3 +24,4 @@
 - [ ] Wire frontend to backend via `NEXT_PUBLIC_API_BASE_URL`
 - [ ] Add Supabase pgvector integration and retrieval flow
 - [ ] Add Docker setup validation for fly.io deployment
+
