@@ -21,6 +21,7 @@
 | 2026-03-02 | Frontend | Added dedicated `/experience` timeline page with dark/light theme support | Feature | Done | Integrated glass cards, timeline bullets, nav, and theme toggle |
 | 2026-03-02 | Frontend | Standardized experience sidebar nav to match home/projects exactly | UX Fix | Done | Unified nav shape, icon set, active color, and hover labels |
 | 2026-03-02 | Frontend | Added dedicated `/contact` page with dual-theme form UI | Feature | Done | Integrated contact form, social icons, timeline dots, and consistent sidebar navigation |
+| 2026-03-09 | Frontend | Moved detailed About content to dedicated `/about` page and kept home layout unchanged | UX Refactor | Done | Added colorful About route and updated nav/card links across pages |
 
 ## Bug Fixes
 | Date | Bug | Root Cause | Fix | Status |

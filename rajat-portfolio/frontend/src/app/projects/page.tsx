@@ -20,7 +20,7 @@ type FeaturedProject = {
 
 const navItems = [
   { href: "/", icon: "home", label: "Home" },
-  { href: "/#about", icon: "person", label: "About" },
+  { href: "/about", icon: "person", label: "About" },
   { href: "/projects", icon: "code_blocks", label: "Projects", active: true },
   { href: "/experience", icon: "history_edu", label: "Experience" },
   { href: "/contact", icon: "alternate_email", label: "Contact" },
@@ -285,3 +285,4 @@ export default function ProjectsPage() {
     </div>
   );
 }
+

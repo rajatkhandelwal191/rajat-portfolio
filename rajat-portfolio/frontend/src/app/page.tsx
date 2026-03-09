@@ -10,7 +10,7 @@ type Theme = "light" | "dark";
 
 const navItems = [
   { href: "#home", icon: "home", label: "Home", active: true },
-  { href: "#about", icon: "person", label: "About" },
+  { href: "/about", icon: "person", label: "About" },
   { href: "/projects", icon: "code_blocks", label: "Projects" },
   { href: "/experience", icon: "history_edu", label: "Experience" },
   { href: "/contact", icon: "alternate_email", label: "Contact" },
@@ -19,7 +19,7 @@ const navItems = [
 const cards = [
   {
     id: "about",
-    href: "#about",
+    href: "/about",
     icon: "person",
     title: "About",
     description: "Discover my journey, philosophy, and what drives my passion for code.",

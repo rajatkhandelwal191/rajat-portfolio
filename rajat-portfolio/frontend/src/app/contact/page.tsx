@@ -7,7 +7,7 @@ type Theme = "light" | "dark";
 
 const navItems = [
   { href: "/projects", icon: "code_blocks", label: "Projects" },
-  { href: "/#about", icon: "person", label: "About" },
+  { href: "/about", icon: "person", label: "About" },
   { href: "/", icon: "home", label: "Home" },
   { href: "/experience", icon: "history_edu", label: "Experience" },
   { href: "/contact", icon: "alternate_email", label: "Contact", active: true },
@@ -206,3 +206,4 @@ export default function ContactPage() {
     </div>
   );
 }
+
