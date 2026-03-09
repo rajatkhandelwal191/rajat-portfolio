@@ -14,7 +14,81 @@ type ChatMessage = {
   id: string;
   role: "user" | "assistant" | "error";
   content: string;
+  links?: { label: string; href: string }[];
 };
+
+type ChatIntent = "about" | "projects" | "experience" | "contact" | "generic";
+
+const followUpByIntent: Record<ChatIntent, { text: string; links: { label: string; href: string }[] }> = {
+  about: {
+    text: "Do you want to know more about Rajat?",
+    links: [{ label: "Go to About", href: "/about" }],
+  },
+  projects: {
+    text: "Do you want to go to the Projects page?",
+    links: [{ label: "Open Projects", href: "/projects" }],
+  },
+  experience: {
+    text: "Do you want to see Rajat's experience timeline?",
+    links: [{ label: "Open Experience", href: "/experience" }],
+  },
+  contact: {
+    text: "Do you want to connect with Rajat directly?",
+    links: [{ label: "Open Contact", href: "/contact" }],
+  },
+  generic: {
+    text: "Want to explore a specific section?",
+    links: [
+      { label: "About", href: "/about" },
+      { label: "Projects", href: "/projects" },
+      { label: "Experience", href: "/experience" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
+};
+
+function detectIntent(message: string): ChatIntent {
+  const text = message.toLowerCase();
+
+  if (
+    text.includes("project") ||
+    text.includes("portfolio work") ||
+    text.includes("build") ||
+    text.includes("github")
+  ) {
+    return "projects";
+  }
+
+  if (
+    text.includes("experience") ||
+    text.includes("career") ||
+    text.includes("work history") ||
+    text.includes("job")
+  ) {
+    return "experience";
+  }
+
+  if (
+    text.includes("contact") ||
+    text.includes("hire") ||
+    text.includes("email") ||
+    text.includes("reach")
+  ) {
+    return "contact";
+  }
+
+  if (
+    text.includes("about") ||
+    text.includes("who is rajat") ||
+    text.includes("who are you") ||
+    text.includes("bio") ||
+    text.includes("profile")
+  ) {
+    return "about";
+  }
+
+  return "generic";
+}
 
 export default function ChatbotWindow({ name, isDark }: ChatbotWindowProps) {
   const prompts = ["Who is Rajat?", "What is your tech stack?", "Are you available for hire?"];
@@ -50,7 +124,14 @@ export default function ChatbotWindow({ name, isDark }: ChatbotWindowProps) {
         role: "assistant",
         content: reply,
       };
-      setMessages((prev) => [...prev, assistantMessage]);
+      const followUp = followUpByIntent[detectIntent(message)];
+      const followupMessage: ChatMessage = {
+        id: `${Date.now()}-followup`,
+        role: "assistant",
+        content: followUp.text,
+        links: followUp.links,
+      };
+      setMessages((prev) => [...prev, assistantMessage, followupMessage]);
     } catch (error) {
       const err = error instanceof Error ? error.message : "Request failed";
       const errorMessage: ChatMessage = {
@@ -77,14 +158,14 @@ export default function ChatbotWindow({ name, isDark }: ChatbotWindowProps) {
       initial={{ opacity: 0, y: 22 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, delay: 0.4 }}
-      className="mx-auto w-full max-w-3xl"
+      className="mx-auto w-full max-w-4xl"
     >
       <div className="mb-8 flex items-center justify-center gap-3">
         <div className="size-2 animate-pulse rounded-full bg-[var(--primary)] shadow-[0_0_16px_var(--primary-glow)]" />
         <h2 className="text-center text-2xl font-bold tracking-tight text-[var(--text-main)]">Ask {name}GPT</h2>
       </div>
 
-      <div className="portfolio-glass-card relative mb-6 min-h-[240px] overflow-hidden rounded-[1.75rem] p-6 lg:p-8">
+      <div className="portfolio-glass-card relative mb-6 min-h-[320px] overflow-hidden rounded-[1.75rem] p-6 lg:min-h-[360px] lg:p-8">
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[var(--primary-soft)] to-transparent" />
 
         <div className="relative z-10 flex flex-col gap-3">
@@ -112,7 +193,7 @@ export default function ChatbotWindow({ name, isDark }: ChatbotWindowProps) {
             </div>
           </div>
         ) : (
-          <div className="relative z-10 mt-6 max-h-72 space-y-3 overflow-y-auto pr-1">
+          <div className="relative z-10 mt-6 max-h-96 space-y-3 overflow-y-auto pr-1">
             {messages.map((message) => (
               <div
                 className={`rounded-2xl border px-4 py-3 text-sm leading-relaxed ${
@@ -124,7 +205,20 @@ export default function ChatbotWindow({ name, isDark }: ChatbotWindowProps) {
                 }`}
                 key={message.id}
               >
-                {message.content}
+                <p>{message.content}</p>
+                {message.links && message.links.length > 0 ? (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {message.links.map((link) => (
+                      <a
+                        className="rounded-full border border-[var(--primary)] bg-[var(--primary-soft)] px-3 py-1 text-xs font-semibold text-[var(--text-main)] transition-all hover:brightness-110"
+                        href={link.href}
+                        key={`${message.id}-${link.href}`}
+                      >
+                        {link.label}
+                      </a>
+                    ))}
+                  </div>
+                ) : null}
               </div>
             ))}
             {isLoading ? (

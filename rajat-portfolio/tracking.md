@@ -23,6 +23,7 @@
 | 2026-03-02 | Frontend | Added dedicated `/contact` page with dual-theme form UI | Feature | Done | Integrated contact form, social icons, timeline dots, and consistent sidebar navigation |
 | 2026-03-09 | Frontend | Moved detailed About content to dedicated `/about` page and kept home layout unchanged | UX Refactor | Done | Added colorful About route and updated nav/card links across pages |
 | 2026-03-09 | Frontend | Connected RajatGPT chat UI to backend `/api/chat` and added RajatGPT icon in sidebar navigation | Feature | Done | Chat now sends real API requests, shows responses/errors, and nav includes smart_toy link on all pages |
+| 2026-03-09 | Frontend | Added intent-based RajatGPT follow-up flows with direct section links and larger responsive chat panel | Feature | Done | GPT now suggests About/Projects/Experience/Contact navigation based on query intent with generic fallback CTA |
 | 2026-03-09 | Backend | Implemented RajatGPT RAG backend with LangGraph + FastAPI + Groq + FAISS + Supabase pgvector | Feature | Done | Added pydantic graph state, tool-node retrieval, ingestion endpoint, markdown profile knowledge base, and vector storage pipeline |
 | 2026-03-09 | Backend | Forced initial retrieval before answer generation in LangGraph flow | Quality | Done | Seeded FAISS + Postgres tool calls before final LLM response to improve grounding |
 
