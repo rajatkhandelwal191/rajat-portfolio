@@ -32,6 +32,19 @@ poetry install
 poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
+## Backend Endpoints
+- `GET /health` - API health check
+- `GET /bootstrap` - startup indexing/bootstrap status
+- `POST /api/chat` - RajatGPT chat endpoint
+- `POST /api/chat/ingest` - force re-ingest profile markdown and refresh vectors
+
+Sample chat request:
+```bash
+curl -X POST http://localhost:8000/api/chat \
+  -H "Content-Type: application/json" \
+  -d "{\"message\":\"Tell me about Rajat's AI experience\"}"
+```
+
 ## Notes
 - Keep secrets in `.env` only.
 - Update `tracking.md` after each change or bug fix.

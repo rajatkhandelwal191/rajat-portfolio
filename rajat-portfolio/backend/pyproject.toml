@@ -5,17 +5,21 @@ description = "FastAPI backend for AI-powered portfolio"
 authors = ["Rajat Khandelwal <you@example.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = ">=3.11,<3.13"
 fastapi = "^0.115.11"
 uvicorn = {extras = ["standard"], version = "^0.34.0"}
 pydantic-settings = "^2.8.1"
 langchain = "^0.3.20"
+langgraph = "^0.6.11"
 langchain-groq = "^0.2.4"
 langchain-community = "^0.3.19"
 supabase = "^2.13.0"
 python-dotenv = "^1.0.1"
 langchain-huggingface = "<0.2.0"
 sentence-transformers = "^5.2.3"
+faiss-cpu = "^1.12.0"
+psycopg = {extras = ["binary"], version = "^3.2.12"}
+pgvector = "^0.4.1"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.9.10"

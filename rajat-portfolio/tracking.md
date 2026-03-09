@@ -22,6 +22,8 @@
 | 2026-03-02 | Frontend | Standardized experience sidebar nav to match home/projects exactly | UX Fix | Done | Unified nav shape, icon set, active color, and hover labels |
 | 2026-03-02 | Frontend | Added dedicated `/contact` page with dual-theme form UI | Feature | Done | Integrated contact form, social icons, timeline dots, and consistent sidebar navigation |
 | 2026-03-09 | Frontend | Moved detailed About content to dedicated `/about` page and kept home layout unchanged | UX Refactor | Done | Added colorful About route and updated nav/card links across pages |
+| 2026-03-09 | Backend | Implemented RajatGPT RAG backend with LangGraph + FastAPI + Groq + FAISS + Supabase pgvector | Feature | Done | Added pydantic graph state, tool-node retrieval, ingestion endpoint, markdown profile knowledge base, and vector storage pipeline |
+| 2026-03-09 | Backend | Forced initial retrieval before answer generation in LangGraph flow | Quality | Done | Seeded FAISS + Postgres tool calls before final LLM response to improve grounding |
 
 ## Bug Fixes
 | Date | Bug | Root Cause | Fix | Status |
@@ -29,13 +31,19 @@
 | 2026-03-02 | Next.js build failed with `Cannot find namespace JSX` | Return type used `JSX.Element` without namespace resolution in current TS config | Removed explicit JSX return type from page component | Done |
 | 2026-03-02 | `Cannot find module for page: /_document` during build | Stale `.next` build cache state after major page refactor | Cleared `.next` and rebuilt successfully | Done |
 | 2026-03-02 | `/projects` appeared unstyled in dev | CSS asset generation instability with unsupported `color-mix(...)` rule in dev pipeline | Replaced with variable-based hover border color and rebuilt | Done |
+| 2026-03-09 | Backend import failed while loading app | Embeddings model was eagerly initialized at module import time | Switched embedding initialization to lazy loading in retrieval service | Done |
+| 2026-03-09 | Poetry lock resolution failed for `faiss-cpu` | Project Python range allowed unsupported Python versions for FAISS wheels | Restricted backend Python range to `>=3.11,<3.13` and regenerated lockfile | Done |
+| 2026-03-09 | Docker backend install step failed | Poetry attempted to install root package without package config | Switched Docker install command to `poetry install --no-root` | Done |
+| 2026-03-09 | Backend failed to read root `.env` from backend runtime directory | Settings only loaded `.env` from backend path | Updated settings env sources to include `../.env` fallback | Done |
+| 2026-03-09 | Backend startup crashed on `ALLOWED_ORIGINS` parsing | pydantic-settings attempted JSON decoding for list field from dotenv | Disabled automatic complex decoding and kept custom CSV parser | Done |
 
 ## Next Tasks
 - [ ] Initialize Next.js app dependencies and scripts
 - [x] Build first landing page sections (hero, about, projects, contact)
 - [x] Add chatbot UI shell with Framer Motion
 - [ ] Implement FastAPI chat route + health route
+- [x] Implement FastAPI chat route + health route
 - [ ] Wire frontend to backend via `NEXT_PUBLIC_API_BASE_URL`
-- [ ] Add Supabase pgvector integration and retrieval flow
+- [x] Add Supabase pgvector integration and retrieval flow
 - [ ] Add Docker setup validation for fly.io deployment
 
