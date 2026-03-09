@@ -11,6 +11,7 @@ const navItems = [
   { href: "/projects", icon: "code_blocks", label: "Projects" },
   { href: "/experience", icon: "history_edu", label: "Experience" },
   { href: "/contact", icon: "alternate_email", label: "Contact" },
+  { href: "/#chatbot", icon: "smart_toy", label: "RajatGPT" },
 ];
 
 const profileStats = [

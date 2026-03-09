@@ -24,6 +24,7 @@ const navItems = [
   { href: "/projects", icon: "code_blocks", label: "Projects", active: true },
   { href: "/experience", icon: "history_edu", label: "Experience" },
   { href: "/contact", icon: "alternate_email", label: "Contact" },
+  { href: "/#chatbot", icon: "smart_toy", label: "RajatGPT" },
 ];
 
 const featuredProjects: FeaturedProject[] = [

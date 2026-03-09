@@ -12,3 +12,30 @@ export async function healthCheck(): Promise<{ status: string }> {
 
   return response.json();
 }
+
+type ChatApiSuccess = {
+  reply: string;
+};
+
+type ChatApiError = {
+  detail?: string;
+};
+
+export async function sendChatMessage(message: string): Promise<string> {
+  const response = await fetch(`${API_BASE_URL}/api/chat`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ message }),
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    const errorPayload = (await response.json().catch(() => ({}))) as ChatApiError;
+    throw new Error(errorPayload.detail || "RajatGPT request failed");
+  }
+
+  const payload = (await response.json()) as ChatApiSuccess;
+  return payload.reply;
+}

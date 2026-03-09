@@ -11,6 +11,7 @@ const navItems = [
   { href: "/", icon: "home", label: "Home" },
   { href: "/experience", icon: "history_edu", label: "Experience" },
   { href: "/contact", icon: "alternate_email", label: "Contact", active: true },
+  { href: "/#chatbot", icon: "smart_toy", label: "RajatGPT" },
 ];
 
 const timelineDots = [false, false, false, false, true];
