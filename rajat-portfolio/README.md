@@ -32,6 +32,11 @@ poetry install
 poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
+### Embedding modes
+- Cloud recommended: `EMBEDDING_PROVIDER=gemini`, `GEMINI_API_KEY=...`, `USE_FAISS=false`
+- Local only: `EMBEDDING_PROVIDER=local`, `USE_LOCAL_EMBEDDINGS=true`, `USE_FAISS=true`
+- No embeddings fallback: `EMBEDDING_PROVIDER=none` (keyword search only)
+
 For local embedding/FAISS workflows only (not needed on Fly):
 ```bash
 cd backend

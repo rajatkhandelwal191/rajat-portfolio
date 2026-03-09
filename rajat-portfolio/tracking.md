@@ -30,6 +30,7 @@
 | 2026-03-09 | Backend | Moved FAISS/embedding heavy dependencies to optional Poetry `local` group | Optimization | Done | Default install no longer pulls sentence-transformers/faiss/torch stack; use `poetry install --with local` for local ingestion workflows |
 | 2026-03-09 | Backend | Implemented RajatGPT RAG backend with LangGraph + FastAPI + Groq + FAISS + Supabase pgvector | Feature | Done | Added pydantic graph state, tool-node retrieval, ingestion endpoint, markdown profile knowledge base, and vector storage pipeline |
 | 2026-03-09 | Backend | Forced initial retrieval before answer generation in LangGraph flow | Quality | Done | Seeded FAISS + Postgres tool calls before final LLM response to improve grounding |
+| 2026-03-09 | Backend | Added Gemini embedding provider support for cloud semantic retrieval | Feature | Done | Added `EMBEDDING_PROVIDER` auto/local/gemini/none, Gemini REST embedding client, FAISS gating by provider, and keyword fallback on embedding errors |
 
 ## Bug Fixes
 | Date | Bug | Root Cause | Fix | Status |

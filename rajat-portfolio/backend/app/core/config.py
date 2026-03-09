@@ -16,7 +16,10 @@ class Settings(BaseSettings):
     supabase_service_role_key: str = ""
     supabase_db_url: str = ""
     huggingfacehub_api_token: str = ""
+    embedding_provider: str = "auto"
     embedding_model_name: str = "sentence-transformers/all-MiniLM-L6-v2"
+    gemini_api_key: str = ""
+    gemini_embedding_model: str = "models/text-embedding-004"
     embedding_dimension: int = 384
     faiss_storage_path: str = "storage/faiss"
     profile_markdown_path: str = "app/data/rajat_khandelwal_profile.md"
@@ -32,6 +35,23 @@ class Settings(BaseSettings):
         if not value:
             return ["http://localhost:3000"]
         return [origin.strip() for origin in value.split(",") if origin.strip()]
+
+    @field_validator("embedding_provider")
+    @classmethod
+    def normalize_embedding_provider(cls, value: str) -> str:
+        normalized = (value or "auto").strip().lower()
+        if normalized not in {"auto", "none", "local", "gemini"}:
+            raise ValueError("EMBEDDING_PROVIDER must be one of: auto, none, local, gemini")
+        return normalized
+
+    def resolved_embedding_provider(self) -> str:
+        if self.embedding_provider != "auto":
+            return self.embedding_provider
+        if self.use_local_embeddings:
+            return "local"
+        if self.gemini_api_key:
+            return "gemini"
+        return "none"
 
     model_config = SettingsConfigDict(
         env_file=(".env", "../.env"),

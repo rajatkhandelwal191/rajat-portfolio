@@ -31,8 +31,18 @@ class RetrievalService:
             "score": score,
         }
 
+    def _embedding_service_or_none(self) -> EmbeddingService | None:
+        try:
+            return self.embedding_service
+        except Exception as exc:
+            logger.exception("Embedding service unavailable: %s", exc)
+            return None
+
     def _load_faiss_from_disk(self) -> bool:
-        if not settings.use_faiss or not settings.use_local_embeddings:
+        if not settings.use_faiss:
+            return False
+        embedding_service = self._embedding_service_or_none()
+        if embedding_service is None or not embedding_service.supports_faiss:
             return False
         try:
             from langchain_community.vectorstores import FAISS
@@ -46,7 +56,7 @@ class RetrievalService:
 
         self._faiss_store = FAISS.load_local(
             folder_path=str(path),
-            embeddings=self.embedding_service.model,
+            embeddings=embedding_service.model,
             allow_dangerous_deserialization=True,
         )
         return True
@@ -55,14 +65,16 @@ class RetrievalService:
         details: dict[str, Any] = {
             "faiss_loaded": False,
             "auto_ingested": False,
-            "local_embeddings": settings.use_local_embeddings,
+            "embedding_provider": settings.resolved_embedding_provider(),
             "faiss_enabled": settings.use_faiss,
         }
         try:
+            details["embeddings_enabled"] = self.embedding_service.is_enabled
             details["faiss_loaded"] = self._load_faiss_from_disk()
             logger.info("FAISS load on bootstrap | loaded=%s", details["faiss_loaded"])
         except Exception as exc:  # pragma: no cover - defensive startup fallback
             details["faiss_load_error"] = str(exc)
+            details["embeddings_enabled"] = False
             logger.exception("FAISS load failed on bootstrap: %s", exc)
 
         if settings.auto_ingest_on_startup:
@@ -75,14 +87,15 @@ class RetrievalService:
 
     def ingest_profile(self, reset: bool = True) -> dict[str, Any]:
         logger.info("Ingest profile started | reset=%s", reset)
-        if not settings.use_local_embeddings:
+        embedding_service = self._embedding_service_or_none()
+        if embedding_service is None or not embedding_service.is_enabled:
             details = {
                 "chunks_indexed": 0,
                 "faiss_ready": False,
                 "stored_in_postgres": False,
                 "postgres_error": None,
                 "skipped": True,
-                "reason": "Local embeddings disabled. Run ingestion locally and reuse Supabase data in cloud mode.",
+                "reason": "Embeddings are disabled (provider=none).",
             }
             logger.info("Ingest profile skipped | detail=%s", details)
             return details
@@ -91,15 +104,27 @@ class RetrievalService:
             documents = load_profile_documents()
             texts = [doc.page_content for doc in documents]
             metadatas = [doc.metadata for doc in documents]
-            embeddings = self.embedding_service.embed_documents(texts)
+            try:
+                embeddings = embedding_service.embed_documents(texts)
+            except Exception as exc:
+                details = {
+                    "chunks_indexed": 0,
+                    "faiss_ready": False,
+                    "stored_in_postgres": False,
+                    "postgres_error": None,
+                    "skipped": True,
+                    "reason": f"Embedding generation failed: {exc}",
+                }
+                logger.exception("Ingest profile failed while generating embeddings: %s", exc)
+                return details
 
-            if settings.use_faiss:
+            if settings.use_faiss and embedding_service.supports_faiss:
                 from langchain_community.vectorstores import FAISS
 
                 faiss_pairs = list(zip(texts, embeddings, strict=True))
                 self._faiss_store = FAISS.from_embeddings(
                     text_embeddings=faiss_pairs,
-                    embedding=self.embedding_service.model,
+                    embedding=embedding_service.model,
                     metadatas=metadatas,
                 )
 
@@ -144,7 +169,10 @@ class RetrievalService:
             return details
 
     def search_faiss(self, query: str, top_k: int = 4) -> list[dict[str, Any]]:
-        if not settings.use_faiss or not settings.use_local_embeddings:
+        if not settings.use_faiss:
+            return []
+        embedding_service = self._embedding_service_or_none()
+        if embedding_service is None or not embedding_service.supports_faiss:
             return []
         if not query.strip():
             return []
@@ -175,13 +203,19 @@ class RetrievalService:
         if not query.strip() or not vector_repository.is_configured:
             return []
 
-        if settings.use_local_embeddings:
-            query_embedding = self.embedding_service.embed_query(query)
-            chunks: list[RetrievedChunk] = vector_repository.similarity_search(
-                query_embedding=query_embedding,
-                top_k=top_k,
-            )
-        else:
+        chunks: list[RetrievedChunk] = []
+        embedding_service = self._embedding_service_or_none()
+        if embedding_service is not None and embedding_service.is_enabled:
+            try:
+                query_embedding = embedding_service.embed_query(query)
+                chunks = vector_repository.similarity_search(
+                    query_embedding=query_embedding,
+                    top_k=top_k,
+                )
+            except Exception as exc:
+                logger.exception("Vector similarity search failed; falling back to keyword search: %s", exc)
+
+        if not chunks:
             chunks = vector_repository.keyword_search(query=query, top_k=top_k)
 
         results = [
