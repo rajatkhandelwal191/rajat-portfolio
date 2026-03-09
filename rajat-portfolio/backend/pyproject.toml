@@ -15,15 +15,20 @@ langchain-groq = "^0.2.4"
 langchain-community = "^0.3.19"
 supabase = "^2.13.0"
 python-dotenv = "^1.0.1"
-langchain-huggingface = "<0.2.0"
-sentence-transformers = "^5.2.3"
-faiss-cpu = "^1.12.0"
 psycopg = {extras = ["binary"], version = "^3.2.12"}
 pgvector = "^0.4.1"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.9.10"
 pytest = "^8.3.5"
+
+[tool.poetry.group.local]
+optional = true
+
+[tool.poetry.group.local.dependencies]
+langchain-huggingface = "<0.2.0"
+sentence-transformers = "^5.2.3"
+faiss-cpu = "^1.12.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

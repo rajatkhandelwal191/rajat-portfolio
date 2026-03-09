@@ -3,8 +3,6 @@ from pathlib import Path
 from threading import Lock
 from typing import Any
 
-from langchain_community.vectorstores import FAISS
-
 from app.core.config import settings
 from app.database.vector_repository import RetrievedChunk, vector_repository
 from app.services.embedding_service import EmbeddingService, get_embedding_service
@@ -16,7 +14,7 @@ logger = logging.getLogger("app.retrieval_service")
 class RetrievalService:
     def __init__(self) -> None:
         self._embedding_service: EmbeddingService | None = None
-        self._faiss_store: FAISS | None = None
+        self._faiss_store: Any = None
         self._lock = Lock()
 
     @property
@@ -34,6 +32,14 @@ class RetrievalService:
         }
 
     def _load_faiss_from_disk(self) -> bool:
+        if not settings.use_faiss or not settings.use_local_embeddings:
+            return False
+        try:
+            from langchain_community.vectorstores import FAISS
+        except ModuleNotFoundError:
+            logger.warning("FAISS package not installed; skipping FAISS load.")
+            return False
+
         path = Path(settings.faiss_storage_path)
         if not path.exists():
             return False
@@ -46,7 +52,12 @@ class RetrievalService:
         return True
 
     def bootstrap(self) -> dict[str, Any]:
-        details: dict[str, Any] = {"faiss_loaded": False, "auto_ingested": False}
+        details: dict[str, Any] = {
+            "faiss_loaded": False,
+            "auto_ingested": False,
+            "local_embeddings": settings.use_local_embeddings,
+            "faiss_enabled": settings.use_faiss,
+        }
         try:
             details["faiss_loaded"] = self._load_faiss_from_disk()
             logger.info("FAISS load on bootstrap | loaded=%s", details["faiss_loaded"])
@@ -64,22 +75,39 @@ class RetrievalService:
 
     def ingest_profile(self, reset: bool = True) -> dict[str, Any]:
         logger.info("Ingest profile started | reset=%s", reset)
+        if not settings.use_local_embeddings:
+            details = {
+                "chunks_indexed": 0,
+                "faiss_ready": False,
+                "stored_in_postgres": False,
+                "postgres_error": None,
+                "skipped": True,
+                "reason": "Local embeddings disabled. Run ingestion locally and reuse Supabase data in cloud mode.",
+            }
+            logger.info("Ingest profile skipped | detail=%s", details)
+            return details
+
         with self._lock:
             documents = load_profile_documents()
             texts = [doc.page_content for doc in documents]
             metadatas = [doc.metadata for doc in documents]
             embeddings = self.embedding_service.embed_documents(texts)
 
-            faiss_pairs = list(zip(texts, embeddings, strict=True))
-            self._faiss_store = FAISS.from_embeddings(
-                text_embeddings=faiss_pairs,
-                embedding=self.embedding_service.model,
-                metadatas=metadatas,
-            )
+            if settings.use_faiss:
+                from langchain_community.vectorstores import FAISS
 
-            faiss_path = Path(settings.faiss_storage_path)
-            faiss_path.mkdir(parents=True, exist_ok=True)
-            self._faiss_store.save_local(folder_path=str(faiss_path))
+                faiss_pairs = list(zip(texts, embeddings, strict=True))
+                self._faiss_store = FAISS.from_embeddings(
+                    text_embeddings=faiss_pairs,
+                    embedding=self.embedding_service.model,
+                    metadatas=metadatas,
+                )
+
+                faiss_path = Path(settings.faiss_storage_path)
+                faiss_path.mkdir(parents=True, exist_ok=True)
+                self._faiss_store.save_local(folder_path=str(faiss_path))
+            else:
+                self._faiss_store = None
 
             stored_in_postgres = False
             postgres_error: str | None = None
@@ -110,11 +138,14 @@ class RetrievalService:
                 "faiss_ready": self._faiss_store is not None,
                 "stored_in_postgres": stored_in_postgres,
                 "postgres_error": postgres_error,
+                "skipped": False,
             }
             logger.info("Ingest profile finished | detail=%s", details)
             return details
 
     def search_faiss(self, query: str, top_k: int = 4) -> list[dict[str, Any]]:
+        if not settings.use_faiss or not settings.use_local_embeddings:
+            return []
         if not query.strip():
             return []
 
@@ -144,11 +175,15 @@ class RetrievalService:
         if not query.strip() or not vector_repository.is_configured:
             return []
 
-        query_embedding = self.embedding_service.embed_query(query)
-        chunks: list[RetrievedChunk] = vector_repository.similarity_search(
-            query_embedding=query_embedding,
-            top_k=top_k,
-        )
+        if settings.use_local_embeddings:
+            query_embedding = self.embedding_service.embed_query(query)
+            chunks: list[RetrievedChunk] = vector_repository.similarity_search(
+                query_embedding=query_embedding,
+                top_k=top_k,
+            )
+        else:
+            chunks = vector_repository.keyword_search(query=query, top_k=top_k)
+
         results = [
             self._format_chunk(
                 content=chunk.content,

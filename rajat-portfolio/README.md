@@ -32,6 +32,12 @@ poetry install
 poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
+For local embedding/FAISS workflows only (not needed on Fly):
+```bash
+cd backend
+poetry install --with local
+```
+
 ## Backend Endpoints
 - `GET /health` - API health check
 - `GET /bootstrap` - startup indexing/bootstrap status

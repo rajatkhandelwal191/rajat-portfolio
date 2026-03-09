@@ -26,6 +26,8 @@
 | 2026-03-09 | Frontend | Added intent-based RajatGPT follow-up flows with direct section links and larger responsive chat panel | Feature | Done | GPT now suggests About/Projects/Experience/Contact navigation based on query intent with generic fallback CTA |
 | 2026-03-09 | Backend + Frontend | Added structured interaction and error logging pipeline for terminal visibility | Feature | Done | FastAPI request/chat/ingest logs + frontend click/chat/error event forwarding to backend `/api/chat/frontend-event` |
 | 2026-03-09 | Frontend | Added Next.js terminal logging endpoint for UI events | Fix | Done | Added `/api/frontend-log` and wired frontend logger to post events so clicks/errors show in frontend terminal |
+| 2026-03-09 | Backend | Added cloud mode to skip FAISS/local embeddings and use Supabase text retrieval | Refactor | Done | Fly deployments can run without sentence-transformers/faiss packages; local mode remains available for ingestion |
+| 2026-03-09 | Backend | Moved FAISS/embedding heavy dependencies to optional Poetry `local` group | Optimization | Done | Default install no longer pulls sentence-transformers/faiss/torch stack; use `poetry install --with local` for local ingestion workflows |
 | 2026-03-09 | Backend | Implemented RajatGPT RAG backend with LangGraph + FastAPI + Groq + FAISS + Supabase pgvector | Feature | Done | Added pydantic graph state, tool-node retrieval, ingestion endpoint, markdown profile knowledge base, and vector storage pipeline |
 | 2026-03-09 | Backend | Forced initial retrieval before answer generation in LangGraph flow | Quality | Done | Seeded FAISS + Postgres tool calls before final LLM response to improve grounding |
 

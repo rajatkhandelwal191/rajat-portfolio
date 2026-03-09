@@ -21,6 +21,8 @@ class Settings(BaseSettings):
     faiss_storage_path: str = "storage/faiss"
     profile_markdown_path: str = "app/data/rajat_khandelwal_profile.md"
     auto_ingest_on_startup: bool = True
+    use_local_embeddings: bool = True
+    use_faiss: bool = True
 
     @field_validator("allowed_origins", mode="before")
     @classmethod

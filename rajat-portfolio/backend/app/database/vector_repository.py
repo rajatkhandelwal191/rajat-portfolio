@@ -60,6 +60,13 @@ class VectorRepository:
                     WITH (lists = 50);
                     """
                 )
+                cur.execute(
+                    f"""
+                    CREATE INDEX IF NOT EXISTS idx_{self.table_name}_content_tsv
+                    ON {self.table_name}
+                    USING gin (to_tsvector('english', content));
+                    """
+                )
 
     def clear_source(self, source: str) -> None:
         if not self.is_configured:
@@ -122,6 +129,42 @@ class VectorRepository:
                     content=content,
                     metadata=metadata or {},
                     score=score,
+                )
+            )
+        return chunks
+
+    def keyword_search(self, query: str, top_k: int = 4) -> list[RetrievedChunk]:
+        if not self.is_configured or not query.strip():
+            return []
+
+        with psycopg.connect(self.db_url, autocommit=True) as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    f"""
+                    SELECT
+                        source,
+                        chunk_id,
+                        content,
+                        metadata,
+                        ts_rank(to_tsvector('english', content), plainto_tsquery('english', %s)) AS rank
+                    FROM {self.table_name}
+                    WHERE to_tsvector('english', content) @@ plainto_tsquery('english', %s)
+                    ORDER BY rank DESC
+                    LIMIT %s;
+                    """,
+                    (query, query, top_k),
+                )
+                rows = cur.fetchall()
+
+        chunks: list[RetrievedChunk] = []
+        for source, chunk_id, content, metadata, rank in rows:
+            chunks.append(
+                RetrievedChunk(
+                    source=source,
+                    chunk_id=chunk_id,
+                    content=content,
+                    metadata=metadata or {},
+                    score=float(rank or 0.0),
                 )
             )
         return chunks
