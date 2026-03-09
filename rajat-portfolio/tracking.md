@@ -31,6 +31,7 @@
 | 2026-03-09 | Backend | Implemented RajatGPT RAG backend with LangGraph + FastAPI + Groq + FAISS + Supabase pgvector | Feature | Done | Added pydantic graph state, tool-node retrieval, ingestion endpoint, markdown profile knowledge base, and vector storage pipeline |
 | 2026-03-09 | Backend | Forced initial retrieval before answer generation in LangGraph flow | Quality | Done | Seeded FAISS + Postgres tool calls before final LLM response to improve grounding |
 | 2026-03-09 | Backend | Added Gemini embedding provider support for cloud semantic retrieval | Feature | Done | Added `EMBEDDING_PROVIDER` auto/local/gemini/none, Gemini REST embedding client, FAISS gating by provider, and keyword fallback on embedding errors |
+| 2026-03-09 | Backend | Added embedding diagnostics endpoint and checker script | Observability | Done | Added `/api/chat/embedding-status` plus `backend/scripts/check_embedding_status.py` to validate provider/model/key + live probe vector dimension |
 
 ## Bug Fixes
 | Date | Bug | Root Cause | Fix | Status |

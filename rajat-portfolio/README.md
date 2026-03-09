@@ -48,12 +48,19 @@ poetry install --with local
 - `GET /bootstrap` - startup indexing/bootstrap status
 - `POST /api/chat` - RajatGPT chat endpoint
 - `POST /api/chat/ingest` - force re-ingest profile markdown and refresh vectors
+- `GET /api/chat/embedding-status` - provider/model/key presence + live embedding probe
 
 Sample chat request:
 ```bash
 curl -X POST http://localhost:8000/api/chat \
   -H "Content-Type: application/json" \
   -d "{\"message\":\"Tell me about Rajat's AI experience\"}"
+```
+
+Embedding diagnostics:
+```bash
+cd backend
+python scripts/check_embedding_status.py --base-url https://rajat-khandelwal.fly.dev
 ```
 
 ## Notes
