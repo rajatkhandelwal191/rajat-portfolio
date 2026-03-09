@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { logUiEvent } from "../../lib/frontendLogger";
 
 type Theme = "light" | "dark";
 
@@ -100,6 +101,7 @@ export default function ExperiencePage() {
                 : "text-[var(--text-muted)] hover:bg-[var(--icon-chip-bg)] hover:text-[var(--primary)]"
             }`}
             href={item.href}
+            onClick={() => logUiEvent("nav_clicked", { page: "experience", label: item.label, href: item.href })}
           >
             <span
               className="material-symbols-outlined text-2xl"
@@ -144,7 +146,10 @@ export default function ExperiencePage() {
           </div>
           <button
             className="portfolio-glass flex size-10 items-center justify-center rounded-xl border border-[var(--glass-border)] text-[var(--primary)] transition-all hover:bg-[var(--icon-chip-bg)]"
-            onClick={() => setTheme(isDark ? "light" : "dark")}
+            onClick={() => {
+              logUiEvent("theme_toggle_clicked", { page: "experience", from: theme, to: isDark ? "light" : "dark" });
+              setTheme(isDark ? "light" : "dark");
+            }}
             type="button"
           >
             <span className="material-symbols-outlined">{isDark ? "light_mode" : "dark_mode"}</span>

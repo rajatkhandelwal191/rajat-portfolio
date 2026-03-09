@@ -1,19 +1,27 @@
 from contextlib import asynccontextmanager
+import logging
+from time import perf_counter
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.chat_routes import router as chat_router
 from app.core.config import settings
+from app.core.logging_config import configure_logging
 from app.services.chat_service import initialize_chat_service
+
+configure_logging()
+logger = logging.getLogger("app.main")
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     try:
         app.state.bootstrap = initialize_chat_service()
+        logger.info("Bootstrap completed: %s", app.state.bootstrap)
     except Exception as exc:  # pragma: no cover - startup fallback path
         app.state.bootstrap = {"error": str(exc)}
+        logger.exception("Bootstrap failed: %s", exc)
     yield
 
 
@@ -26,6 +34,34 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    start = perf_counter()
+    logger.info("Request started: %s %s", request.method, request.url.path)
+    try:
+        response = await call_next(request)
+    except Exception as exc:  # pragma: no cover - middleware exception path
+        duration_ms = (perf_counter() - start) * 1000
+        logger.exception(
+            "Request failed: %s %s | duration_ms=%.2f | error=%s",
+            request.method,
+            request.url.path,
+            duration_ms,
+            exc,
+        )
+        raise
+
+    duration_ms = (perf_counter() - start) * 1000
+    logger.info(
+        "Request finished: %s %s | status=%s | duration_ms=%.2f",
+        request.method,
+        request.url.path,
+        response.status_code,
+        duration_ms,
+    )
+    return response
 
 
 @app.get("/health")

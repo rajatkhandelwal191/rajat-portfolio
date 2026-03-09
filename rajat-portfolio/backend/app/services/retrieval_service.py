@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 from threading import Lock
 from typing import Any
@@ -8,6 +9,8 @@ from app.core.config import settings
 from app.database.vector_repository import RetrievedChunk, vector_repository
 from app.services.embedding_service import EmbeddingService, get_embedding_service
 from app.services.knowledge_base import SOURCE_ID, load_profile_documents
+
+logger = logging.getLogger("app.retrieval_service")
 
 
 class RetrievalService:
@@ -46,17 +49,21 @@ class RetrievalService:
         details: dict[str, Any] = {"faiss_loaded": False, "auto_ingested": False}
         try:
             details["faiss_loaded"] = self._load_faiss_from_disk()
+            logger.info("FAISS load on bootstrap | loaded=%s", details["faiss_loaded"])
         except Exception as exc:  # pragma: no cover - defensive startup fallback
             details["faiss_load_error"] = str(exc)
+            logger.exception("FAISS load failed on bootstrap: %s", exc)
 
         if settings.auto_ingest_on_startup:
             ingest_result = self.ingest_profile(reset=False)
             details["auto_ingested"] = True
             details["ingest"] = ingest_result
+            logger.info("Auto-ingest completed on startup | detail=%s", ingest_result)
 
         return details
 
     def ingest_profile(self, reset: bool = True) -> dict[str, Any]:
+        logger.info("Ingest profile started | reset=%s", reset)
         with self._lock:
             documents = load_profile_documents()
             texts = [doc.page_content for doc in documents]
@@ -96,13 +103,16 @@ class RetrievalService:
                     stored_in_postgres = True
                 except Exception as exc:  # pragma: no cover - external db errors
                     postgres_error = str(exc)
+                    logger.exception("Postgres vector upsert failed: %s", exc)
 
-            return {
+            details = {
                 "chunks_indexed": len(texts),
                 "faiss_ready": self._faiss_store is not None,
                 "stored_in_postgres": stored_in_postgres,
                 "postgres_error": postgres_error,
             }
+            logger.info("Ingest profile finished | detail=%s", details)
+            return details
 
     def search_faiss(self, query: str, top_k: int = 4) -> list[dict[str, Any]]:
         if not query.strip():
@@ -127,6 +137,7 @@ class RetrievalService:
                     score=float(raw_score),
                 )
             )
+        logger.info("FAISS search | query_preview=%s | top_k=%s | hits=%s", query[:80], top_k, len(results))
         return results
 
     def search_postgres(self, query: str, top_k: int = 4) -> list[dict[str, Any]]:
@@ -138,7 +149,7 @@ class RetrievalService:
             query_embedding=query_embedding,
             top_k=top_k,
         )
-        return [
+        results = [
             self._format_chunk(
                 content=chunk.content,
                 source=chunk.source,
@@ -147,6 +158,8 @@ class RetrievalService:
             )
             for chunk in chunks
         ]
+        logger.info("Postgres search | query_preview=%s | top_k=%s | hits=%s", query[:80], top_k, len(results))
+        return results
 
 
 retrieval_service = RetrievalService()

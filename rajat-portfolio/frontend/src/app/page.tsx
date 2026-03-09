@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 
 import ChatbotWindow from "../components/ChatbotWindow";
 import ProjectCard from "../components/ProjectCard";
+import { logUiEvent } from "../lib/frontendLogger";
 
 type Theme = "light" | "dark";
 
@@ -84,6 +85,7 @@ export default function Home() {
                 : "text-[var(--text-muted)] hover:bg-[var(--icon-chip-bg)] hover:text-[var(--primary)]"
             }`}
             href={item.href}
+            onClick={() => logUiEvent("nav_clicked", { page: "home", label: item.label, href: item.href })}
           >
             <span
               className="material-symbols-outlined text-2xl"
@@ -127,7 +129,10 @@ export default function Home() {
 
           <button
             className="portfolio-glass flex size-10 items-center justify-center rounded-xl border border-[var(--glass-border)] text-[var(--primary)] transition-all hover:bg-[var(--icon-chip-bg)]"
-            onClick={() => setTheme(isDark ? "light" : "dark")}
+            onClick={() => {
+              logUiEvent("theme_toggle_clicked", { page: "home", from: theme, to: isDark ? "light" : "dark" });
+              setTheme(isDark ? "light" : "dark");
+            }}
             type="button"
           >
             <span className="material-symbols-outlined">{isDark ? "light_mode" : "dark_mode"}</span>
@@ -188,6 +193,7 @@ export default function Home() {
                 key={link.label}
                 className="group relative text-[var(--text-muted)] transition-all hover:scale-110 hover:text-[var(--primary)]"
                 href={link.href}
+                onClick={() => logUiEvent("footer_link_clicked", { page: "home", label: link.label, href: link.href })}
                 title={link.label}
               >
                 <span className="material-symbols-outlined text-2xl">{link.icon}</span>

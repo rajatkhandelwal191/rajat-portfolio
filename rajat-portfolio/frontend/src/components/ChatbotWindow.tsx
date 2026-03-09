@@ -4,6 +4,7 @@ import { KeyboardEvent, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 
 import { sendChatMessage } from "../lib/api";
+import { logUiError, logUiEvent } from "../lib/frontendLogger";
 
 type ChatbotWindowProps = {
   name: string;
@@ -106,6 +107,7 @@ export default function ChatbotWindow({ name, isDark }: ChatbotWindowProps) {
     if (!message || isLoading) {
       return;
     }
+    logUiEvent("chat_submit_clicked", { message_preview: message.slice(0, 120) });
 
     const userMessage: ChatMessage = {
       id: `${Date.now()}-user`,
@@ -119,6 +121,7 @@ export default function ChatbotWindow({ name, isDark }: ChatbotWindowProps) {
 
     try {
       const reply = await sendChatMessage(message);
+      logUiEvent("chat_response_received", { reply_chars: reply.length });
       const assistantMessage: ChatMessage = {
         id: `${Date.now()}-assistant`,
         role: "assistant",
@@ -134,6 +137,7 @@ export default function ChatbotWindow({ name, isDark }: ChatbotWindowProps) {
       setMessages((prev) => [...prev, assistantMessage, followupMessage]);
     } catch (error) {
       const err = error instanceof Error ? error.message : "Request failed";
+      logUiError("chat_response_error", { error: err, message_preview: message.slice(0, 120) });
       const errorMessage: ChatMessage = {
         id: `${Date.now()}-error`,
         role: "error",
@@ -174,7 +178,10 @@ export default function ChatbotWindow({ name, isDark }: ChatbotWindowProps) {
             {prompts.map((prompt) => (
               <button
                 key={prompt}
-                onClick={() => void submitMessage(prompt)}
+                onClick={() => {
+                  logUiEvent("chat_prompt_clicked", { prompt });
+                  void submitMessage(prompt);
+                }}
                 className="rounded-full border border-[var(--prompt-border)] bg-[var(--prompt-bg)] px-5 py-2.5 text-sm text-[var(--text-muted)] transition-all hover:border-[var(--primary)] hover:text-[var(--primary)]"
               >
                 {prompt}
@@ -212,6 +219,7 @@ export default function ChatbotWindow({ name, isDark }: ChatbotWindowProps) {
                       <a
                         className="rounded-full border border-[var(--primary)] bg-[var(--primary-soft)] px-3 py-1 text-xs font-semibold text-[var(--text-main)] transition-all hover:brightness-110"
                         href={link.href}
+                        onClick={() => logUiEvent("chat_followup_link_clicked", { label: link.label, href: link.href })}
                         key={`${message.id}-${link.href}`}
                       >
                         {link.label}

@@ -1,4 +1,5 @@
 from functools import lru_cache
+import logging
 
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from langchain_core.tools import tool
@@ -9,6 +10,8 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from app.core.config import settings
 from app.services.retrieval_service import retrieval_service
+
+logger = logging.getLogger("app.langgraph_agent")
 
 SYSTEM_PROMPT = """
 You are RajatGPT, a portfolio assistant for Rajat Khandelwal.
@@ -138,9 +141,12 @@ def get_chat_graph():
 
 
 def run_chat(question: str) -> str:
+    logger.info("LangGraph run started | question_preview=%s", question[:120])
     initial_state = ChatState(
         question=question,
         messages=[SystemMessage(content=SYSTEM_PROMPT), HumanMessage(content=question)],
     )
     result = get_chat_graph().invoke(initial_state)
-    return str(result.get("answer", "")).strip()
+    answer = str(result.get("answer", "")).strip()
+    logger.info("LangGraph run finished | answer_chars=%s", len(answer))
+    return answer

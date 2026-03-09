@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { logUiEvent } from "../../lib/frontendLogger";
 
 type Theme = "light" | "dark";
 
@@ -31,6 +32,7 @@ export default function ContactPage() {
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    logUiEvent("contact_form_submit_clicked");
   };
 
   return (
@@ -50,6 +52,7 @@ export default function ContactPage() {
                 : "text-[var(--text-muted)] hover:bg-[var(--icon-chip-bg)] hover:text-[var(--primary)]"
             }`}
             href={item.href}
+            onClick={() => logUiEvent("nav_clicked", { page: "contact", label: item.label, href: item.href })}
           >
             <span
               className="material-symbols-outlined text-2xl"
@@ -102,7 +105,10 @@ export default function ContactPage() {
             <h2 className="font-display text-3xl text-[var(--text-main)]">Get in Touch</h2>
             <button
               className="portfolio-glass flex size-10 items-center justify-center rounded-xl border border-[var(--glass-border)] text-[var(--primary)] transition-all hover:bg-[var(--icon-chip-bg)]"
-              onClick={() => setTheme(isDark ? "light" : "dark")}
+              onClick={() => {
+                logUiEvent("theme_toggle_clicked", { page: "contact", from: theme, to: isDark ? "light" : "dark" });
+                setTheme(isDark ? "light" : "dark");
+              }}
               type="button"
             >
               <span className="material-symbols-outlined">{isDark ? "light_mode" : "dark_mode"}</span>
@@ -176,7 +182,11 @@ export default function ContactPage() {
           </form>
 
           <div className="mt-12 flex justify-center gap-6">
-            <a className="text-[var(--text-main)] transition-colors duration-300 hover:text-[var(--cream-active)]" href="#">
+            <a
+              className="text-[var(--text-main)] transition-colors duration-300 hover:text-[var(--cream-active)]"
+              href="#"
+              onClick={() => logUiEvent("social_link_clicked", { page: "contact", platform: "linkedin" })}
+            >
               <svg aria-hidden="true" className="h-8 w-8 fill-current" viewBox="0 0 24 24">
                 <path
                   clipRule="evenodd"
@@ -186,7 +196,11 @@ export default function ContactPage() {
               </svg>
               <span className="sr-only">LinkedIn</span>
             </a>
-            <a className="text-[var(--text-main)] transition-colors duration-300 hover:text-[var(--cream-active)]" href="#">
+            <a
+              className="text-[var(--text-main)] transition-colors duration-300 hover:text-[var(--cream-active)]"
+              href="#"
+              onClick={() => logUiEvent("social_link_clicked", { page: "contact", platform: "github" })}
+            >
               <svg aria-hidden="true" className="h-8 w-8 fill-current" viewBox="0 0 24 24">
                 <path
                   clipRule="evenodd"
