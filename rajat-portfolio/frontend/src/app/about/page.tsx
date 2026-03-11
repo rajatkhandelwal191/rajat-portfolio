@@ -160,6 +160,24 @@ export default function AboutPage() {
         </motion.header>
 
         <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-12">
+          <div className="mb-8 flex justify-center">
+            <div className="relative flex flex-col items-center">
+              <div className="h-8 w-px bg-[var(--section-line)]" />
+              <motion.div
+                animate={{ rotate: [-4, 4, -4] }}
+                className="portfolio-glass-card max-w-3xl rounded-2xl border border-[var(--card-hover-border)] px-5 py-4 text-center"
+                transition={{ duration: 3.2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+              >
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--primary)]">Note</p>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--text-main)]">
+                  Extracted dynamically from MCP Apify API: This API provides a pre-configured MCP
+                  client for LinkedIn profile scraping, allowing you to access LinkedIn data
+                  programmatically.
+                </p>
+              </motion.div>
+            </div>
+          </div>
+
           <motion.section
             animate={{ opacity: 1, y: 0 }}
             className="mb-10"
