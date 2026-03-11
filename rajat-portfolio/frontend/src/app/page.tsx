@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { PointerEvent, useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 import ChatbotWindow from "../components/ChatbotWindow";
@@ -61,12 +61,97 @@ const footerLinks = [
 
 export default function Home() {
   const [theme, setTheme] = useState<Theme>("dark");
+  const [pullOffset, setPullOffset] = useState(0);
+  const [isPulling, setIsPulling] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
+  const [isChatbotVisible, setIsChatbotVisible] = useState(false);
+  const pullStartRef = useRef<number | null>(null);
   const isDark = theme === "dark";
+  const pullThreshold = 26;
 
   const footerText = useMemo(
     () => `(c) ${new Date().getFullYear()} Rajat Khandelwal. Built with glassmorphism and motion.`,
     [],
   );
+  const showHangingTrigger = hasScrolled && !isChatbotVisible;
+
+  useEffect(() => {
+    const onScroll = () => {
+      setHasScrolled(window.scrollY > 80);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    const chatbotEl = document.getElementById("chatbot");
+    let observer: IntersectionObserver | null = null;
+    if (chatbotEl) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          setIsChatbotVisible(entries.some((entry) => entry.isIntersecting));
+        },
+        { threshold: 0.25 },
+      );
+      observer.observe(chatbotEl);
+    }
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (observer) {
+        observer.disconnect();
+      }
+    };
+  }, []);
+
+  const goToChatbot = () => {
+    logUiEvent("hanging_ask_rajatgpt_triggered", { page: "home" });
+    const target = document.getElementById("chatbot");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.setTimeout(() => {
+        window.location.hash = "chatbot";
+      }, 220);
+      return;
+    }
+    window.location.href = "#chatbot";
+  };
+
+  const handlePullStart = (event: PointerEvent<HTMLButtonElement>) => {
+    if (!showHangingTrigger) {
+      return;
+    }
+    event.preventDefault();
+    pullStartRef.current = event.clientY;
+    setIsPulling(true);
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handlePullMove = (event: PointerEvent<HTMLButtonElement>) => {
+    if (!showHangingTrigger) {
+      return;
+    }
+    if (pullStartRef.current === null) {
+      return;
+    }
+    const delta = Math.max(0, event.clientY - pullStartRef.current);
+    setPullOffset(Math.min(delta, 60));
+  };
+
+  const handlePullEnd = (event: PointerEvent<HTMLButtonElement>) => {
+    if (!showHangingTrigger) {
+      return;
+    }
+    if (pullStartRef.current === null) {
+      return;
+    }
+    event.currentTarget.releasePointerCapture(event.pointerId);
+    const didTrigger = pullOffset >= pullThreshold;
+    pullStartRef.current = null;
+    setIsPulling(false);
+    setPullOffset(0);
+    if (didTrigger) {
+      goToChatbot();
+    }
+  };
 
   return (
     <div
@@ -101,6 +186,48 @@ export default function Home() {
       </aside>
 
       <div className="layout-container relative flex min-h-screen w-full flex-col lg:pl-24">
+        <div
+          className={`fixed left-1/2 top-0 z-[70] -translate-x-1/2 transition-all duration-300 ${
+            showHangingTrigger ? "pointer-events-auto opacity-100" : "pointer-events-none -translate-y-6 opacity-0"
+          }`}
+        >
+          <div className="mx-auto h-10 w-px bg-[var(--section-line)]" />
+          <button
+            aria-label="Pull down to open RajatGPT"
+            className="flex flex-col items-center rounded-b-2xl focus:outline-none"
+            onPointerCancel={handlePullEnd}
+            onPointerDown={handlePullStart}
+            onPointerMove={handlePullMove}
+            onPointerUp={handlePullEnd}
+            style={{ touchAction: "none", transform: `translateY(${pullOffset}px)` }}
+            type="button"
+          >
+            <div className="h-8 w-px bg-[var(--section-line)]" />
+            <div className="portfolio-glass-card rounded-2xl border border-[var(--card-hover-border)] px-4 py-2.5">
+              <div className="flex items-center gap-2">
+                <motion.span
+                  animate={{
+                    opacity: [1, 1, 0.25, 1, 1, 0.3, 1],
+                    scaleY: [1, 1, 0.2, 1, 1, 0.25, 1],
+                    color: ["#ec5b13", "#fde6ca", "#ec5b13", "#fde6ca", "#ec5b13"],
+                  }}
+                  className="material-symbols-outlined text-base"
+                  transition={{ duration: 2.4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                  style={{ transformOrigin: "center" }}
+                >
+                  visibility
+                </motion.span>
+                <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--text-main)]">
+                  Ask RajatGPT
+                </span>
+              </div>
+              <p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">
+                {isPulling ? "Release to jump" : "Pull down"}
+              </p>
+            </div>
+          </button>
+        </div>
+
         <motion.header
           animate={{ opacity: 1, y: 0 }}
           className="portfolio-glass sticky top-0 z-40 mx-6 mt-4 flex items-center justify-between rounded-xl border-b border-[var(--glass-border)] px-6 py-6 lg:mx-0 lg:mt-0 lg:rounded-none lg:px-12"
