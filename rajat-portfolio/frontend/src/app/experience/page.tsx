@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { logUiEvent } from "../../lib/frontendLogger";
 
@@ -15,6 +16,7 @@ type ExperienceItem = {
   badgeClass: string;
   icon: string;
   isCurrent?: boolean;
+  detailsHref?: string;
 };
 
 const navItems = [
@@ -28,20 +30,21 @@ const navItems = [
 
 const experienceData: ExperienceItem[] = [
   {
-    company: "Harmoney",
-    role: "Fullstack Engineer",
-    period: "January 2023 - Present",
+    company: "Tata Consultancy Services Ltd",
+    role: "Lead AI Engineer - Agentic AI Workflow for Infra Operations (ITIS)",
+    period: "August 2025 - Present",
     highlights: [
-      "Integrated Google Gemini into the platform and built the first AI agent, increasing loan book performance and customer conversion.",
-      "Created a reusable analytics library across product and landing pages for data-driven decisions.",
-      "Migrated the core data layer from TypeORM to Prisma, improving DX and reducing migration conflicts.",
-      "Contributed to product and UX focus groups to align engineering with user outcomes.",
-      "Organized internal hackathon initiatives and toolkits for cross-functional collaboration.",
+      "Designed and implemented an agentic AI ecosystem across heatmap, incident, patch compliance, and drive cleanup workflows.",
+      "Automated daily, weekly, and monthly audit-ready reporting pipelines using LangGraph, Python, FPDF, and Azure Blob Storage.",
+      "Built resilient orchestration with schema-driven outputs, chunking and retry logic, and spawned long-running task handling.",
+      "Implemented blob leasing and locking with idempotent execution to prevent race conditions and duplicate report generation.",
+      "Reduced manual Infra Ops effort by about 70-80% while improving stability, governance, and triage standardization.",
     ],
-    tags: ["React", "TypeScript", "Node.js", "Google Gemini", "Prisma"],
+    tags: ["LangGraph", "LangChain", "Python", "Azure Blob Storage", "Streamlit", "Plotly", "FPDF", "GitHub Actions"],
     badgeClass: "bg-red-500 text-white shadow-lg shadow-red-500/20",
-    icon: "code",
+    icon: "smart_toy",
     isCurrent: true,
+    detailsHref: "/experience/tcs-agentic-ai",
   },
   {
     company: "Jasper",
@@ -218,6 +221,24 @@ export default function ExperiencePage() {
                         </li>
                       ))}
                     </ul>
+
+                    {item.detailsHref ? (
+                      <div className="mt-7">
+                        <Link
+                          className="inline-flex items-center gap-2 rounded-xl border border-[var(--card-hover-border)] bg-[var(--primary-soft)] px-4 py-2 text-sm font-semibold text-[var(--cream-active)] transition-colors hover:bg-[var(--primary-soft-strong)]"
+                          href={item.detailsHref}
+                          onClick={() =>
+                            logUiEvent("experience_details_clicked", {
+                              company: item.company,
+                              destination: item.detailsHref,
+                            })
+                          }
+                        >
+                          View detailed impact
+                          <span className="material-symbols-outlined text-base">arrow_outward</span>
+                        </Link>
+                      </div>
+                    ) : null}
 
                     <div className="mt-8 flex flex-wrap gap-2 border-t border-white/5 pt-6">
                       {item.tags.map((tag) => (
