@@ -70,5 +70,69 @@ class ContactRepository:
                     raise RuntimeError("Failed to store contact submission.")
                 return int(row[0])
 
+    def list_submissions(
+        self,
+        *,
+        name: str | None = None,
+        email: str | None = None,
+        company: str | None = None,
+        date_from: str | None = None,
+        date_to: str | None = None,
+        limit: int = 100,
+    ) -> list[dict[str, Any]]:
+        if not self.is_configured:
+            raise RuntimeError("Database is not configured for contact submissions.")
+
+        self.ensure_schema()
+        safe_limit = max(1, min(limit, 500))
+
+        where_clauses: list[str] = []
+        params: list[Any] = []
+
+        if name:
+            where_clauses.append("name ILIKE %s")
+            params.append(f"%{name.strip()}%")
+        if email:
+            where_clauses.append("email ILIKE %s")
+            params.append(f"%{email.strip()}%")
+        if company:
+            where_clauses.append("company ILIKE %s")
+            params.append(f"%{company.strip()}%")
+        if date_from:
+            where_clauses.append("created_at::date >= %s::date")
+            params.append(date_from)
+        if date_to:
+            where_clauses.append("created_at::date <= %s::date")
+            params.append(date_to)
+
+        where_sql = f"WHERE {' AND '.join(where_clauses)}" if where_clauses else ""
+
+        with psycopg.connect(self.db_url, autocommit=True) as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    f"""
+                    SELECT id, name, email, company, message, metadata, created_at
+                    FROM {self.table_name}
+                    {where_sql}
+                    ORDER BY created_at DESC
+                    LIMIT %s;
+                    """,
+                    (*params, safe_limit),
+                )
+                rows = cur.fetchall()
+
+        return [
+            {
+                "id": int(row[0]),
+                "name": row[1],
+                "email": row[2],
+                "company": row[3] or "",
+                "message": row[4],
+                "metadata": row[5] or {},
+                "created_at": row[6],
+            }
+            for row in rows
+        ]
+
 
 contact_repository = ContactRepository(settings.supabase_db_url)

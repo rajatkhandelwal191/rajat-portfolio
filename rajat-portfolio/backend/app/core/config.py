@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     supabase_url: str = ""
     supabase_service_role_key: str = ""
     supabase_db_url: str = ""
+    contact_admin_password: str = ""
     huggingfacehub_api_token: str = ""
     embedding_provider: str = "auto"
     embedding_model_name: str = "sentence-transformers/all-MiniLM-L6-v2"
