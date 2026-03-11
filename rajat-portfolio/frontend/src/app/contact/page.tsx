@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { submitContactForm } from "../../lib/api";
 import { logUiEvent } from "../../lib/frontendLogger";
 
 type Theme = "light" | "dark";
@@ -19,6 +20,13 @@ const timelineDots = [false, false, false, false, true];
 
 export default function ContactPage() {
   const [theme, setTheme] = useState<Theme>("dark");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
+  const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const isDark = theme === "dark";
 
   const footerText = useMemo(
@@ -30,9 +38,37 @@ export default function ContactPage() {
     document.title = "Contact Page | Rajat Portfolio";
   }, []);
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitMessage(null);
+    setSubmitError(null);
     logUiEvent("contact_form_submit_clicked");
+
+    try {
+      const response = await submitContactForm({
+        name: name.trim(),
+        email: email.trim(),
+        company: company.trim() || undefined,
+        message: message.trim(),
+      });
+      setSubmitMessage(`Message sent successfully. Ref ID: ${response.submission_id}`);
+      setName("");
+      setEmail("");
+      setCompany("");
+      setMessage("");
+      logUiEvent("contact_form_submit_success", { submission_id: response.submission_id });
+    } catch (error) {
+      const errMessage = error instanceof Error ? error.message : "Unable to send message.";
+      setSubmitError(errMessage);
+      logUiEvent("contact_form_submit_failed", { error: errMessage });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -124,9 +160,11 @@ export default function ContactPage() {
                 className="block w-full rounded-lg border border-white/10 bg-[var(--input-bg)] px-4 py-3 text-[var(--text-main)] placeholder:text-[var(--text-placeholder)] focus:border-[var(--cream-active)] focus:ring-1 focus:ring-[var(--cream-active)]"
                 id="name"
                 name="name"
+                onChange={(event) => setName(event.target.value)}
                 placeholder="Jon Snow"
                 required
                 type="text"
+                value={name}
               />
             </div>
 
@@ -138,9 +176,11 @@ export default function ContactPage() {
                 className="block w-full rounded-lg border border-white/10 bg-[var(--input-bg)] px-4 py-3 text-[var(--text-main)] placeholder:text-[var(--text-placeholder)] focus:border-[var(--cream-active)] focus:ring-1 focus:ring-[var(--cream-active)]"
                 id="email"
                 name="email"
+                onChange={(event) => setEmail(event.target.value)}
                 placeholder="jon.snow@stark.com"
                 required
                 type="email"
+                value={email}
               />
             </div>
 
@@ -152,8 +192,10 @@ export default function ContactPage() {
                 className="block w-full rounded-lg border border-white/10 bg-[var(--input-bg)] px-4 py-3 text-[var(--text-main)] placeholder:text-[var(--text-placeholder)] focus:border-[var(--cream-active)] focus:ring-1 focus:ring-[var(--cream-active)]"
                 id="company"
                 name="company"
+                onChange={(event) => setCompany(event.target.value)}
                 placeholder="Night's Watch Inc."
                 type="text"
+                value={company}
               />
             </div>
 
@@ -165,18 +207,24 @@ export default function ContactPage() {
                 className="block w-full resize-none rounded-lg border border-white/10 bg-[var(--input-bg)] px-4 py-3 text-[var(--text-main)] placeholder:text-[var(--text-placeholder)] focus:border-[var(--cream-active)] focus:ring-1 focus:ring-[var(--cream-active)]"
                 id="message"
                 name="message"
+                onChange={(event) => setMessage(event.target.value)}
                 placeholder="Winter is coming..."
                 required
                 rows={4}
+                value={message}
               />
             </div>
 
+            {submitMessage ? <p className="text-sm text-emerald-300">{submitMessage}</p> : null}
+            {submitError ? <p className="text-sm text-red-300">{submitError}</p> : null}
+
             <button
-              className="group mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--cream-active)] px-6 py-3 font-semibold text-[var(--cream-text)] shadow-lg shadow-[var(--primary-glow)] transition-all hover:brightness-105 active:scale-[0.99]"
+              className="group mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--cream-active)] px-6 py-3 font-semibold text-[var(--cream-text)] shadow-lg shadow-[var(--primary-glow)] transition-all hover:brightness-105 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
+              disabled={isSubmitting}
               type="submit"
             >
               <span className="material-symbols-outlined text-xl transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
-                send
+                {isSubmitting ? "hourglass_top" : "send"}
               </span>
             </button>
           </form>

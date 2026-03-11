@@ -33,6 +33,7 @@
 | 2026-03-09 | Backend | Added Gemini embedding provider support for cloud semantic retrieval | Feature | Done | Added `EMBEDDING_PROVIDER` auto/local/gemini/none, Gemini REST embedding client, FAISS gating by provider, and keyword fallback on embedding errors |
 | 2026-03-09 | Backend | Added embedding diagnostics endpoint and checker script | Observability | Done | Added `/api/chat/embedding-status` plus `backend/scripts/check_embedding_status.py` to validate provider/model/key + live probe vector dimension |
 | 2026-03-11 | Backend Data | Updated profile knowledge base with latest TCS experience cards + detailed project breakdowns and re-ingested vectors to Postgres | Data + Ingestion | Done | Ingest result: `chunks_indexed=13`, `stored_in_postgres=true`, `postgres_error=null` |
+| 2026-03-11 | Backend + Frontend | Added contact form persistence to Postgres with API integration | Feature | Done | Added `contact_submissions` table auto-create + `POST /api/contact` + frontend submit wiring with success/error feedback |
 
 ## Bug Fixes
 | Date | Bug | Root Cause | Fix | Status |
