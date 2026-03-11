@@ -72,6 +72,31 @@ const experienceData: ExperienceItem[] = [
     detailsHref: "/experience/tcs-innovista-user-analysis",
   },
   {
+    company: "Tata Consultancy Services Ltd",
+    role: "Developer / Core Chatbot Developer - OTK Chatbot Implementation (Outokumpu)",
+    period: "December 2021 - October 2024",
+    highlights: [
+      "Developed a multilingual enterprise chatbot with GenAI and RAG-based retrieval capabilities.",
+      "Integrated OpenAI APIs, vector embeddings, and LangChain workflows for knowledge-driven responses and prompt automation.",
+      "Built Node.js chatbot backend with Python Flask ML services in a microservice architecture.",
+      "Delivered enterprise integrations across ServiceNow, Genesys Chat, Twilio, Redis, and Microsoft Adaptive Cards.",
+      "Owned Azure deployment and CI/CD execution with strong reliability outcomes including zero SLA breaches.",
+    ],
+    tags: [
+      "Yellow.ai",
+      "Node.js",
+      "Python",
+      "LangChain",
+      "OpenAI APIs",
+      "Azure DevOps",
+      "ServiceNow",
+      "Redis",
+    ],
+    badgeClass: "bg-emerald-700 text-white border border-white/10",
+    icon: "forum",
+    detailsHref: "/experience/tcs-otk-chatbot",
+  },
+  {
     company: "Freelance",
     role: "Web Developer",
     period: "2020 - 2021",
@@ -185,7 +210,7 @@ export default function ExperiencePage() {
             <div className="space-y-12">
               {experienceData.map((item, index) => (
                 <motion.article
-                  key={item.company}
+                  key={`${item.company}-${item.role}-${item.period}`}
                   animate={{ opacity: 1, y: 0 }}
                   className="group relative pl-12 md:pl-20"
                   initial={{ opacity: 0, y: 20 }}
