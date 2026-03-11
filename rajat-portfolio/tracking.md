@@ -32,6 +32,7 @@
 | 2026-03-09 | Backend | Forced initial retrieval before answer generation in LangGraph flow | Quality | Done | Seeded FAISS + Postgres tool calls before final LLM response to improve grounding |
 | 2026-03-09 | Backend | Added Gemini embedding provider support for cloud semantic retrieval | Feature | Done | Added `EMBEDDING_PROVIDER` auto/local/gemini/none, Gemini REST embedding client, FAISS gating by provider, and keyword fallback on embedding errors |
 | 2026-03-09 | Backend | Added embedding diagnostics endpoint and checker script | Observability | Done | Added `/api/chat/embedding-status` plus `backend/scripts/check_embedding_status.py` to validate provider/model/key + live probe vector dimension |
+| 2026-03-11 | Backend Data | Updated profile knowledge base with latest TCS experience cards + detailed project breakdowns and re-ingested vectors to Postgres | Data + Ingestion | Done | Ingest result: `chunks_indexed=13`, `stored_in_postgres=true`, `postgres_error=null` |
 
 ## Bug Fixes
 | Date | Bug | Root Cause | Fix | Status |

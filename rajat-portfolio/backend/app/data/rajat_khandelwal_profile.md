@@ -28,27 +28,98 @@ Core skills:
 
 ## Experience
 
-### Tata Consultancy Services (Full-time, 4 years 4 months)
+### Tata Consultancy Services Ltd
 
-#### AI Engineer (Aug 2025 - Present, Noida, Hybrid)
-- Lead AI Engineer focused on LLM orchestration with LangChain, LangGraph, and LlamaIndex
-- Built conversational agents and autonomous AI systems with Generative AI
-- Integrated vector databases and custom embeddings for semantic retrieval and reasoning
-- Worked on ML and DL pipelines for tuning, deployment, and production optimization
-- Tools and technologies: LangChain, LangGraph, Autogen, LlamaIndex, CrewAI, Python, scikit-learn, TensorFlow, PyTorch, BERT, RoBerta, SpaCy, Streamlit, Gradio
-- Achievements and certifications include Agentic AI E1, Microservices E2, and advanced LangGraph tracks
+#### Lead AI Engineer - Agentic AI Workflow for Infra Operations (ITIS) (August 2025 - Present)
+- Designed and implemented an agentic AI ecosystem across heatmap, incident, patch compliance, and drive cleanup workflows.
+- Automated daily, weekly, and monthly audit-ready reporting pipelines using LangGraph, Python, FPDF, and Azure Blob Storage.
+- Built resilient orchestration with schema-driven outputs, chunking and retry logic, and spawned long-running task handling.
+- Implemented blob leasing and locking with idempotent execution to prevent race conditions and duplicate report generation.
+- Reduced manual Infra Ops effort by about 70 to 80 percent while improving stability, governance, and triage standardization.
+- Tech tags: LangGraph, LangChain, Python, Azure Blob Storage, Streamlit, Plotly, FPDF, GitHub Actions.
 
-#### System Engineer (Dec 2022 - Aug 2025, Noida, Hybrid)
-- Designed end-to-end Azure pipelines from development to production
-- Used Azure Web Apps, Blob Storage, Functions, AKS, and Power BI analytics
-- Built internal AI tooling for categorization, summarization, and automation (Python + Node.js)
-- Developed and deployed ML models for sentiment analysis, summarization, and entity extraction
-- Managed backend architecture, DevOps, Azure infra, cost optimization, and secure deployments
-- Led client discussions for integration, threat modeling, and solution design
-- Built AI bots including broadcast and notification bots integrated with Microsoft Teams
+Key detailed implementation:
+- Delivered multiple production-grade AI agents:
+  - Heatmap Analysis AI Agent with LangGraph reusable nodes, deterministic JSON prompts, and recurring issue trend detection.
+  - Patching Analysis AI Agent with iPatch validation, compliance KPI computation, patch-incident correlation, and automated PDF reports.
+  - Incident Analysis AI Agent with governed historical-resolution retrieval for faster RCA.
+  - Drive Cleanup Agent for filesystem incident classification and standardized triage.
+- Engineered advanced orchestration patterns:
+  - Branching and fallback LangGraph flows.
+  - Token/rate limit handling with chunking, retries, and timeout control.
+  - Spawn-based execution for workloads beyond 240 seconds.
+  - Real-time status tracking to improve user visibility during long-running report jobs.
+- Built enterprise-grade Azure Blob locking/leasing/caching:
+  - Single-writer guarantees and race-condition protection.
+  - Cached SAS URL reuse for repeated runs to improve response time and reduce cloud cost.
+- Resolved high-impact production blockers:
+  - Long-running request failures.
+  - Token overflow and model rate limits.
+  - Duplicate PDF generation under concurrency.
+  - RAG/Cosmos/indexing configuration failures.
+  - Merge-conflict regressions via DRY refactor and CI/CD improvements.
 
-#### System Engineer Trainee (Dec 2021 - Dec 2022, Gurugram)
-- Worked on backend web development, React.js, and production coding foundations
+#### Lead Developer - User Analysis Project (TCS Innovista) (November 2024 - August 2025)
+- Built an end-to-end AI automation pipeline for ITSM user analysis from file upload to dashboard insights.
+- Implemented Azure Blob event-driven workflows with Azure Functions for scalable asynchronous processing.
+- Delivered NLP-powered ticket classification, sentiment analysis, and summarization using HuggingFace models.
+- Processed high-volume ticket datasets (around 100K records) to cut manual analysis timelines from weeks to automated runs.
+- Enabled automation opportunity discovery and recurring incident pattern detection with Cosmos DB and Power BI analytics.
+- Tech tags: Python, Azure Blob Storage, Azure Functions, Cosmos DB, HuggingFace, Power BI, AKS, Docker.
+
+Key detailed implementation:
+- Data ingestion system:
+  - Built upload portal for CSV/XLSX datasets up to 100 MB and around one lakh ticket records.
+  - Validated schema columns and persisted uploads to Azure Blob Storage.
+- Blob-based processing pipeline:
+  - Azure Function triggers for decoupled, scalable asynchronous batch workflows.
+- Preprocessing pipeline:
+  - Text cleaning, normalization, column mapping, category dictionary mapping, and structured dataset creation.
+- NLP/ML pipeline:
+  - HuggingFace Transformers with BART, T5, and Pegasus for summarization and text transformation.
+  - Libraries and runtime: transformers, PyTorch/TensorFlow, NumPy, Pandas, NLTK, spaCy.
+- Analytics features:
+  - Ticket categorization, sentiment analysis (positive/neutral/negative), and ticket summarization.
+  - Repeated issue and automation-candidate detection from incident patterns.
+- Storage and visualization:
+  - Processed outputs stored in Cosmos DB.
+  - Power BI dashboards for distribution trends, sentiments, recurring categories, and automation opportunities.
+- Infra and scaling:
+  - Azure Blob Storage, Azure Functions, AKS, ACI, Azure App Service, Azure Service Bus.
+  - Containerized processing with Docker on AKS/ACI.
+  - GPU VM stack with NVIDIA, CUDA, cuDNN for accelerated transformer inference.
+- Simplified pipeline:
+  - Ticket upload -> Blob -> Function trigger -> preprocessing -> NLP model inference -> classification/sentiment -> Cosmos DB -> Power BI.
+
+#### Developer / Core Chatbot Developer - OTK Chatbot Implementation (Outokumpu) (December 2021 - October 2024)
+- Developed a multilingual enterprise chatbot with GenAI and RAG-based retrieval capabilities.
+- Integrated OpenAI APIs, vector embeddings, and LangChain workflows for knowledge-driven responses and prompt automation.
+- Built Node.js chatbot backend with Python Flask ML services in a microservice architecture.
+- Delivered enterprise integrations across ServiceNow, Genesys Chat, Twilio, Redis, and Microsoft Adaptive Cards.
+- Owned Azure deployment and CI/CD execution with strong reliability outcomes, including zero SLA breaches.
+- Tech tags: Yellow.ai, Node.js, Python, LangChain, OpenAI APIs, Azure DevOps, ServiceNow, Redis.
+
+Key detailed implementation:
+- Multilingual chatbot and GenAI:
+  - Built ML model workflows in Python/Jupyter and integrated into chatbot architecture.
+  - Developed RAG retrieval with vector embeddings and LangChain pipelines.
+- Yellow.ai platform development:
+  - Implemented core conversation flows and enterprise automation logic.
+- Company Communicator Notification Bot (POC):
+  - Built user plus agent notification bot and integrated with ServiceNow/chatbot ecosystem.
+  - Delivered POC within one month.
+- Backend and microservices:
+  - Node.js dialog engine and response orchestration.
+  - Flask API-based Python ML services connected to chatbot backend.
+  - Microservice components for chatbot-service and ML-service interaction.
+- Cloud/DevOps and architecture:
+  - Azure setup, deployment orchestration, environment configuration, and production rollout.
+  - Azure DevOps CI/CD with automated build, deploy, and testing stages.
+  - Architecture design support for single-tenant routing and secure integration traffic.
+- Testing and defect lifecycle:
+  - Unit, integration, end-to-end, and performance testing.
+  - Defect triage and remediation across dialog flows, API bugs, expired keys, Redis issues, and third-party dependencies.
+  - Risk-prioritized fixes with production validation and SLA adherence.
 
 ### Internship Trainee, Pepcoding (May 2021 - Dec 2021, Delhi, On-site)
 - Handled DSA course structure in Java
