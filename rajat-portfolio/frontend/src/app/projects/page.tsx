@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { KeyboardEvent, MouseEvent, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { logUiEvent } from "../../lib/frontendLogger";
 
 type Theme = "light" | "dark";
-type LogoType = "scraatch" | "anass" | "harmoney";
+type LogoType = "enterprise" | "anass" | "harmoney";
 
 type FeaturedProject = {
   title: string;
@@ -16,7 +17,11 @@ type FeaturedProject = {
   accent: string;
   logo: LogoType;
   primaryCta: string;
+  primaryHref?: string;
   secondaryCta?: string;
+  secondaryHref?: string;
+  detailHref?: string;
+  architectureSummary?: string[];
 };
 
 const navItems = [
@@ -30,16 +35,25 @@ const navItems = [
 
 const featuredProjects: FeaturedProject[] = [
   {
-    title: "Scraatch",
-    category: "Web Application",
+    title: "Capstone Project - Enterprise Assistant",
+    category: "Agentic AI Platform",
     description:
-      "Create and send custom scratch cards to your family and friends. A unique way to reveal surprises digitally with a tactile feel.",
-    tags: ["React", "TypeScript", "Canvas API", "Tailwind"],
+      "Enterprise assistant that routes user intent across RAG, tool automation, and RFP drafting in one LangGraph-based workflow.",
+    tags: ["LangGraph", "Streamlit", "RAG", "FAISS/Qdrant", "SQLite", "LangChain"],
     gradient: "linear-gradient(135deg, #f59e0b 0%, #f97316 45%, #b45309 100%)",
     accent: "#f59e0b",
-    logo: "scraatch",
+    logo: "enterprise",
     primaryCta: "View Live",
+    primaryHref: "https://capstoneprojectagenticairag-hgpicyqq4joiksq2bhtc3q.streamlit.app/",
     secondaryCta: "Source Code",
+    secondaryHref: "https://github.com/rajatkhandelwal191/Capstone_Project_Agentic_Ai_RAG",
+    detailHref: "/projects/capstone-enterprise-assistant",
+    architectureSummary: [
+      "Supervisor node routes requests to RAG, Tool, RFP, or Upload flows.",
+      "Dual retrieval stack supports FAISS (local) and Qdrant (cloud).",
+      "Tool layer reads open incidents and service requests from SQLite.",
+      "Unified logging with request_id traceability across UI and graph nodes.",
+    ],
   },
   {
     title: "AnAss",
@@ -51,7 +65,9 @@ const featuredProjects: FeaturedProject[] = [
     accent: "#a78bfa",
     logo: "anass",
     primaryCta: "View Live",
+    primaryHref: "https://github.com/rajatkhandelwal191",
     secondaryCta: "Source Code",
+    secondaryHref: "https://github.com/rajatkhandelwal191",
   },
   {
     title: "Harmoney",
@@ -63,15 +79,19 @@ const featuredProjects: FeaturedProject[] = [
     accent: "#fb7185",
     logo: "harmoney",
     primaryCta: "Case Study",
+    primaryHref: "https://github.com/rajatkhandelwal191",
   },
 ];
 
 function ProjectLogo({ logo }: { logo: LogoType }) {
-  if (logo === "scraatch") {
+  if (logo === "enterprise") {
     return (
       <div className="feature-logo-shell bg-black/20">
         <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-slate-900">
-          <span className="font-display text-lg font-bold tracking-wide text-yellow-300 md:text-xl">SCRAAATCH</span>
+          <div className="flex flex-col items-center">
+            <span className="material-symbols-outlined text-4xl text-yellow-300">hub</span>
+            <span className="font-display text-sm font-bold tracking-[0.2em] text-yellow-200">ENTERPRISE</span>
+          </div>
         </div>
       </div>
     );
@@ -112,6 +132,7 @@ function ProjectLogo({ logo }: { logo: LogoType }) {
 export default function ProjectsPage() {
   const [theme, setTheme] = useState<Theme>("dark");
   const isDark = theme === "dark";
+  const router = useRouter();
 
   const footerText = useMemo(
     () => `(c) ${new Date().getFullYear()} Rajat Khandelwal. Project page.`,
@@ -121,6 +142,42 @@ export default function ProjectsPage() {
   useEffect(() => {
     document.title = "Project Page | Rajat Portfolio";
   }, []);
+
+  const isExternalLink = (href: string) => href.startsWith("http://") || href.startsWith("https://");
+
+  const handleCardClick = (event: MouseEvent<HTMLElement>, project: FeaturedProject) => {
+    if (!project.detailHref) {
+      return;
+    }
+    const target = event.target as HTMLElement;
+    if (target.closest("a")) {
+      return;
+    }
+    logUiEvent("project_detail_opened", {
+      page: "projects",
+      source: "card",
+      project: project.title,
+      href: project.detailHref,
+    });
+    router.push(project.detailHref);
+  };
+
+  const handleCardKeyDown = (event: KeyboardEvent<HTMLElement>, project: FeaturedProject) => {
+    if (!project.detailHref) {
+      return;
+    }
+    if (event.key !== "Enter" && event.key !== " ") {
+      return;
+    }
+    event.preventDefault();
+    logUiEvent("project_detail_opened", {
+      page: "projects",
+      source: "keyboard",
+      project: project.title,
+      href: project.detailHref,
+    });
+    router.push(project.detailHref);
+  };
 
   return (
     <div
@@ -215,8 +272,16 @@ export default function ProjectsPage() {
                 <motion.article
                   key={project.title}
                   animate={{ opacity: 1, y: 0 }}
-                  className="group feature-card relative overflow-hidden rounded-3xl"
+                  className={`group feature-card relative overflow-hidden rounded-3xl ${
+                    project.detailHref
+                      ? "cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black/20"
+                      : ""
+                  }`}
                   initial={{ opacity: 0, y: 24 }}
+                  onClick={(event) => handleCardClick(event, project)}
+                  onKeyDown={(event) => handleCardKeyDown(event, project)}
+                  role={project.detailHref ? "button" : undefined}
+                  tabIndex={project.detailHref ? 0 : undefined}
                   transition={{ duration: 0.45, delay: 0.12 * index }}
                   whileHover={{ y: -8 }}
                 >
@@ -243,6 +308,22 @@ export default function ProjectsPage() {
                         {project.description}
                       </p>
 
+                      {project.architectureSummary ? (
+                        <div className="mb-6 rounded-2xl border border-white/15 bg-black/20 p-4 backdrop-blur-sm">
+                          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
+                            Architecture Snapshot
+                          </p>
+                          <ul className="mt-3 space-y-2 text-sm text-white/90">
+                            {project.architectureSummary.map((item) => (
+                              <li className="flex items-start gap-2" key={item}>
+                                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-white/80" />
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ) : null}
+
                       <div className="mb-8 flex flex-wrap justify-center gap-2 md:justify-start">
                         {project.tags.map((tag) => (
                           <span
@@ -255,24 +336,64 @@ export default function ProjectsPage() {
                       </div>
 
                       <div className="flex flex-wrap justify-center gap-4 md:justify-start">
-                        <a
-                          className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 font-bold text-slate-900 shadow-lg transition-colors duration-300 hover:bg-slate-100"
-                          href="#"
-                          style={{ color: project.accent }}
-                        >
-                          {project.primaryCta}
-                          <span className="material-symbols-outlined text-sm">
-                            {project.primaryCta === "Case Study" ? "arrow_forward" : "open_in_new"}
-                          </span>
-                        </a>
+                        {project.primaryHref ? (
+                          <a
+                            className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 font-bold text-slate-900 shadow-lg transition-colors duration-300 hover:bg-slate-100"
+                            href={project.primaryHref}
+                            onClick={() =>
+                              logUiEvent("project_link_clicked", {
+                                page: "projects",
+                                project: project.title,
+                                href: project.primaryHref,
+                                cta: project.primaryCta,
+                              })
+                            }
+                            rel={isExternalLink(project.primaryHref) ? "noreferrer noopener" : undefined}
+                            style={{ color: project.accent }}
+                            target={isExternalLink(project.primaryHref) ? "_blank" : undefined}
+                          >
+                            {project.primaryCta}
+                            <span className="material-symbols-outlined text-sm">
+                              {project.primaryCta === "Case Study" ? "arrow_forward" : "open_in_new"}
+                            </span>
+                          </a>
+                        ) : null}
 
-                        {project.secondaryCta ? (
+                        {project.secondaryCta && project.secondaryHref ? (
                           <a
                             className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-black/20 px-6 py-3 font-medium text-white backdrop-blur-sm transition-colors duration-300 hover:bg-black/30"
-                            href="#"
+                            href={project.secondaryHref}
+                            onClick={() =>
+                              logUiEvent("project_link_clicked", {
+                                page: "projects",
+                                project: project.title,
+                                href: project.secondaryHref,
+                                cta: project.secondaryCta,
+                              })
+                            }
+                            rel={isExternalLink(project.secondaryHref) ? "noreferrer noopener" : undefined}
+                            target={isExternalLink(project.secondaryHref) ? "_blank" : undefined}
                           >
                             {project.secondaryCta}
                             <span className="material-symbols-outlined text-sm">code</span>
+                          </a>
+                        ) : null}
+
+                        {project.detailHref ? (
+                          <a
+                            className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3 font-medium text-white backdrop-blur-sm transition-colors duration-300 hover:bg-white/20"
+                            href={project.detailHref}
+                            onClick={() =>
+                              logUiEvent("project_detail_opened", {
+                                page: "projects",
+                                source: "button",
+                                project: project.title,
+                                href: project.detailHref,
+                              })
+                            }
+                          >
+                            Project Details
+                            <span className="material-symbols-outlined text-sm">arrow_forward</span>
                           </a>
                         ) : null}
                       </div>

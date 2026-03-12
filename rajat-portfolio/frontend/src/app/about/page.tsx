@@ -246,9 +246,26 @@ export default function AboutPage() {
             <div className="portfolio-glass-card rounded-3xl p-6">
               <h3 className="text-2xl font-semibold text-[var(--text-main)]">Contact Info</h3>
               <div className="mt-4 space-y-2 text-[var(--text-muted)]">
-                <p>Email: rajat.khandelwal@example.com</p>
-                <p>Phone: +91-XXXXXXXXXX</p>
+                <p>Email: rajatkhandelwal191@gmail.com</p>
                 <p>Location: Delhi, India</p>
+                <a
+                  className="block transition-colors hover:text-[var(--primary)]"
+                  href="https://github.com/rajatkhandelwal191"
+                  onClick={() => logUiEvent("profile_link_clicked", { page: "about", platform: "github" })}
+                  rel="noreferrer noopener"
+                  target="_blank"
+                >
+                  GitHub: github.com/rajatkhandelwal191
+                </a>
+                <a
+                  className="block transition-colors hover:text-[var(--primary)]"
+                  href="https://www.linkedin.com/in/rajatkhandelwal27/"
+                  onClick={() => logUiEvent("profile_link_clicked", { page: "about", platform: "linkedin" })}
+                  rel="noreferrer noopener"
+                  target="_blank"
+                >
+                  LinkedIn: linkedin.com/in/rajatkhandelwal27
+                </a>
               </div>
             </div>
           </section>

@@ -232,8 +232,10 @@ export default function ContactPage() {
           <div className="mt-12 flex justify-center gap-6">
             <a
               className="text-[var(--text-main)] transition-colors duration-300 hover:text-[var(--cream-active)]"
-              href="#"
+              href="https://www.linkedin.com/in/rajatkhandelwal27/"
               onClick={() => logUiEvent("social_link_clicked", { page: "contact", platform: "linkedin" })}
+              rel="noreferrer noopener"
+              target="_blank"
             >
               <svg aria-hidden="true" className="h-8 w-8 fill-current" viewBox="0 0 24 24">
                 <path
@@ -246,8 +248,10 @@ export default function ContactPage() {
             </a>
             <a
               className="text-[var(--text-main)] transition-colors duration-300 hover:text-[var(--cream-active)]"
-              href="#"
+              href="https://github.com/rajatkhandelwal191"
               onClick={() => logUiEvent("social_link_clicked", { page: "contact", platform: "github" })}
+              rel="noreferrer noopener"
+              target="_blank"
             >
               <svg aria-hidden="true" className="h-8 w-8 fill-current" viewBox="0 0 24 24">
                 <path

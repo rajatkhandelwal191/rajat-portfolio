@@ -54,9 +54,9 @@ const cards = [
 ];
 
 const footerLinks = [
-  { href: "#", icon: "code", label: "GitHub" },
-  { href: "#", icon: "work", label: "LinkedIn" },
-  { href: "#", icon: "mail", label: "Email" },
+  { href: "https://github.com/rajatkhandelwal191", icon: "code", label: "GitHub" },
+  { href: "https://www.linkedin.com/in/rajatkhandelwal27/", icon: "work", label: "LinkedIn" },
+  { href: "mailto:rajatkhandelwal191@gmail.com", icon: "mail", label: "Email" },
 ];
 
 export default function Home() {
@@ -114,6 +114,8 @@ export default function Home() {
     }
     window.location.href = "#chatbot";
   };
+
+  const isExternalLink = (href: string) => href.startsWith("http://") || href.startsWith("https://");
 
   const handlePullStart = (event: PointerEvent<HTMLButtonElement>) => {
     if (!showHangingTrigger) {
@@ -321,6 +323,8 @@ export default function Home() {
                 className="group relative text-[var(--text-muted)] transition-all hover:scale-110 hover:text-[var(--primary)]"
                 href={link.href}
                 onClick={() => logUiEvent("footer_link_clicked", { page: "home", label: link.label, href: link.href })}
+                rel={isExternalLink(link.href) ? "noreferrer noopener" : undefined}
+                target={isExternalLink(link.href) ? "_blank" : undefined}
                 title={link.label}
               >
                 <span className="material-symbols-outlined text-2xl">{link.icon}</span>
