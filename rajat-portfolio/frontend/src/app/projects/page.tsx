@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { logUiEvent } from "../../lib/frontendLogger";
 
 type Theme = "light" | "dark";
-type LogoType = "enterprise" | "anass" | "harmoney";
+type LogoType = "enterprise" | "anass";
 
 type FeaturedProject = {
   title: string;
@@ -34,6 +34,25 @@ const navItems = [
 ];
 
 const featuredProjects: FeaturedProject[] = [
+  {
+    title: "RAG Playground",
+    category: "Interactive RAG Pipeline",
+    description:
+      "Interactive web application demonstrating the complete Retrieval-Augmented Generation pipeline with visual stage-by-stage exploration. Experiment with document processing, embeddings, vector search, and AI generation.",
+    tags: ["Next.js 16", "FastAPI", "Qdrant", "OpenAI", "Gemini", "React Flow", "Zustand", "Python 3.11"],
+    gradient: "linear-gradient(135deg, #06b6d4 0%, #0891b2 45%, #0e7490 100%)",
+    accent: "#06b6d4",
+    logo: "enterprise",
+    primaryCta: "View Live",
+    primaryHref: "https://ragtutorial.netlify.app/",
+    detailHref: "/projects/rag-playground",
+    architectureSummary: [
+      "9-stage RAG pipeline: Ingestion → Preprocessing → Chunking → Embedding → Indexing → Retrieval → Reranking → Generation → Evaluation.",
+      "Multi-provider support: Google Gemini, OpenAI embeddings (768/1536/3072-dim) and GPT/Gemini/Groq LLMs.",
+      "Dual storage: Supabase S3 cloud with local fallback, Qdrant vector DB with HNSW indexing.",
+      "Real-time visual pipeline with React Flow, comprehensive logging, and evaluation metrics.",
+    ],
+  },
   {
     title: "Capstone Project - Enterprise Assistant",
     category: "Agentic AI Platform",
@@ -74,18 +93,6 @@ const featuredProjects: FeaturedProject[] = [
       "Block-level CMS for content management and community updates.",
     ],
   },
-  {
-    title: "Harmoney",
-    category: "Fintech Platform",
-    description:
-      "Integrated Google Gemini to build an AI agent for loan processing, increasing operational efficiency and user satisfaction.",
-    tags: ["Next.js", "Google Gemini", "Prisma"],
-    gradient: "linear-gradient(135deg, #f43f5e 0%, #db2777 42%, #dc2626 100%)",
-    accent: "#fb7185",
-    logo: "harmoney",
-    primaryCta: "Case Study",
-    primaryHref: "https://github.com/rajatkhandelwal191",
-  },
 ];
 
 function ProjectLogo({ logo }: { logo: LogoType }) {
@@ -102,33 +109,23 @@ function ProjectLogo({ logo }: { logo: LogoType }) {
     );
   }
 
-  if (logo === "anass") {
-    return (
-      <div className="feature-logo-shell bg-white/10">
-        <div className="flex h-full w-full items-center justify-center rounded-xl">
-          <svg
-            className="h-20 w-20 text-white drop-shadow-lg md:h-24 md:w-24"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1.5"
-            />
-          </svg>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="feature-logo-shell bg-white/90">
+    <div className="feature-logo-shell bg-white/10">
       <div className="flex h-full w-full items-center justify-center rounded-xl">
-        <span className="font-display text-2xl font-bold text-rose-500">HM</span>
+        <svg
+          className="h-20 w-20 text-white drop-shadow-lg md:h-24 md:w-24"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
+          />
+        </svg>
       </div>
     </div>
   );
