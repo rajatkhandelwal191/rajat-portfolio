@@ -181,7 +181,7 @@ export default function MobiKwikScamTrackerPage() {
               <div className="mt-7 flex flex-wrap gap-3">
                 <a
                   className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 font-semibold text-[#7c3aed] transition-colors hover:bg-slate-100"
-                  href="https://mobikwik-lendbox-scam.vercel.app/"
+                  href="https://mobikwik-lendbox-xtra-issue.vercel.app/"
                   onClick={() => logUiEvent("project_link_clicked", { page: "project_detail_mobikwik", cta: "view_live" })}
                   rel="noreferrer noopener"
                   target="_blank"
@@ -293,7 +293,7 @@ export default function MobiKwikScamTrackerPage() {
             <div className="flex flex-wrap gap-3">
               <a
                 className="rounded-xl border border-[var(--card-hover-border)] bg-[var(--icon-chip-bg)] px-4 py-2 text-sm text-[var(--text-main)] transition-colors hover:text-[var(--primary)]"
-                href="https://mobikwik-lendbox-scam.vercel.app/"
+                href="https://mobikwik-lendbox-xtra-issue.vercel.app/"
                 onClick={() => logUiEvent("project_link_clicked", { page: "project_detail_mobikwik", cta: "live_app" })}
                 rel="noreferrer noopener"
                 target="_blank"

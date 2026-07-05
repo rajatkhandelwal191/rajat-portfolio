@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { logUiEvent } from "../../lib/frontendLogger";
 
 type Theme = "light" | "dark";
-type LogoType = "enterprise" | "anass";
+type LogoType = "enterprise" | "anass" | "parser";
 
 type FeaturedProject = {
   title: string;
@@ -34,6 +34,25 @@ const navItems = [
 ];
 
 const featuredProjects: FeaturedProject[] = [
+  {
+    title: "Exam Parser Pipeline",
+    category: "Production-Grade PDF Parsing",
+    description:
+      "Production-grade ingestion pipeline that parses competitive exam PDFs into structured, validated JSON data. Employs a robust multi-stage flow with automated visual/text segmenting, self-correcting Pydantic validation, and bounding-box diagram extraction.",
+    tags: ["Python 3.11", "PyMuPDF", "Pydantic v2", "Gemini", "DeepSeek", "Tesseract OCR", "uv"],
+    gradient: "linear-gradient(135deg, #10b981 0%, #059669 45%, #064e3b 100%)",
+    accent: "#10b981",
+    logo: "parser",
+    primaryCta: "Source Code",
+    primaryHref: "https://github.com/rajatkhandelwal191/pdf_extractor/blob/main/exam-parser/architecture.md",
+    detailHref: "/projects/exam-parser-pipeline",
+    architectureSummary: [
+      "9-stage sequential pipeline architecture isolates AI logic to a single parser stage.",
+      "Self-correction loop catches Pydantic validation errors and requests LLM retries with traceback.",
+      "Union merge coordinate cropping extracts visual math, chemistry, and diagram sub-regions.",
+      "Factory provider layer decouples system code from LLM vendors (Gemini, Qwen, DeepSeek, local).",
+    ],
+  },
   {
     title: "RAG Playground",
     category: "Interactive RAG Pipeline",
@@ -84,7 +103,7 @@ const featuredProjects: FeaturedProject[] = [
     accent: "#a78bfa",
     logo: "anass",
     primaryCta: "View Live",
-    primaryHref: "https://mobikwik-lendbox-scam.vercel.app/",
+    primaryHref: "https://mobikwik-lendbox-xtra-issue.vercel.app/",
     detailHref: "/projects/mobikwik-scam-tracker",
     architectureSummary: [
       "Next.js 14 frontend with Supabase PostgreSQL backend and Row Level Security.",
@@ -103,6 +122,19 @@ function ProjectLogo({ logo }: { logo: LogoType }) {
           <div className="flex flex-col items-center">
             <span className="material-symbols-outlined text-4xl text-yellow-300">hub</span>
             <span className="font-display text-sm font-bold tracking-[0.2em] text-yellow-200">ENTERPRISE</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (logo === "parser") {
+    return (
+      <div className="feature-logo-shell bg-black/20">
+        <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-slate-900">
+          <div className="flex flex-col items-center">
+            <span className="material-symbols-outlined text-4xl text-emerald-400">description</span>
+            <span className="font-display text-xs font-bold tracking-[0.2em] text-emerald-200">EXAM PARSER</span>
           </div>
         </div>
       </div>

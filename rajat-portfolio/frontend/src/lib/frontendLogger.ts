@@ -30,7 +30,7 @@ function sendToBackend(level: LogLevel, event: string, context: LogContext): voi
     body: JSON.stringify({ level, event, context }),
     keepalive: true,
   }).catch((error) => {
-    console.error("[frontend] failed to send log to backend", { event, error });
+    console.warn("[frontend] failed to send log to backend", { event, error });
   });
 }
 
@@ -45,7 +45,7 @@ function sendToFrontendServer(level: LogLevel, event: string, context: LogContex
     body: JSON.stringify({ level, event, context }),
     keepalive: true,
   }).catch((error) => {
-    console.error("[frontend] failed to send log to Next server", { event, error });
+    console.warn("[frontend] failed to send log to Next server", { event, error });
   });
 }
 
