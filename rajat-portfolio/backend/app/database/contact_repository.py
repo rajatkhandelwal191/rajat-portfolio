@@ -15,11 +15,14 @@ class ContactRepository:
     def is_configured(self) -> bool:
         return bool(self.db_url)
 
+    def _connect(self):
+        return psycopg.connect(self.db_url, autocommit=True, prepare_threshold=None)
+
     def ensure_schema(self) -> None:
         if not self.is_configured:
             return
 
-        with psycopg.connect(self.db_url, autocommit=True) as conn:
+        with self._connect() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     f"""
@@ -55,7 +58,7 @@ class ContactRepository:
 
         self.ensure_schema()
 
-        with psycopg.connect(self.db_url, autocommit=True) as conn:
+        with self._connect() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     f"""
@@ -107,7 +110,7 @@ class ContactRepository:
 
         where_sql = f"WHERE {' AND '.join(where_clauses)}" if where_clauses else ""
 
-        with psycopg.connect(self.db_url, autocommit=True) as conn:
+        with self._connect() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     f"""

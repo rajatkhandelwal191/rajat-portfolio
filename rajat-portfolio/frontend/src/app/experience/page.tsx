@@ -314,7 +314,10 @@ export default function ExperiencePage() {
           <div className="mt-20 text-center">
             <a
               className="inline-flex items-center gap-2 text-sm font-medium text-[var(--text-muted)] transition-colors hover:text-[var(--cream-active)]"
-              href="#"
+              href="/Rajat_Khandelwal_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              download="Rajat_Khandelwal_Resume.pdf"
             >
               <span className="material-symbols-outlined text-lg">download</span>
               Download Resume

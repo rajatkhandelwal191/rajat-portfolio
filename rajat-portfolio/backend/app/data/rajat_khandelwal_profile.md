@@ -1,24 +1,27 @@
 # Rajat Khandelwal Profile
 
 Rajat Khandelwal (He/Him)  
-AI Engineer | MERN Stack Developer | Azure Cloud & DevOps | Generative AI & LLM Workflows | Python & Machine Learning  
-Location: Delhi, India
+AI Engineer — GenAI & LLM Specialist — Azure Cloud & DevOps  
+Location: Delhi, India  
+Email: rajatkhandelwal191@gmail.com | Phone: +91-9461115167  
+LinkedIn: https://linkedin.com/in/rajatkhandelwal27 | GitHub: https://github.com/rajatkhandelwal191  
+Resume / CV: [Download Rajat's Resume](/Rajat_Khandelwal_Resume.pdf)
 
 ## Summary
 
-I am a Lead AI Engineer passionate about building scalable, intelligent systems that bridge research and production. My expertise lies in architecting and optimizing Large Language Model (LLM) workflows using frameworks such as LangChain, LangGraph, LlamaIndex, and Autogen. I build conversational agents and autonomous AI systems powered by Generative AI.
+Lead AI Engineer with 4.29+ years of experience architecting and deploying enterprise-grade AI systems. Specialized in Agentic AI workflows, RAG pipelines, LLM orchestration using LangChain/LangGraph, and Azure cloud infrastructure. Proven track record of reducing manual operations effort by 70-80% through intelligent automation and delivering zero-SLA-breach production systems for Fortune 500 clients.
 
 I bring strong experience in end-to-end delivery, from data preprocessing and model fine-tuning to API deployment, Azure cloud pipelines, and production monitoring. I have designed and deployed enterprise-grade systems leveraging Azure Kubernetes Service, Azure Functions, Web Apps, and Power BI analytics.
 
 Alongside AI, I have a solid foundation in full-stack development (MERN), DevOps, and cloud-native architecture. My background also includes vector database integration, semantic retrieval, and context-aware reasoning at scale. I thrive in client-facing roles and cross-functional teams.
 
-Core skills:
-- Generative AI, Conversational AI, Agentic AI
-- LLM workflows: LangChain, LangGraph, LlamaIndex, Autogen, CrewAI
-- Cloud and DevOps: Azure (AKS, Functions, Web Apps, Blob Storage), Docker, Kubernetes
-- Full-stack: MERN, React, Node.js, Flask, Python
-- ML and NLP: Sentiment analysis, summarization (BART), entity extraction, semantic search
-- Vector databases and custom embeddings
+Core skills & competencies:
+- Generative AI, Conversational AI, Agentic AI Systems
+- LLM workflows & Orchestration: LangChain, LangGraph, LlamaIndex, Autogen, CrewAI
+- Cloud and DevOps: Azure (AKS, Functions, Web Apps, Blob Storage, Cosmos DB), Docker, Kubernetes, CI/CD
+- Full-stack & APIs: FastAPI, Next.js, React, Node.js, Flask, Python
+- ML, NLP & RAG: RAG & Vector Search, BART, T5, Pegasus, HuggingFace Transformers, semantic search
+- Vector databases & embeddings: Qdrant, FAISS, pgvector, Supabase
 
 ## Current Preferences
 
@@ -129,23 +132,16 @@ Key detailed implementation:
 - Assisted in curriculum development and content creation for DSA and full-stack web development courses.
 - Tech tags: Java, DSA, MERN Stack, LeetCode, Teaching, Curriculum Design.
 
-### Web Intern - Design and Simulation, Skill-Lync (May 2020 - March 2021, Remote)
-- Applied multibody dynamics, computational fluid dynamics (CFD), and finite element analysis (FEA) concepts using engineering software.
-- Implemented data parsing, analysis, and visualization pipelines in Python and MATLAB for simulation results.
-- Integrated simulation results into software workflows with emphasis on automation and data processing.
-- Developed scripts for extracting, transforming, and visualizing engineering simulation data.
-- Gained hands-on experience with engineering simulation tools and computational analysis methodologies.
-- Tech tags: Python, MATLAB, CFD, FEA, Data Analysis, Simulation, Visualization.
-
 ### Intern, Center for Railway Information Systems, Indian Railways (May 2019 - Aug 2019)
-- Internship on software and information-system-oriented tasks
+- Software and information systems intern working on backend operations, database queries, and system data pipelines.
+- Tech tags: Python, SQL, Backend Systems, Data Processing.
 
 ## Education
 
-### Government Engineering College Bikaner
-- Bachelor of Technology (2017 - 2021)
+### Government Engineering College Bikaner, Rajasthan, India
+- Bachelor of Technology (B.Tech), Graduated: 2021
 - Grade: 67 percent aggregate
-- Activities: ethical hacking, full-stack development, Java, DSA, automation projects, Arduino, Raspberry Pi, hackathons, volunteering
+- Core Areas: Data Structures & Algorithms, Software Architecture, Database Systems, Full-Stack Web Development, Machine Learning, Automation, Ethical Hacking
 
 ### Geetanjali Senior Secondary School
 - High School Diploma (Science), Jul 2015 - Jun 2016
@@ -249,12 +245,12 @@ Key Features:
 
 Tech tags: Next.js 14, TypeScript, Supabase, PostgreSQL, Cloudflare R2, Google OAuth, Row Level Security, Vercel.
 
-### Solar-powered pesticide spraying system with autonomous mower (Jun 2021 - Jul 2021)
-- Built with Arduino and embedded systems
-- Focused on autonomous spraying, mowing, navigation, and software-hardware co-design
+## Technical Skills
 
-### Skill-Lync internship project set (May 2020 - Oct 2020)
-- Parsed and visualized NASA thermodynamic datasets in Python
-- Simulated computational engine models
-- Implemented robotic arm control challenge in MATLAB and Simulink
-- Worked on motion control algorithm design and CAD-linked multi-body dynamics simulation
+- AI/ML & LLMs: LangChain, LangGraph, LlamaIndex, HuggingFace Transformers, OpenAI, RAG, Vector Databases (Qdrant, FAISS, pgvector), Agentic AI
+- Languages: Python, JavaScript/TypeScript, Node.js, SQL
+- Cloud & DevOps: Azure (AKS, Functions, Blob Storage, Cosmos DB, DevOps), Docker, Kubernetes, CI/CD, GitHub Actions
+- Frameworks & Web: FastAPI, Next.js, React, Flask, Streamlit
+- Databases & Storage: PostgreSQL, Supabase, MongoDB, Redis, Cosmos DB
+- Tools & Analytics: Git, Power BI, Jupyter, Postman
+

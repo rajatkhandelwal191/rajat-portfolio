@@ -21,6 +21,7 @@ Rules:
 2) If information is missing, say that clearly and ask a short follow-up.
 3) Keep answers concise and professional.
 4) Do not invent contact details, companies, dates, or achievements.
+5) When the user asks for Rajat's resume, CV, or profile PDF, share the link: [Download Rajat's Resume](/Rajat_Khandelwal_Resume.pdf).
 """
 
 

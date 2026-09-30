@@ -26,11 +26,14 @@ class VectorRepository:
     def is_configured(self) -> bool:
         return bool(self.db_url)
 
+    def _connect(self):
+        return psycopg.connect(self.db_url, autocommit=True, prepare_threshold=None)
+
     def ensure_schema(self) -> None:
         if not self.is_configured:
             return
 
-        with psycopg.connect(self.db_url, autocommit=True) as conn:
+        with self._connect() as conn:
             with conn.cursor() as cur:
                 cur.execute("CREATE EXTENSION IF NOT EXISTS vector;")
                 cur.execute(
@@ -71,7 +74,7 @@ class VectorRepository:
     def clear_source(self, source: str) -> None:
         if not self.is_configured:
             return
-        with psycopg.connect(self.db_url, autocommit=True) as conn:
+        with self._connect() as conn:
             with conn.cursor() as cur:
                 cur.execute(f"DELETE FROM {self.table_name} WHERE source = %s;", (source,))
 
@@ -83,7 +86,7 @@ class VectorRepository:
         if not self.is_configured or not chunks:
             return
 
-        with psycopg.connect(self.db_url, autocommit=True) as conn:
+        with self._connect() as conn:
             with conn.cursor() as cur:
                 for chunk_id, content, metadata, embedding in chunks:
                     embedding_vector = "[" + ",".join(f"{value:.8f}" for value in embedding) + "]"
@@ -106,7 +109,7 @@ class VectorRepository:
 
         query_vector = "[" + ",".join(f"{value:.8f}" for value in query_embedding) + "]"
 
-        with psycopg.connect(self.db_url, autocommit=True) as conn:
+        with self._connect() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     f"""
@@ -137,7 +140,7 @@ class VectorRepository:
         if not self.is_configured or not query.strip():
             return []
 
-        with psycopg.connect(self.db_url, autocommit=True) as conn:
+        with self._connect() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     f"""
