@@ -1,12 +1,10 @@
-"use client";
+﻿"use client";
 
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-
-import { PointerEvent, useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 import ChatbotWindow from "../components/ChatbotWindow";
-import ProjectCard from "../components/ProjectCard";
 import { logUiEvent } from "../lib/frontendLogger";
 
 type Theme = "light" | "dark";
@@ -21,158 +19,48 @@ const navItems = [
   { href: "#chatbot", icon: "smart_toy", label: "RajatGPT" },
 ];
 
-const cards = [
-  {
-    id: "about",
-    href: "/about",
-    icon: "person",
-    title: "About",
-    description: "Discover my journey, philosophy, and what drives my passion for code.",
-    cta: "READ MORE",
-  },
-  {
-    id: "projects",
-    href: "/projects",
-    icon: "code_blocks",
-    title: "Projects",
-    description: "Explore my open source contributions, commercial work, and experiments.",
-    cta: "VIEW WORK",
-  },
-  {
-    id: "experience",
-    href: "/experience",
-    icon: "history_edu",
-    title: "Experience",
-    description: "A timeline of my professional career, roles, and key accomplishments.",
-    cta: "SEE TIMELINE",
-  },
-  {
-    id: "architecture",
-    href: "/projects/portfolio-architecture",
-    icon: "account_tree",
-    title: "System Architecture",
-    description: "Explore the full-stack design, LangGraph agentic RAG flow, and deployment topology of this site.",
-    cta: "EXPLORE ARCHITECTURE",
-  },
-  {
-    id: "resume",
-    href: "/resume",
-    icon: "description",
-    title: "Resume & CV",
-    description: "Interactive document viewer and verified career credentials for 4.29+ years in AI Engineering.",
-    cta: "VIEW RESUME",
-  },
-  {
-    id: "contact",
-    href: "/contact",
-    icon: "alternate_email",
-    title: "Contact",
-    description: "Let's connect. Available for freelance projects and full-time opportunities.",
-    cta: "GET IN TOUCH",
-  },
+const techPills = [
+  { name: "LangGraph", icon: "account_tree", highlight: true },
+  { name: "FastAPI", icon: "api", highlight: true },
+  { name: "Next.js 15", icon: "terminal", highlight: true },
+  { name: "Groq Cloud LPU", icon: "bolt", highlight: true },
+  { name: "Supabase pgvector", icon: "database", highlight: false },
+  { name: "Azure AKS & Blob", icon: "cloud", highlight: false },
+  { name: "PyTorch & Transformers", icon: "psychology", highlight: false },
+  { name: "Docker & CI/CD", icon: "deployed_code", highlight: false },
+  { name: "TypeScript", icon: "code", highlight: false },
 ];
 
-const footerLinks = [
-  { href: "https://github.com/rajatkhandelwal191", icon: "code", label: "GitHub" },
-  { href: "https://www.linkedin.com/in/rajatkhandelwal27/", icon: "work", label: "LinkedIn" },
-  { href: "mailto:rajatkhandelwal191@gmail.com", icon: "mail", label: "Email" },
+const keyMetrics = [
+  { label: "Experience", value: "4.29+", suffix: "Years", desc: "Production AI & Full-Stack" },
+  { label: "Ops Automated", value: "70-80%", suffix: "Reduction", desc: "TCS ITIS Infra Operations" },
+  { label: "NLP Ingestion", value: "100K+", suffix: "Records", desc: "Automated ITSM Classification" },
+  { label: "Uptime & Reliability", value: "0", suffix: "SLA Breaches", desc: "3+ Years Enterprise Delivery" },
 ];
 
 export default function Home() {
   const [theme, setTheme] = useState<Theme>("dark");
-  const [pullOffset, setPullOffset] = useState(0);
-  const [isPulling, setIsPulling] = useState(false);
-  const [hasScrolled, setHasScrolled] = useState(false);
-  const [isChatbotVisible, setIsChatbotVisible] = useState(false);
-  const pullStartRef = useRef<number | null>(null);
   const isDark = theme === "dark";
-  const pullThreshold = 26;
-
-  const footerText = useMemo(
-    () => `(c) ${new Date().getFullYear()} Rajat Khandelwal. Built with glassmorphism and motion.`,
-    [],
-  );
-  const showHangingTrigger = hasScrolled && !isChatbotVisible;
 
   useEffect(() => {
-    const onScroll = () => {
-      setHasScrolled(window.scrollY > 80);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    const chatbotEl = document.getElementById("chatbot");
-    let observer: IntersectionObserver | null = null;
-    if (chatbotEl) {
-      observer = new IntersectionObserver(
-        (entries) => {
-          setIsChatbotVisible(entries.some((entry) => entry.isIntersecting));
-        },
-        { threshold: 0.25 },
-      );
-      observer.observe(chatbotEl);
+    document.title = "Rajat Khandelwal | Lead AI Engineer & Full-Stack Architect";
+    const savedTheme = localStorage.getItem("portfolio_theme") as Theme | null;
+    if (savedTheme === "light" || savedTheme === "dark") {
+      setTheme(savedTheme);
     }
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (observer) {
-        observer.disconnect();
-      }
-    };
   }, []);
 
-  const goToChatbot = () => {
-    logUiEvent("hanging_ask_rajatgpt_triggered", { page: "home" });
-    const target = document.getElementById("chatbot");
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-      window.setTimeout(() => {
-        window.location.hash = "chatbot";
-      }, 220);
-      return;
-    }
-    window.location.href = "#chatbot";
+  const toggleTheme = () => {
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    localStorage.setItem("portfolio_theme", next);
+    logUiEvent("theme_toggle_clicked", { page: "home", from: theme, to: next });
   };
 
-  const isExternalLink = (href: string) => href.startsWith("http://") || href.startsWith("https://");
-
-  const handlePullStart = (event: PointerEvent<HTMLButtonElement>) => {
-    if (!showHangingTrigger) {
-      return;
-    }
-    event.preventDefault();
-    pullStartRef.current = event.clientY;
-    setIsPulling(true);
-    event.currentTarget.setPointerCapture(event.pointerId);
-  };
-
-  const handlePullMove = (event: PointerEvent<HTMLButtonElement>) => {
-    if (!showHangingTrigger) {
-      return;
-    }
-    if (pullStartRef.current === null) {
-      return;
-    }
-    const delta = Math.max(0, event.clientY - pullStartRef.current);
-    setPullOffset(Math.min(delta, 60));
-  };
-
-  const handlePullEnd = (event: PointerEvent<HTMLButtonElement>) => {
-    if (!showHangingTrigger) {
-      return;
-    }
-    if (pullStartRef.current === null) {
-      return;
-    }
-    event.currentTarget.releasePointerCapture(event.pointerId);
-    const didTrigger = pullOffset >= pullThreshold;
-    pullStartRef.current = null;
-    setIsPulling(false);
-    setPullOffset(0);
-    if (didTrigger) {
-      goToChatbot();
-    }
-  };
+  const footerText = useMemo(
+    () => `(c) ${new Date().getFullYear()} Rajat Khandelwal. Engineered with Next.js 15, FastAPI & LangGraph.`,
+    [],
+  );
 
   return (
     <div
@@ -181,209 +69,477 @@ export default function Home() {
       }`}
       data-theme={theme}
     >
+      {/* Floating Left Dock Navigation */}
       <aside className="nav-float fixed left-6 top-1/2 z-50 hidden -translate-y-1/2 flex-col items-center gap-6 rounded-full border border-[var(--nav-border)] px-3 py-6 lg:flex">
         {navItems.map((item) => (
           <a
             key={item.label}
-            className={`group relative flex size-12 items-center justify-center rounded-full transition-all ${
-              item.active
-                ? "bg-[var(--primary)] text-white shadow-[0_10px_24px_var(--primary-glow)]"
-                : "text-[var(--text-muted)] hover:bg-[var(--icon-chip-bg)] hover:text-[var(--primary)]"
-            }`}
             href={item.href}
-            onClick={() => logUiEvent("nav_clicked", { page: "home", label: item.label, href: item.href })}
+            onClick={() => logUiEvent("nav_click", { target: item.href, label: item.label })}
+            className={`nav-btn relative flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 ${
+              item.active
+                ? "bg-[var(--primary)] text-white shadow-lg shadow-indigo-500/30"
+                : "text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--text-main)]"
+            }`}
           >
-            <span
-              className="material-symbols-outlined text-2xl"
-              style={item.active ? { fontVariationSettings: "'FILL' 1, 'wght' 600" } : undefined}
-            >
-              {item.icon}
-            </span>
-            <span className="pointer-events-none absolute left-full ml-3 whitespace-nowrap rounded bg-slate-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
+            <span className="material-symbols-outlined text-lg">{item.icon}</span>
+            <span className="nav-tooltip pointer-events-none absolute left-full ml-4 whitespace-nowrap rounded-md bg-black/85 px-2.5 py-1 text-xs text-white opacity-0 backdrop-blur-sm transition-opacity">
               {item.label}
             </span>
           </a>
         ))}
       </aside>
 
-      <div className="layout-container relative flex min-h-screen w-full flex-col lg:pl-24">
-        <div
-          className={`fixed left-1/2 top-0 z-[70] -translate-x-1/2 transition-all duration-300 ${
-            showHangingTrigger ? "pointer-events-auto opacity-100" : "pointer-events-none -translate-y-6 opacity-0"
-          }`}
-        >
-          <div className="mx-auto h-10 w-px bg-[var(--section-line)]" />
-          <button
-            aria-label="Pull down to open RajatGPT"
-            className="flex flex-col items-center rounded-b-2xl focus:outline-none"
-            onPointerCancel={handlePullEnd}
-            onPointerDown={handlePullStart}
-            onPointerMove={handlePullMove}
-            onPointerUp={handlePullEnd}
-            style={{ touchAction: "none", transform: `translateY(${pullOffset}px)` }}
-            type="button"
-          >
-            <div className="h-8 w-px bg-[var(--section-line)]" />
-            <div className="portfolio-glass-card rounded-2xl border border-[var(--card-hover-border)] px-4 py-2.5">
-              <div className="flex items-center gap-2">
-                <motion.span
-                  animate={{
-                    opacity: [1, 1, 0.25, 1, 1, 0.3, 1],
-                    scaleY: [1, 1, 0.2, 1, 1, 0.25, 1],
-                    color: ["#ec5b13", "#fde6ca", "#ec5b13", "#fde6ca", "#ec5b13"],
-                  }}
-                  className="material-symbols-outlined text-base"
-                  transition={{ duration: 2.4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-                  style={{ transformOrigin: "center" }}
-                >
-                  visibility
-                </motion.span>
-                <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--text-main)]">
-                  Ask RajatGPT
-                </span>
-              </div>
-              <p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">
-                {isPulling ? "Release to jump" : "Pull down"}
-              </p>
-            </div>
-          </button>
-        </div>
-
-        <motion.header
-          animate={{ opacity: 1, y: 0 }}
-          className="portfolio-glass sticky top-0 z-40 mx-6 mt-4 flex items-center justify-between rounded-xl border-b border-[var(--glass-border)] px-6 py-6 lg:mx-0 lg:mt-0 lg:rounded-none lg:px-12"
-          initial={{ opacity: 0, y: -18 }}
-          transition={{ duration: 0.35 }}
-        >
-          <div className="flex items-center gap-4">
-            <div className="flex size-10 items-center justify-center rounded-full bg-[var(--primary)] text-white shadow-[0_0_20px_var(--primary-glow)]">
-              <span className="material-symbols-outlined">terminal</span>
+      {/* Main Layout Container */}
+      <div className="relative z-10 flex min-h-screen flex-col lg:pl-24">
+        {/* Sticky Header */}
+        <header className="portfolio-glass sticky top-0 z-40 mx-4 mt-3 flex items-center justify-between rounded-2xl border px-6 py-4 lg:mx-8 lg:mt-4 lg:px-8">
+          <div className="flex items-center gap-3.5">
+            <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-500/25">
+              <span className="material-symbols-outlined text-xl">terminal</span>
             </div>
             <div>
-              <h1
-                className={`text-xl font-bold tracking-tight ${
-                  isDark
-                    ? "text-[var(--title-glow)] drop-shadow-[0_0_12px_var(--primary-glow)]"
-                    : "text-[var(--text-main)]"
-                }`}
-              >
-                Rajat Khandelwal
-              </h1>
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--primary)]">
-                Software Engineer
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-bold tracking-tight text-[var(--text-main)]">
+                  Rajat Khandelwal
+                </span>
+                <span className="hidden rounded-full border border-indigo-500/30 bg-indigo-500/10 px-2 py-0.5 text-[10px] font-semibold text-indigo-400 sm:inline-block">
+                  Lead AI Engineer
+                </span>
+              </div>
+              <p className="text-[11px] font-medium text-[var(--text-muted)]">
+                Agentic Workflows · LangGraph · Azure Cloud
               </p>
             </div>
           </div>
 
-          <button
-            className="portfolio-glass flex size-10 items-center justify-center rounded-xl border border-[var(--glass-border)] text-[var(--primary)] transition-all hover:bg-[var(--icon-chip-bg)]"
-            onClick={() => {
-              logUiEvent("theme_toggle_clicked", { page: "home", from: theme, to: isDark ? "light" : "dark" });
-              setTheme(isDark ? "light" : "dark");
-            }}
-            type="button"
-          >
-            <span className="material-symbols-outlined">{isDark ? "light_mode" : "dark_mode"}</span>
-          </button>
-        </motion.header>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/resume"
+              onClick={() => logUiEvent("header_resume_clicked", { page: "home" })}
+              className="hidden items-center gap-2 rounded-xl border border-[var(--glass-border)] bg-white/5 px-4 py-2 text-xs font-semibold text-[var(--text-main)] transition hover:bg-white/10 sm:inline-flex"
+            >
+              <span className="material-symbols-outlined text-sm">description</span>
+              Resume
+            </Link>
 
-        <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-6 py-12">
-          <motion.section
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-16 mt-8 max-w-4xl"
-            id="home"
-            initial={{ opacity: 0, y: 24 }}
-            transition={{ duration: 0.45, delay: 0.1 }}
-          >
-            <h2 className="mb-6 text-5xl font-bold leading-tight tracking-tight text-[var(--text-main)] lg:text-7xl">
-              Building high-performance{" "}
-              <span
-                className={
-                  isDark
-                    ? "text-[var(--primary)] drop-shadow-[0_0_10px_var(--primary-glow)]"
-                    : "text-[var(--primary)]"
-                }
-              >
-                digital solutions
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle light/dark theme"
+              className="flex size-9 items-center justify-center rounded-xl border border-[var(--glass-border)] bg-white/5 text-[var(--text-main)] transition hover:bg-white/10"
+              type="button"
+            >
+              <span className="material-symbols-outlined text-lg">
+                {isDark ? "light_mode" : "dark_mode"}
               </span>
-              .
-            </h2>
-            <p className="max-w-2xl text-lg leading-relaxed text-[var(--text-muted)]">
-              I specialize in scalable backend architectures and fluid frontend experiences. Exploring
-              the intersection of AI and modern web development.
-            </p>
+            </button>
+          </div>
+        </header>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4">
+        {/* Hero Section */}
+        <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-10 sm:px-6 lg:px-8">
+          <section id="home" className="mb-16 pt-4 sm:pt-8">
+            {/* Live Availability Pill */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="inline-flex items-center gap-2.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-medium text-emerald-400"
+            >
+              <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Available for Lead AI & Full-Stack Opportunities</span>
+            </motion.div>
+
+            {/* Main Headline */}
+            <motion.h1
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+              className="mt-6 max-w-4xl text-4xl font-extrabold leading-[1.15] tracking-tight text-[var(--text-main)] sm:text-6xl lg:text-7xl"
+            >
+              Architecting Enterprise AI Systems &{" "}
+              <span className="text-gradient-primary">
+                Agentic Workflows.
+              </span>
+            </motion.h1>
+
+            {/* Sub-Headline */}
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="mt-6 max-w-2xl text-base leading-relaxed text-[var(--text-muted)] sm:text-lg"
+            >
+              Lead AI Engineer with <strong>4.29+ years of experience</strong> designing multi-agent LangGraph workflows, high-throughput RAG retrieval pipelines, and scalable cloud-native backends across Azure & Supabase.
+            </motion.p>
+
+            {/* Hero Action Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+              className="mt-8 flex flex-wrap items-center gap-3.5"
+            >
               <Link
                 href="/projects/portfolio-architecture"
                 onClick={() => logUiEvent("hero_architecture_clicked", { page: "home" })}
-                className="group relative inline-flex items-center gap-3 overflow-hidden rounded-2xl border border-[var(--primary)]/50 bg-[var(--primary)]/10 px-5 py-3 text-sm font-semibold text-[var(--text-main)] shadow-lg backdrop-blur-md transition-all duration-300 hover:border-[var(--primary)] hover:bg-[var(--primary)]/20 hover:scale-[1.02]"
+                className="group inline-flex items-center gap-2.5 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition-all duration-300 hover:scale-[1.02] hover:shadow-indigo-500/40"
               >
-                <span className="flex size-7 items-center justify-center rounded-lg bg-[var(--primary)] text-white shadow-md">
-                  <span className="material-symbols-outlined text-base">account_tree</span>
+                <span className="material-symbols-outlined text-lg">account_tree</span>
+                Explore Site Architecture
+                <span className="material-symbols-outlined text-sm transition-transform duration-300 group-hover:translate-x-1">
+                  arrow_forward
                 </span>
-                <div className="flex flex-col text-left">
-                  <span className="flex items-center gap-1.5 font-bold tracking-wide">
-                    Rajat Portfolio Architecture
-                    <span className="material-symbols-outlined text-xs transition-transform duration-300 group-hover:translate-x-1">
-                      arrow_forward
-                    </span>
-                  </span>
-                  <span className="text-[11px] font-normal text-[var(--text-muted)]">
-                    Next.js 15 · FastAPI · LangGraph · Groq 120B · pgvector
-                  </span>
-                </div>
               </Link>
 
               <Link
                 href="/resume"
                 onClick={() => logUiEvent("hero_resume_clicked", { page: "home" })}
-                className="inline-flex items-center gap-2 rounded-2xl border border-[var(--glass-border)] bg-[var(--icon-chip-bg)] px-4 py-3 text-sm font-medium text-[var(--text-main)] transition-all hover:bg-white/10"
+                className="inline-flex items-center gap-2 rounded-xl border border-[var(--glass-border)] bg-white/5 px-4 py-3 text-sm font-semibold text-[var(--text-main)] backdrop-blur-sm transition hover:bg-white/10"
               >
-                <span className="material-symbols-outlined text-base">description</span>
-                View Resume
+                <span className="material-symbols-outlined text-lg">description</span>
+                View Resume / CV
               </Link>
-            </div>
-          </motion.section>
 
-          <section className="mb-24 grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
-            {cards.map((card, index) => (
-              <div id={card.id} key={card.title}>
-                <ProjectCard
-                  cta={card.cta}
-                  description={card.description}
-                  href={card.href}
-                  icon={card.icon}
-                  index={index}
-                  title={card.title}
-                />
-              </div>
-            ))}
+              <a
+                href="#chatbot"
+                onClick={() => {
+                  const el = document.getElementById("chatbot");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="inline-flex items-center gap-2 rounded-xl border border-[var(--glass-border)] bg-white/5 px-4 py-3 text-sm font-semibold text-[var(--text-main)] backdrop-blur-sm transition hover:bg-white/10"
+              >
+                <span className="material-symbols-outlined text-lg text-indigo-400">smart_toy</span>
+                Ask RajatGPT
+              </a>
+            </motion.div>
+
+            {/* Metrics Counter Strip */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.4 }}
+              className="mt-12 grid grid-cols-2 gap-4 rounded-2xl border border-[var(--glass-border)] bg-[var(--card-bg)] p-6 backdrop-blur-md sm:grid-cols-4"
+            >
+              {keyMetrics.map((m) => (
+                <div key={m.label} className="border-l-2 border-indigo-500/40 pl-3">
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-2xl font-black tracking-tight text-[var(--text-main)] sm:text-3xl">
+                      {m.value}
+                    </span>
+                    <span className="text-xs font-semibold text-indigo-400">{m.suffix}</span>
+                  </div>
+                  <p className="mt-0.5 text-xs font-medium text-[var(--text-muted)]">{m.desc}</p>
+                </div>
+              ))}
+            </motion.div>
+
+            {/* Tech Stack Marquee Pills */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.5 }}
+              className="mt-8 flex flex-wrap items-center gap-2"
+            >
+              <span className="mr-2 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
+                Core Stack:
+              </span>
+              {techPills.map((pill) => (
+                <span
+                  key={pill.name}
+                  className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1 text-xs font-medium backdrop-blur-sm transition hover:scale-105 ${
+                    pill.highlight
+                      ? "border-indigo-500/30 bg-indigo-500/10 text-indigo-300"
+                      : "border-white/10 bg-white/5 text-[var(--text-muted)]"
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-sm">{pill.icon}</span>
+                  {pill.name}
+                </span>
+              ))}
+            </motion.div>
           </section>
 
-          <section id="chatbot">
-            <ChatbotWindow isDark={isDark} name="Rajat" />
+          {/* Bento Grid Showcase */}
+          <section className="mb-20">
+            <div className="mb-6 flex items-center justify-between">
+              <div>
+                <h2 className="text-xl font-bold tracking-tight text-[var(--text-main)] sm:text-2xl">
+                  Featured Work & Navigation
+                </h2>
+                <p className="text-xs text-[var(--text-muted)]">
+                  Explore architecture deep-dives, career highlights, and verified credentials.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+              {/* Card 1: Large Featured System Architecture (Spans 2 cols) */}
+              <div className="bento-card group col-span-1 p-7 md:col-span-2">
+                <div className="flex flex-col justify-between h-full">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-3 py-1 text-xs font-semibold text-indigo-400">
+                        <span className="size-1.5 rounded-full bg-indigo-400 animate-ping" />
+                        Full-Stack Deep Dive
+                      </span>
+                      <span className="font-mono text-xs text-[var(--text-muted)]">Monorepo / 2026</span>
+                    </div>
+
+                    <h3 className="mt-4 text-2xl font-bold text-[var(--text-main)]">
+                      AI Portfolio & Agentic RAG Platform
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">
+                      The complete architectural blueprint powering this site. Built with Next.js 15, FastAPI, a multi-tool LangGraph state graph, Groq 120B inference, and dual vector stores with zero-downtime failover.
+                    </p>
+
+                    <div className="mt-5 flex flex-wrap gap-2 text-xs">
+                      <span className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[var(--text-muted)]">
+                        LangGraph Agentic RAG
+                      </span>
+                      <span className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[var(--text-muted)]">
+                        Groq 120B LPU (&lt;1s)
+                      </span>
+                      <span className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[var(--text-muted)]">
+                        Supabase pgvector (384-dim)
+                      </span>
+                      <span className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[var(--text-muted)]">
+                        Local FAISS Fallback
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 flex items-center justify-between border-t border-[var(--glass-border)] pt-5">
+                    <span className="text-xs font-medium text-[var(--text-muted)]">
+                      Includes 29-chunk RAG explorer & dataflow diagram
+                    </span>
+                    <Link
+                      href="/projects/portfolio-architecture"
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-400 transition group-hover:translate-x-1"
+                    >
+                      Explore Architecture
+                      <span className="material-symbols-outlined text-base">arrow_forward</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 2: Experience Spotlight (1 col) */}
+              <div className="bento-card group col-span-1 p-7">
+                <div className="flex flex-col justify-between h-full">
+                  <div>
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-orange-500/10 text-orange-400">
+                      <span className="material-symbols-outlined">history_edu</span>
+                    </div>
+                    <h3 className="mt-4 text-xl font-bold text-[var(--text-main)]">Experience</h3>
+                    <p className="mt-2 text-xs leading-relaxed text-[var(--text-muted)]">
+                      Lead AI Engineer @ TCS ITIS designing agentic reporting pipelines, heatmap analysis, and Azure infrastructure.
+                    </p>
+
+                    <div className="mt-4 space-y-2 text-xs text-[var(--text-muted)]">
+                      <div className="flex items-center gap-2">
+                        <span className="size-1.5 rounded-full bg-emerald-400" />
+                        <span>TCS Lead AI Engineer (2025 - Present)</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="size-1.5 rounded-full bg-blue-400" />
+                        <span>TCS Innovista Lead Dev (2024 - 2025)</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="size-1.5 rounded-full bg-amber-400" />
+                        <span>Outokumpu Core Chatbot Dev (2021 - 2024)</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 border-t border-[var(--glass-border)] pt-4">
+                    <Link
+                      href="/experience"
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-400 transition group-hover:translate-x-1"
+                    >
+                      See Career Timeline
+                      <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 3: Projects Spotlight (1 col) */}
+              <div className="bento-card group col-span-1 p-7">
+                <div className="flex flex-col justify-between h-full">
+                  <div>
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-400">
+                      <span className="material-symbols-outlined">code_blocks</span>
+                    </div>
+                    <h3 className="mt-4 text-xl font-bold text-[var(--text-main)]">Featured Projects</h3>
+                    <p className="mt-2 text-xs leading-relaxed text-[var(--text-muted)]">
+                      Interactive RAG Playground, Exam Parser Pipeline, and MobiKwik NBFC Scam Tracker.
+                    </p>
+
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      <span className="rounded-md border border-white/5 bg-white/5 px-2 py-0.5 text-[11px] text-[var(--text-muted)]">
+                        RAG Playground
+                      </span>
+                      <span className="rounded-md border border-white/5 bg-white/5 px-2 py-0.5 text-[11px] text-[var(--text-muted)]">
+                        Exam Parser
+                      </span>
+                      <span className="rounded-md border border-white/5 bg-white/5 px-2 py-0.5 text-[11px] text-[var(--text-muted)]">
+                        Enterprise Assistant
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 border-t border-[var(--glass-border)] pt-4">
+                    <Link
+                      href="/projects"
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-cyan-400 transition group-hover:translate-x-1"
+                    >
+                      View All Projects
+                      <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 4: Resume & Credentials (1 col) */}
+              <div className="bento-card group col-span-1 p-7">
+                <div className="flex flex-col justify-between h-full">
+                  <div>
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-purple-500/10 text-purple-400">
+                      <span className="material-symbols-outlined">description</span>
+                    </div>
+                    <h3 className="mt-4 text-xl font-bold text-[var(--text-main)]">Resume & Credentials</h3>
+                    <p className="mt-2 text-xs leading-relaxed text-[var(--text-muted)]">
+                      Verified curriculum vitae, B.Tech (2021) degree details, and LangGraph certifications.
+                    </p>
+
+                    <div className="mt-4 rounded-xl border border-white/5 bg-white/5 p-3 text-xs text-[var(--text-muted)]">
+                      <div className="font-mono text-emerald-400 font-semibold">✓ Verified PDF Ready</div>
+                      <div className="mt-1">Full-screen document viewer & 1-click download</div>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 border-t border-[var(--glass-border)] pt-4">
+                    <Link
+                      href="/resume"
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-purple-400 transition group-hover:translate-x-1"
+                    >
+                      Open Resume Viewer
+                      <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 5: About & Philosophy (1 col) */}
+              <div className="bento-card group col-span-1 p-7">
+                <div className="flex flex-col justify-between h-full">
+                  <div>
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-rose-500/10 text-rose-400">
+                      <span className="material-symbols-outlined">person</span>
+                    </div>
+                    <h3 className="mt-4 text-xl font-bold text-[var(--text-main)]">About Me</h3>
+                    <p className="mt-2 text-xs leading-relaxed text-[var(--text-muted)]">
+                      My journey, technical philosophy, and passion for engineering autonomous agent ecosystems.
+                    </p>
+
+                    <div className="mt-4 flex items-center gap-3 text-xs text-[var(--text-muted)]">
+                      <a
+                        href="https://github.com/rajatkhandelwal191"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-[var(--text-main)]"
+                      >
+                        GitHub
+                      </a>
+                      <span>·</span>
+                      <a
+                        href="https://www.linkedin.com/in/rajatkhandelwal27/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-[var(--text-main)]"
+                      >
+                        LinkedIn
+                      </a>
+                      <span>·</span>
+                      <Link href="/contact" className="hover:text-[var(--text-main)]">
+                        Contact
+                      </Link>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 border-t border-[var(--glass-border)] pt-4">
+                    <Link
+                      href="/about"
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-rose-400 transition group-hover:translate-x-1"
+                    >
+                      Read Bio & Values
+                      <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* RajatGPT AI Terminal Section */}
+          <section id="chatbot" className="mb-16">
+            <div className="rounded-2xl border border-[var(--glass-border)] bg-[var(--card-bg)] p-6 shadow-2xl backdrop-blur-md sm:p-8">
+              <div className="mb-6 flex flex-col justify-between gap-4 border-b border-[var(--glass-border)] pb-6 sm:flex-row sm:items-center">
+                <div>
+                  <div className="flex items-center gap-2.5">
+                    <span className="flex size-8 items-center justify-center rounded-lg bg-indigo-500/20 text-indigo-400">
+                      <span className="material-symbols-outlined text-lg">smart_toy</span>
+                    </span>
+                    <h2 className="text-xl font-bold text-[var(--text-main)]">RajatGPT Assistant</h2>
+                  </div>
+                  <p className="mt-1 text-xs text-[var(--text-muted)]">
+                    Ask anything about Rajat's technical background, projects, architecture, or credentials.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-400">
+                    <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+                    Online · Groq 120B & pgvector
+                  </span>
+                </div>
+              </div>
+
+              {/* Chatbot Window Component */}
+              <ChatbotWindow isDark={isDark} name="Rajat" />
+            </div>
           </section>
         </main>
 
+        {/* Footer */}
         <footer className="mt-auto border-t border-[var(--footer-border)] bg-[var(--footer-bg)] px-6 py-10 text-center backdrop-blur-sm">
-          <div className="mb-6 flex justify-center gap-8">
-            {footerLinks.map((link) => (
-              <a
-                key={link.label}
-                className="group relative text-[var(--text-muted)] transition-all hover:scale-110 hover:text-[var(--primary)]"
-                href={link.href}
-                onClick={() => logUiEvent("footer_link_clicked", { page: "home", label: link.label, href: link.href })}
-                rel={isExternalLink(link.href) ? "noreferrer noopener" : undefined}
-                target={isExternalLink(link.href) ? "_blank" : undefined}
-                title={link.label}
-              >
-                <span className="material-symbols-outlined text-2xl">{link.icon}</span>
-                <span className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-slate-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
-                  {link.label}
-                </span>
-              </a>
-            ))}
+          <div className="mb-4 flex justify-center gap-6 text-sm text-[var(--text-muted)]">
+            <a
+              href="https://github.com/rajatkhandelwal191"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-indigo-400 transition"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://www.linkedin.com/in/rajatkhandelwal27/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-indigo-400 transition"
+            >
+              LinkedIn
+            </a>
+            <Link href="/resume" className="hover:text-indigo-400 transition">
+              Resume
+            </Link>
+            <Link href="/projects/portfolio-architecture" className="hover:text-indigo-400 transition">
+              Architecture
+            </Link>
+            <Link href="/contact" className="hover:text-indigo-400 transition">
+              Contact
+            </Link>
           </div>
           <p className="text-xs text-[var(--text-muted)]">{footerText}</p>
         </footer>
@@ -391,4 +547,3 @@ export default function Home() {
     </div>
   );
 }
-
