@@ -38,8 +38,36 @@ const keyMetrics = [
   { label: "Uptime & Reliability", value: "0", suffix: "SLA Breaches", desc: "3+ Years Enterprise Delivery" },
 ];
 
+const heroPrefix = "Architecting Enterprise AI Systems & ";
+const heroSuffix = "Agentic Workflows.";
+const fullHeroTitle = `${heroPrefix}${heroSuffix}`;
+
 export default function Home() {
   const { theme, isDark, toggleTheme } = useTheme();
+  const [typedLength, setTypedLength] = useState(0);
+
+  useEffect(() => {
+    let current = 0;
+    const startTimeout = setTimeout(() => {
+      const interval = setInterval(() => {
+        if (current < fullHeroTitle.length) {
+          current++;
+          setTypedLength(current);
+        } else {
+          clearInterval(interval);
+        }
+      }, 38);
+      return () => clearInterval(interval);
+    }, 250);
+
+    return () => clearTimeout(startTimeout);
+  }, []);
+
+  const typedPrefix = fullHeroTitle.slice(0, Math.min(typedLength, heroPrefix.length));
+  const typedSuffix =
+    typedLength > heroPrefix.length
+      ? fullHeroTitle.slice(heroPrefix.length, typedLength)
+      : "";
 
   useEffect(() => {
     document.title = "Rajat Khandelwal | Lead AI Engineer & Full-Stack Architect";
@@ -138,17 +166,23 @@ export default function Home() {
               <span>Available for Lead AI & Full-Stack Opportunities</span>
             </motion.div>
 
-            {/* Main Headline */}
+            {/* Main Headline with Typewriter Effect */}
             <motion.h1
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 }}
-              className="mt-6 max-w-4xl text-4xl font-extrabold leading-[1.15] tracking-tight text-[var(--text-main)] sm:text-6xl lg:text-7xl"
+              className="mt-6 max-w-4xl text-4xl font-extrabold leading-[1.15] tracking-tight text-[var(--text-main)] sm:text-6xl lg:text-7xl min-h-[2.4em] sm:min-h-[2.3em]"
             >
-              Architecting Enterprise AI Systems &{" "}
-              <span className="text-gradient-primary">
-                Agentic Workflows.
-              </span>
+              {typedPrefix}
+              {typedSuffix ? (
+                <span className="text-gradient-primary">
+                  {typedSuffix}
+                </span>
+              ) : null}
+              <span
+                className="ml-1.5 inline-block h-[0.82em] w-[3px] align-baseline bg-indigo-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(99,102,241,0.6)]"
+                aria-hidden="true"
+              />
             </motion.h1>
 
             {/* Sub-Headline */}
