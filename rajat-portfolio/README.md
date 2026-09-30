@@ -11,6 +11,8 @@ Monorepo for a personal portfolio website with an AI assistant.
 ## Project Structure
 - `frontend/` Next.js app
 - `backend/` FastAPI + LangChain app
+- `ARCHITECTURE.md` complete system architecture (frontend, backend, LangGraph, pgvector, schemas)
+- `OPERATIONS_GUIDE.md` comprehensive operations, account IDs, chatbot flow & maintenance guide
 - `.env` local environment configuration
 - `tracking.md` implementation and bug-fix log
 

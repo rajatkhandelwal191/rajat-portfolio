@@ -36,6 +36,12 @@
 | 2026-03-11 | Backend + Frontend | Added contact form persistence to Postgres with API integration | Feature | Done | Added `contact_submissions` table auto-create + `POST /api/contact` + frontend submit wiring with success/error feedback |
 | 2026-03-11 | Backend + Frontend | Added password-protected contact submissions dashboard with filtering | Feature | Done | Added `GET /api/contact/submissions` protected by `CONTACT_ADMIN_PASSWORD` and new frontend route `/contact/admin` |
 
+| 2026-09-30 | Backend | Updated Groq model to openai/gpt-oss-120b | Fix | Done | Fixed 404 error caused by deprecated llama-3.3-70b-versatile |
+| 2026-09-30 | Backend | Added prepare_threshold=None to psycopg connect | Fix | Done | Fixed DuplicatePreparedStatement on Supabase PgBouncer transaction pooler |
+| 2026-09-30 | Backend Data | Removed mechanical engineering references and re-indexed knowledge base | Data + Ingestion | Done | Stripped Skill-Lync/CFD/FEA references; re-indexed 29 chunks to Supabase & FAISS |
+| 2026-09-30 | Frontend + Backend | Added resume download pipeline and UI button wiring | Feature | Done | Placed resume in rontend/public/Rajat_Khandelwal_Resume.pdf, wired Experience button, trained RajatGPT link rule |
+| 2026-09-30 | Docs | Created comprehensive OPERATIONS_GUIDE.md | Docs | Done | Documented commands, account IDs, chatbot flow, chunks architecture, and troubleshooting |
+
 ## Bug Fixes
 | Date | Bug | Root Cause | Fix | Status |
 |---|---|---|---|---|

@@ -11,6 +11,7 @@ const navItems = [
   { href: "/about", icon: "person", label: "About", active: true },
   { href: "/projects", icon: "code_blocks", label: "Projects" },
   { href: "/experience", icon: "history_edu", label: "Experience" },
+  { href: "/resume", icon: "description", label: "Resume" },
   { href: "/contact", icon: "alternate_email", label: "Contact" },
   { href: "/#chatbot", icon: "smart_toy", label: "RajatGPT" },
 ];
@@ -78,7 +79,7 @@ const experienceHighlights = [
     points: [
       "System Engineer Trainee at TCS with backend and React-based development responsibilities.",
       "Pepcoding internship handling DSA + MERN learning structure and practical delivery.",
-      "Railways and Skill-Lync internships involving simulation pipelines, analytics, and software workflows.",
+      "Software engineering internship with Indian Railways involving data processing, analytics, and software workflows.",
     ],
     gradient: "linear-gradient(135deg, #0ea5e9 0%, #0284c7 55%, #1e3a8a 100%)",
   },

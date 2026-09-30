@@ -12,6 +12,7 @@ const navItems = [
   { href: "/about", icon: "person", label: "About" },
   { href: "/", icon: "home", label: "Home" },
   { href: "/experience", icon: "history_edu", label: "Experience" },
+  { href: "/resume", icon: "description", label: "Resume" },
   { href: "/contact", icon: "alternate_email", label: "Contact", active: true },
   { href: "/#chatbot", icon: "smart_toy", label: "RajatGPT" },
 ];

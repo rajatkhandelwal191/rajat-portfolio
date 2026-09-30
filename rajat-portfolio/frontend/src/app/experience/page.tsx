@@ -24,6 +24,7 @@ const navItems = [
   { href: "/about", icon: "person", label: "About" },
   { href: "/projects", icon: "code_blocks", label: "Projects" },
   { href: "/experience", icon: "history_edu", label: "Experience", active: true },
+  { href: "/resume", icon: "description", label: "Resume" },
   { href: "/contact", icon: "alternate_email", label: "Contact" },
   { href: "/#chatbot", icon: "smart_toy", label: "RajatGPT" },
 ];
@@ -112,24 +113,23 @@ const experienceData: ExperienceItem[] = [
     icon: "school",
   },
   {
-    company: "Skill-Lync",
-    role: "Web Intern - Design and Simulation",
-    period: "May 2020 - March 2021",
+    company: "Center for Railway Information Systems (CRIS)",
+    role: "Software & Data Systems Intern",
+    period: "May 2019 - August 2019",
     highlights: [
-      "Applied multibody dynamics, computational fluid dynamics (CFD), and finite element analysis (FEA) concepts using engineering software.",
-      "Implemented data parsing, analysis, and visualization pipelines in Python and MATLAB for simulation results.",
-      "Integrated simulation results into software workflows with emphasis on automation and data processing.",
-      "Developed scripts for extracting, transforming, and visualizing engineering simulation data.",
-      "Gained hands-on experience with engineering simulation tools and computational analysis methodologies.",
+      "Assisted in backend software operations, database querying, and operational data pipelines.",
+      "Developed data processing and verification scripts in Python to streamline workflow datasets.",
+      "Collaborated with engineering teams on system data validation and technical documentation.",
     ],
-    tags: ["Python", "MATLAB", "CFD", "FEA", "Data Analysis", "Simulation", "Visualization"],
+    tags: ["Python", "SQL", "Database Systems", "Data Processing", "Backend"],
     badgeClass: "bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg shadow-blue-500/20",
-    icon: "science",
+    icon: "train",
   },
 ];
 
 export default function ExperiencePage() {
   const [theme, setTheme] = useState<Theme>("dark");
+  const [showResumePreview, setShowResumePreview] = useState(false);
   const isDark = theme === "dark";
 
   const footerText = useMemo(
@@ -311,18 +311,78 @@ export default function ExperiencePage() {
             </div>
           </section>
 
-          <div className="mt-20 text-center">
-            <a
-              className="inline-flex items-center gap-2 text-sm font-medium text-[var(--text-muted)] transition-colors hover:text-[var(--cream-active)]"
-              href="/Rajat_Khandelwal_Resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              download="Rajat_Khandelwal_Resume.pdf"
-            >
-              <span className="material-symbols-outlined text-lg">download</span>
-              Download Resume
-            </a>
-          </div>
+          {/* Resume Section */}
+          <section className="mt-16 rounded-2xl border border-[var(--glass-card-border)] bg-[var(--glass-card-bg)] p-8 shadow-xl backdrop-blur-md">
+            <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="material-symbols-outlined text-2xl text-[var(--cream-active)]">description</span>
+                  <h3 className="text-xl font-bold text-[var(--cream-active)]">Curriculum Vitae / Resume</h3>
+                </div>
+                <p className="mt-1 text-sm text-[var(--text-muted)]">
+                  Latest verified resume covering 4.29+ years of AI Engineering, LangGraph RAG workflows, and Azure cloud infrastructure.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setShowResumePreview((prev) => !prev)}
+                  className="inline-flex items-center gap-2 rounded-xl border border-[var(--glass-card-border)] bg-white/5 px-4 py-2.5 text-sm font-medium text-[var(--text-primary)] transition hover:border-[var(--cream-active)] hover:bg-white/10"
+                >
+                  <span className="material-symbols-outlined text-base">
+                    {showResumePreview ? "visibility_off" : "visibility"}
+                  </span>
+                  {showResumePreview ? "Hide Preview" : "Preview Resume"}
+                </button>
+
+                <Link
+                  href="/resume"
+                  className="inline-flex items-center gap-2 rounded-xl border border-[var(--glass-card-border)] bg-white/5 px-4 py-2.5 text-sm font-medium text-[var(--text-primary)] transition hover:border-[var(--cream-active)] hover:bg-white/10"
+                >
+                  <span className="material-symbols-outlined text-base">open_in_new</span>
+                  Full Page View
+                </Link>
+
+                <a
+                  href="/Rajat_Khandelwal_Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  download="Rajat_Khandelwal_Resume.pdf"
+                  className="inline-flex items-center gap-2 rounded-xl bg-[var(--cream-active)] px-5 py-2.5 text-sm font-semibold text-black transition hover:opacity-90 shadow-md"
+                >
+                  <span className="material-symbols-outlined text-base">download</span>
+                  Download PDF
+                </a>
+              </div>
+            </div>
+
+            {showResumePreview && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="mt-8 overflow-hidden rounded-xl border border-[var(--glass-card-border)] bg-black/20"
+              >
+                <div className="flex items-center justify-between border-b border-[var(--glass-card-border)] bg-white/5 px-4 py-2.5 text-xs text-[var(--text-muted)]">
+                  <span className="font-mono">Rajat_Khandelwal_Resume.pdf</span>
+                  <a
+                    href="/Rajat_Khandelwal_Resume.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 hover:underline"
+                  >
+                    Open in new tab <span className="material-symbols-outlined text-xs">launch</span>
+                  </a>
+                </div>
+                <iframe
+                  src="/Rajat_Khandelwal_Resume.pdf"
+                  className="h-[750px] w-full border-0"
+                  title="Rajat Khandelwal Resume Preview"
+                />
+              </motion.div>
+            )}
+          </section>
         </main>
 
         <footer className="mt-12 border-t border-[var(--footer-border)] bg-[var(--footer-bg)] px-6 py-8 text-center backdrop-blur-sm">
