@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { PointerEvent, useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
@@ -43,6 +45,22 @@ const cards = [
     title: "Experience",
     description: "A timeline of my professional career, roles, and key accomplishments.",
     cta: "SEE TIMELINE",
+  },
+  {
+    id: "architecture",
+    href: "/projects/portfolio-architecture",
+    icon: "account_tree",
+    title: "System Architecture",
+    description: "Explore the full-stack design, LangGraph agentic RAG flow, and deployment topology of this site.",
+    cta: "EXPLORE ARCHITECTURE",
+  },
+  {
+    id: "resume",
+    href: "/resume",
+    icon: "description",
+    title: "Resume & CV",
+    description: "Interactive document viewer and verified career credentials for 4.29+ years in AI Engineering.",
+    cta: "VIEW RESUME",
   },
   {
     id: "contact",
@@ -294,6 +312,38 @@ export default function Home() {
               I specialize in scalable backend architectures and fluid frontend experiences. Exploring
               the intersection of AI and modern web development.
             </p>
+
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <Link
+                href="/projects/portfolio-architecture"
+                onClick={() => logUiEvent("hero_architecture_clicked", { page: "home" })}
+                className="group relative inline-flex items-center gap-3 overflow-hidden rounded-2xl border border-[var(--primary)]/50 bg-[var(--primary)]/10 px-5 py-3 text-sm font-semibold text-[var(--text-main)] shadow-lg backdrop-blur-md transition-all duration-300 hover:border-[var(--primary)] hover:bg-[var(--primary)]/20 hover:scale-[1.02]"
+              >
+                <span className="flex size-7 items-center justify-center rounded-lg bg-[var(--primary)] text-white shadow-md">
+                  <span className="material-symbols-outlined text-base">account_tree</span>
+                </span>
+                <div className="flex flex-col text-left">
+                  <span className="flex items-center gap-1.5 font-bold tracking-wide">
+                    Rajat Portfolio Architecture
+                    <span className="material-symbols-outlined text-xs transition-transform duration-300 group-hover:translate-x-1">
+                      arrow_forward
+                    </span>
+                  </span>
+                  <span className="text-[11px] font-normal text-[var(--text-muted)]">
+                    Next.js 15 · FastAPI · LangGraph · Groq 120B · pgvector
+                  </span>
+                </div>
+              </Link>
+
+              <Link
+                href="/resume"
+                onClick={() => logUiEvent("hero_resume_clicked", { page: "home" })}
+                className="inline-flex items-center gap-2 rounded-2xl border border-[var(--glass-border)] bg-[var(--icon-chip-bg)] px-4 py-3 text-sm font-medium text-[var(--text-main)] transition-all hover:bg-white/10"
+              >
+                <span className="material-symbols-outlined text-base">description</span>
+                View Resume
+              </Link>
+            </div>
           </motion.section>
 
           <section className="mb-24 grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">

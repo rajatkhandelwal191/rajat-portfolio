@@ -36,6 +36,26 @@ const navItems = [
 
 const featuredProjects: FeaturedProject[] = [
   {
+    title: "AI Portfolio & Agentic RAG Platform",
+    category: "Full-Stack System Architecture (This Site)",
+    description:
+      "The complete architectural design, backend integration, and agentic AI pipeline powering this portfolio. Built with Next.js 15, FastAPI, LangGraph multi-tool state machine, Groq 120B inference, and dual vector stores (Supabase pgvector + local FAISS fallback).",
+    tags: ["Next.js 15", "FastAPI", "LangGraph", "Groq 120B", "Supabase pgvector", "FAISS", "SentenceTransformers", "TypeScript", "Vercel", "Fly.io"],
+    gradient: "linear-gradient(135deg, #8b5cf6 0%, #6366f1 45%, #3b82f6 100%)",
+    accent: "#8b5cf6",
+    logo: "enterprise",
+    primaryCta: "Explore Architecture",
+    primaryHref: "/projects/portfolio-architecture",
+    detailHref: "/projects/portfolio-architecture",
+    architectureSummary: [
+      "Decoupled Monorepo: Next.js 15 (App Router, Edge CDN) + FastAPI (Dockerized ASGI on Fly.io Singapore).",
+      "Agentic RAG Engine: LangGraph StateGraph with pre-seeded tool calls querying Supabase pgvector with local FAISS failover.",
+      "Ultra-Fast Inference: Groq LPU running openai/gpt-oss-120b with strict grounding and zero-hallucination rules.",
+      "Knowledge Ingestion: 29 semantic chunks embedded with sentence-transformers/all-MiniLM-L6-v2 (384 dimensions).",
+      "PgBouncer Pooler Fix: prepare_threshold=None guarantees robust transaction pooling on Supabase port 6543.",
+    ],
+  },
+  {
     title: "Exam Parser Pipeline",
     category: "Production-Grade PDF Parsing",
     description:
