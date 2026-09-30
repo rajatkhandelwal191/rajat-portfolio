@@ -18,7 +18,7 @@ type ChatMessage = {
   links?: { label: string; href: string }[];
 };
 
-type ChatIntent = "about" | "projects" | "experience" | "contact" | "generic";
+type ChatIntent = "about" | "projects" | "experience" | "contact" | "resume" | "generic";
 
 const followUpByIntent: Record<ChatIntent, { text: string; links: { label: string; href: string }[] }> = {
   about: {
@@ -37,6 +37,13 @@ const followUpByIntent: Record<ChatIntent, { text: string; links: { label: strin
     text: "Do you want to connect with Rajat directly?",
     links: [{ label: "Open Contact", href: "/contact" }],
   },
+  resume: {
+    text: "Looking for Rajat's official resume?",
+    links: [
+      { label: "📄 Download PDF Resume", href: "/Rajat_Khandelwal_Resume.pdf" },
+      { label: "View Experience", href: "/experience" },
+    ],
+  },
   generic: {
     text: "Want to explore a specific section?",
     links: [
@@ -48,8 +55,137 @@ const followUpByIntent: Record<ChatIntent, { text: string; links: { label: strin
   },
 };
 
+function parseInlineTokens(text: string): React.ReactNode[] {
+  const tokenRegex = /(\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*|`([^`]+)`|(https?:\/\/[^\s<]+[^<.,:;"')\]\s]))/g;
+  const nodes: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = tokenRegex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      nodes.push(text.slice(lastIndex, match.index));
+    }
+
+    const fullMatch = match[0];
+    if (match[2] && match[3]) {
+      const label = match[2];
+      const href = match[3];
+      const isPdf = href.toLowerCase().endsWith(".pdf");
+      const isExternal = href.startsWith("http://") || href.startsWith("https://");
+
+      nodes.push(
+        <a
+          key={`${match.index}-link`}
+          href={href}
+          target={isPdf || isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noopener noreferrer" : undefined}
+          download={isPdf ? true : undefined}
+          className={
+            isPdf
+              ? "inline-flex items-center gap-1 rounded-md border border-[var(--primary)]/40 bg-[var(--primary-soft)] px-2 py-0.5 text-xs font-semibold text-[var(--primary)] shadow-xs transition-all hover:brightness-125"
+              : "font-semibold text-[var(--primary)] underline underline-offset-4 transition-all hover:brightness-125"
+          }
+        >
+          {isPdf ? <span className="material-symbols-outlined text-xs">download</span> : null}
+          {label}
+        </a>,
+      );
+    } else if (match[4]) {
+      nodes.push(
+        <strong key={`${match.index}-bold`} className="font-semibold text-[var(--text-main)]">
+          {match[4]}
+        </strong>,
+      );
+    } else if (match[5]) {
+      nodes.push(
+        <code
+          key={`${match.index}-code`}
+          className="rounded bg-black/15 px-1.5 py-0.5 font-mono text-xs text-[var(--text-main)] dark:bg-white/10"
+        >
+          {match[5]}
+        </code>,
+      );
+    } else if (match[6]) {
+      const url = match[6];
+      nodes.push(
+        <a
+          key={`${match.index}-url`}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[var(--primary)] underline underline-offset-4 hover:brightness-125"
+        >
+          {url}
+        </a>,
+      );
+    }
+
+    lastIndex = match.index + fullMatch.length;
+  }
+
+  if (lastIndex < text.length) {
+    nodes.push(text.slice(lastIndex));
+  }
+
+  return nodes;
+}
+
+function FormattedMessage({ content }: { content: string }) {
+  const lines = content.split("\n");
+
+  return (
+    <div className="space-y-1.5 leading-relaxed">
+      {lines.map((line, index) => {
+        const trimmed = line.trim();
+        if (!trimmed) {
+          return <div key={index} className="h-1.5" />;
+        }
+
+        if (trimmed === "---" || trimmed === "***") {
+          return <hr key={index} className="my-2 border-[var(--prompt-border)]" />;
+        }
+
+        if (trimmed.startsWith("### ")) {
+          return (
+            <h4 key={index} className="mt-2 text-sm font-bold text-[var(--text-main)]">
+              {parseInlineTokens(trimmed.slice(4))}
+            </h4>
+          );
+        }
+
+        if (trimmed.startsWith("## ")) {
+          return (
+            <h3 key={index} className="mt-2.5 text-base font-bold text-[var(--text-main)]">
+              {parseInlineTokens(trimmed.slice(3))}
+            </h3>
+          );
+        }
+
+        if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
+          return (
+            <div key={index} className="flex items-start gap-2 pl-2">
+              <span className="font-bold leading-tight text-[var(--primary)]">•</span>
+              <div className="flex-1">{parseInlineTokens(trimmed.slice(2))}</div>
+            </div>
+          );
+        }
+
+        return <p key={index}>{parseInlineTokens(line)}</p>;
+      })}
+    </div>
+  );
+}
+
 function detectIntent(message: string): ChatIntent {
   const text = message.toLowerCase();
+
+  if (
+    text.includes("resume") ||
+    text.includes("cv") ||
+    text.includes("curriculum vitae")
+  ) {
+    return "resume";
+  }
 
   if (
     text.includes("project") ||
@@ -212,19 +348,27 @@ export default function ChatbotWindow({ name, isDark }: ChatbotWindowProps) {
                 }`}
                 key={message.id}
               >
-                <p>{message.content}</p>
+                <FormattedMessage content={message.content} />
                 {message.links && message.links.length > 0 ? (
                   <div className="mt-3 flex flex-wrap gap-2">
-                    {message.links.map((link) => (
-                      <a
-                        className="rounded-full border border-[var(--primary)] bg-[var(--primary-soft)] px-3 py-1 text-xs font-semibold text-[var(--text-main)] transition-all hover:brightness-110"
-                        href={link.href}
-                        onClick={() => logUiEvent("chat_followup_link_clicked", { label: link.label, href: link.href })}
-                        key={`${message.id}-${link.href}`}
-                      >
-                        {link.label}
-                      </a>
-                    ))}
+                    {message.links.map((link) => {
+                      const isPdf = link.href.toLowerCase().endsWith(".pdf");
+                      const isExternal = link.href.startsWith("http://") || link.href.startsWith("https://");
+                      return (
+                        <a
+                          className="inline-flex items-center gap-1 rounded-full border border-[var(--primary)] bg-[var(--primary-soft)] px-3 py-1.5 text-xs font-semibold text-[var(--text-main)] shadow-xs transition-all hover:scale-[1.03] hover:brightness-110"
+                          href={link.href}
+                          target={isPdf || isExternal ? "_blank" : undefined}
+                          rel={isExternal ? "noopener noreferrer" : undefined}
+                          download={isPdf ? true : undefined}
+                          onClick={() => logUiEvent("chat_followup_link_clicked", { label: link.label, href: link.href })}
+                          key={`${message.id}-${link.href}`}
+                        >
+                          {isPdf ? <span className="material-symbols-outlined text-xs text-[var(--primary)]">download</span> : null}
+                          {link.label}
+                        </a>
+                      );
+                    })}
                   </div>
                 ) : null}
               </div>
