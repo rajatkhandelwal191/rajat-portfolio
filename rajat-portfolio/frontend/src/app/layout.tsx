@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import type { Metadata } from "next";
 import { Public_Sans } from "next/font/google";
+import { ThemeProvider } from "../context/ThemeContext";
 
 const publicSans = Public_Sans({
   subsets: ["latin"],
@@ -26,7 +27,9 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={publicSans.variable}>{children}</body>
+      <body className={publicSans.variable}>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

@@ -182,7 +182,7 @@ export default function ChatbotWindow({ name, isDark }: ChatbotWindowProps) {
                   logUiEvent("chat_prompt_clicked", { prompt });
                   void submitMessage(prompt);
                 }}
-                className="rounded-full border border-[var(--prompt-border)] bg-[var(--prompt-bg)] px-5 py-2.5 text-sm text-[var(--text-muted)] transition-all hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                className="rounded-full border border-[var(--prompt-border)] bg-[var(--prompt-bg)] px-5 py-2.5 text-sm font-medium text-[var(--text-main)] shadow-xs transition-all hover:scale-[1.02] hover:border-[var(--primary)] hover:bg-[var(--primary-soft)] hover:text-[var(--primary)]"
               >
                 {prompt}
               </button>

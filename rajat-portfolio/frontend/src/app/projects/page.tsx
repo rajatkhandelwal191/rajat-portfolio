@@ -1,11 +1,12 @@
 "use client";
 
-import { KeyboardEvent, MouseEvent, useEffect, useMemo, useState } from "react";
+import { KeyboardEvent, MouseEvent, useEffect, useMemo } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { logUiEvent } from "../../lib/frontendLogger";
+import { useTheme } from "../../context/ThemeContext";
 
-type Theme = "light" | "dark";
 type LogoType = "enterprise" | "anass" | "parser";
 
 type FeaturedProject = {
@@ -185,8 +186,7 @@ function ProjectLogo({ logo }: { logo: LogoType }) {
 }
 
 export default function ProjectsPage() {
-  const [theme, setTheme] = useState<Theme>("dark");
-  const isDark = theme === "dark";
+  const { theme, isDark, toggleTheme } = useTheme();
   const router = useRouter();
 
   const footerText = useMemo(
@@ -243,7 +243,7 @@ export default function ProjectsPage() {
     >
       <aside className="nav-float fixed left-6 top-1/2 z-50 hidden -translate-y-1/2 flex-col items-center gap-6 rounded-full border border-[var(--nav-border)] px-3 py-6 lg:flex">
         {navItems.map((item) => (
-          <a
+          <Link
             key={item.label}
             className={`group relative flex size-12 items-center justify-center rounded-full transition-all ${
               item.active
@@ -262,7 +262,7 @@ export default function ProjectsPage() {
             <span className="pointer-events-none absolute left-full ml-3 whitespace-nowrap rounded bg-slate-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
               {item.label}
             </span>
-          </a>
+          </Link>
         ))}
       </aside>
 
@@ -295,10 +295,7 @@ export default function ProjectsPage() {
 
           <button
             className="portfolio-glass flex size-10 items-center justify-center rounded-xl border border-[var(--glass-border)] text-[var(--primary)] transition-all hover:bg-[var(--icon-chip-bg)]"
-            onClick={() => {
-              logUiEvent("theme_toggle_clicked", { page: "projects", from: theme, to: isDark ? "light" : "dark" });
-              setTheme(isDark ? "light" : "dark");
-            }}
+            onClick={toggleTheme}
             type="button"
           >
             <span className="material-symbols-outlined">{isDark ? "light_mode" : "dark_mode"}</span>

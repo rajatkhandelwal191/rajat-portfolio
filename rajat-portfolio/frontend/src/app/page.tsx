@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
@@ -7,10 +7,10 @@ import { motion } from "framer-motion";
 import ChatbotWindow from "../components/ChatbotWindow";
 import { logUiEvent } from "../lib/frontendLogger";
 
-type Theme = "light" | "dark";
+import { useTheme } from "../context/ThemeContext";
 
 const navItems = [
-  { href: "#home", icon: "home", label: "Home", active: true },
+  { href: "/", icon: "home", label: "Home", active: true },
   { href: "/about", icon: "person", label: "About" },
   { href: "/projects", icon: "code_blocks", label: "Projects" },
   { href: "/experience", icon: "history_edu", label: "Experience" },
@@ -39,23 +39,11 @@ const keyMetrics = [
 ];
 
 export default function Home() {
-  const [theme, setTheme] = useState<Theme>("dark");
-  const isDark = theme === "dark";
+  const { theme, isDark, toggleTheme } = useTheme();
 
   useEffect(() => {
     document.title = "Rajat Khandelwal | Lead AI Engineer & Full-Stack Architect";
-    const savedTheme = localStorage.getItem("portfolio_theme") as Theme | null;
-    if (savedTheme === "light" || savedTheme === "dark") {
-      setTheme(savedTheme);
-    }
   }, []);
-
-  const toggleTheme = () => {
-    const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
-    localStorage.setItem("portfolio_theme", next);
-    logUiEvent("theme_toggle_clicked", { page: "home", from: theme, to: next });
-  };
 
   const footerText = useMemo(
     () => `(c) ${new Date().getFullYear()} Rajat Khandelwal. Engineered with Next.js 15, FastAPI & LangGraph.`,
@@ -72,7 +60,7 @@ export default function Home() {
       {/* Floating Left Dock Navigation */}
       <aside className="nav-float fixed left-6 top-1/2 z-50 hidden -translate-y-1/2 flex-col items-center gap-6 rounded-full border border-[var(--nav-border)] px-3 py-6 lg:flex">
         {navItems.map((item) => (
-          <a
+          <Link
             key={item.label}
             href={item.href}
             onClick={() => logUiEvent("nav_click", { target: item.href, label: item.label })}
@@ -86,7 +74,7 @@ export default function Home() {
             <span className="nav-tooltip pointer-events-none absolute left-full ml-4 whitespace-nowrap rounded-md bg-black/85 px-2.5 py-1 text-xs text-white opacity-0 backdrop-blur-sm transition-opacity">
               {item.label}
             </span>
-          </a>
+          </Link>
         ))}
       </aside>
 
@@ -117,7 +105,7 @@ export default function Home() {
             <Link
               href="/resume"
               onClick={() => logUiEvent("header_resume_clicked", { page: "home" })}
-              className="hidden items-center gap-2 rounded-xl border border-[var(--glass-border)] bg-white/5 px-4 py-2 text-xs font-semibold text-[var(--text-main)] transition hover:bg-white/10 sm:inline-flex"
+              className="theme-btn-secondary hidden items-center gap-2 rounded-xl px-4 py-2 text-xs font-semibold sm:inline-flex"
             >
               <span className="material-symbols-outlined text-sm">description</span>
               Resume
@@ -126,7 +114,7 @@ export default function Home() {
             <button
               onClick={toggleTheme}
               aria-label="Toggle light/dark theme"
-              className="flex size-9 items-center justify-center rounded-xl border border-[var(--glass-border)] bg-white/5 text-[var(--text-main)] transition hover:bg-white/10"
+              className="theme-btn-secondary flex size-9 items-center justify-center rounded-xl"
               type="button"
             >
               <span className="material-symbols-outlined text-lg">
@@ -144,9 +132,9 @@ export default function Home() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
-              className="inline-flex items-center gap-2.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-medium text-emerald-400"
+              className="inline-flex items-center gap-2.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-400"
             >
-              <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="size-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
               <span>Available for Lead AI & Full-Stack Opportunities</span>
             </motion.div>
 
@@ -195,7 +183,7 @@ export default function Home() {
               <Link
                 href="/resume"
                 onClick={() => logUiEvent("hero_resume_clicked", { page: "home" })}
-                className="inline-flex items-center gap-2 rounded-xl border border-[var(--glass-border)] bg-white/5 px-4 py-3 text-sm font-semibold text-[var(--text-main)] backdrop-blur-sm transition hover:bg-white/10"
+                className="theme-btn-secondary inline-flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold"
               >
                 <span className="material-symbols-outlined text-lg">description</span>
                 View Resume / CV
@@ -207,9 +195,9 @@ export default function Home() {
                   const el = document.getElementById("chatbot");
                   if (el) el.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="inline-flex items-center gap-2 rounded-xl border border-[var(--glass-border)] bg-white/5 px-4 py-3 text-sm font-semibold text-[var(--text-main)] backdrop-blur-sm transition hover:bg-white/10"
+                className="theme-btn-secondary inline-flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold"
               >
-                <span className="material-symbols-outlined text-lg text-indigo-400">smart_toy</span>
+                <span className="material-symbols-outlined text-lg text-indigo-600 dark:text-indigo-400">smart_toy</span>
                 Ask RajatGPT
               </a>
             </motion.div>
@@ -219,15 +207,15 @@ export default function Home() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.4 }}
-              className="mt-12 grid grid-cols-2 gap-4 rounded-2xl border border-[var(--glass-border)] bg-[var(--card-bg)] p-6 backdrop-blur-md sm:grid-cols-4"
+              className="mt-12 grid grid-cols-2 gap-4 rounded-2xl border border-[var(--glass-border)] bg-[var(--card-bg)] p-6 shadow-[var(--card-shadow)] sm:grid-cols-4"
             >
               {keyMetrics.map((m) => (
-                <div key={m.label} className="border-l-2 border-indigo-500/40 pl-3">
+                <div key={m.label} className="border-l-2 border-indigo-500/50 pl-3">
                   <div className="flex items-baseline gap-1.5">
                     <span className="text-2xl font-black tracking-tight text-[var(--text-main)] sm:text-3xl">
                       {m.value}
                     </span>
-                    <span className="text-xs font-semibold text-indigo-400">{m.suffix}</span>
+                    <span className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">{m.suffix}</span>
                   </div>
                   <p className="mt-0.5 text-xs font-medium text-[var(--text-muted)]">{m.desc}</p>
                 </div>
@@ -247,10 +235,10 @@ export default function Home() {
               {techPills.map((pill) => (
                 <span
                   key={pill.name}
-                  className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1 text-xs font-medium backdrop-blur-sm transition hover:scale-105 ${
+                  className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1 text-xs font-medium transition hover:scale-105 ${
                     pill.highlight
-                      ? "border-indigo-500/30 bg-indigo-500/10 text-indigo-300"
-                      : "border-white/10 bg-white/5 text-[var(--text-muted)]"
+                      ? "border-indigo-500/40 bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 font-semibold"
+                      : "theme-chip"
                   }`}
                 >
                   <span className="material-symbols-outlined text-sm">{pill.icon}</span>
@@ -279,8 +267,8 @@ export default function Home() {
                 <div className="flex flex-col justify-between h-full">
                   <div>
                     <div className="flex items-center justify-between">
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-3 py-1 text-xs font-semibold text-indigo-400">
-                        <span className="size-1.5 rounded-full bg-indigo-400 animate-ping" />
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-3 py-1 text-xs font-semibold text-indigo-700 dark:text-indigo-400">
+                        <span className="size-1.5 rounded-full bg-indigo-600 dark:bg-indigo-400 animate-ping" />
                         Full-Stack Deep Dive
                       </span>
                       <span className="font-mono text-xs text-[var(--text-muted)]">Monorepo / 2026</span>
@@ -294,16 +282,16 @@ export default function Home() {
                     </p>
 
                     <div className="mt-5 flex flex-wrap gap-2 text-xs">
-                      <span className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[var(--text-muted)]">
+                      <span className="theme-chip rounded-md px-2.5 py-1 font-mono text-xs">
                         LangGraph Agentic RAG
                       </span>
-                      <span className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[var(--text-muted)]">
+                      <span className="theme-chip rounded-md px-2.5 py-1 font-mono text-xs">
                         Groq 120B LPU (&lt;1s)
                       </span>
-                      <span className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[var(--text-muted)]">
+                      <span className="theme-chip rounded-md px-2.5 py-1 font-mono text-xs">
                         Supabase pgvector (384-dim)
                       </span>
-                      <span className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[var(--text-muted)]">
+                      <span className="theme-chip rounded-md px-2.5 py-1 font-mono text-xs">
                         Local FAISS Fallback
                       </span>
                     </div>
@@ -315,7 +303,7 @@ export default function Home() {
                     </span>
                     <Link
                       href="/projects/portfolio-architecture"
-                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-400 transition group-hover:translate-x-1"
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 dark:text-indigo-400 transition group-hover:translate-x-1"
                     >
                       Explore Architecture
                       <span className="material-symbols-outlined text-base">arrow_forward</span>
@@ -328,7 +316,7 @@ export default function Home() {
               <div className="bento-card group col-span-1 p-7">
                 <div className="flex flex-col justify-between h-full">
                   <div>
-                    <div className="flex size-10 items-center justify-center rounded-xl bg-orange-500/10 text-orange-400">
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-orange-500/15 text-orange-600 dark:text-orange-400">
                       <span className="material-symbols-outlined">history_edu</span>
                     </div>
                     <h3 className="mt-4 text-xl font-bold text-[var(--text-main)]">Experience</h3>
@@ -338,15 +326,15 @@ export default function Home() {
 
                     <div className="mt-4 space-y-2 text-xs text-[var(--text-muted)]">
                       <div className="flex items-center gap-2">
-                        <span className="size-1.5 rounded-full bg-emerald-400" />
+                        <span className="size-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
                         <span>TCS Lead AI Engineer (2025 - Present)</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="size-1.5 rounded-full bg-blue-400" />
+                        <span className="size-1.5 rounded-full bg-blue-500 dark:bg-blue-400" />
                         <span>TCS Innovista Lead Dev (2024 - 2025)</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="size-1.5 rounded-full bg-amber-400" />
+                        <span className="size-1.5 rounded-full bg-amber-500 dark:bg-amber-400" />
                         <span>Outokumpu Core Chatbot Dev (2021 - 2024)</span>
                       </div>
                     </div>
@@ -355,7 +343,7 @@ export default function Home() {
                   <div className="mt-6 border-t border-[var(--glass-border)] pt-4">
                     <Link
                       href="/experience"
-                      className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-400 transition group-hover:translate-x-1"
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-600 dark:text-indigo-400 transition group-hover:translate-x-1"
                     >
                       See Career Timeline
                       <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -368,7 +356,7 @@ export default function Home() {
               <div className="bento-card group col-span-1 p-7">
                 <div className="flex flex-col justify-between h-full">
                   <div>
-                    <div className="flex size-10 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-400">
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-cyan-500/15 text-cyan-600 dark:text-cyan-400">
                       <span className="material-symbols-outlined">code_blocks</span>
                     </div>
                     <h3 className="mt-4 text-xl font-bold text-[var(--text-main)]">Featured Projects</h3>
@@ -377,13 +365,13 @@ export default function Home() {
                     </p>
 
                     <div className="mt-4 flex flex-wrap gap-1.5">
-                      <span className="rounded-md border border-white/5 bg-white/5 px-2 py-0.5 text-[11px] text-[var(--text-muted)]">
+                      <span className="theme-chip rounded-md px-2 py-0.5 text-[11px]">
                         RAG Playground
                       </span>
-                      <span className="rounded-md border border-white/5 bg-white/5 px-2 py-0.5 text-[11px] text-[var(--text-muted)]">
+                      <span className="theme-chip rounded-md px-2 py-0.5 text-[11px]">
                         Exam Parser
                       </span>
-                      <span className="rounded-md border border-white/5 bg-white/5 px-2 py-0.5 text-[11px] text-[var(--text-muted)]">
+                      <span className="theme-chip rounded-md px-2 py-0.5 text-[11px]">
                         Enterprise Assistant
                       </span>
                     </div>
@@ -392,7 +380,7 @@ export default function Home() {
                   <div className="mt-6 border-t border-[var(--glass-border)] pt-4">
                     <Link
                       href="/projects"
-                      className="inline-flex items-center gap-1 text-xs font-semibold text-cyan-400 transition group-hover:translate-x-1"
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-cyan-600 dark:text-cyan-400 transition group-hover:translate-x-1"
                     >
                       View All Projects
                       <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -405,7 +393,7 @@ export default function Home() {
               <div className="bento-card group col-span-1 p-7">
                 <div className="flex flex-col justify-between h-full">
                   <div>
-                    <div className="flex size-10 items-center justify-center rounded-xl bg-purple-500/10 text-purple-400">
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-purple-500/15 text-purple-600 dark:text-purple-400">
                       <span className="material-symbols-outlined">description</span>
                     </div>
                     <h3 className="mt-4 text-xl font-bold text-[var(--text-main)]">Resume & Credentials</h3>
@@ -413,8 +401,8 @@ export default function Home() {
                       Verified curriculum vitae, B.Tech (2021) degree details, and LangGraph certifications.
                     </p>
 
-                    <div className="mt-4 rounded-xl border border-white/5 bg-white/5 p-3 text-xs text-[var(--text-muted)]">
-                      <div className="font-mono text-emerald-400 font-semibold">✓ Verified PDF Ready</div>
+                    <div className="mt-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-xs text-[var(--text-muted)]">
+                      <div className="font-mono text-emerald-700 dark:text-emerald-400 font-semibold">✓ Verified PDF Ready</div>
                       <div className="mt-1">Full-screen document viewer & 1-click download</div>
                     </div>
                   </div>
@@ -422,7 +410,7 @@ export default function Home() {
                   <div className="mt-6 border-t border-[var(--glass-border)] pt-4">
                     <Link
                       href="/resume"
-                      className="inline-flex items-center gap-1 text-xs font-semibold text-purple-400 transition group-hover:translate-x-1"
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-purple-600 dark:text-purple-400 transition group-hover:translate-x-1"
                     >
                       Open Resume Viewer
                       <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -435,7 +423,7 @@ export default function Home() {
               <div className="bento-card group col-span-1 p-7">
                 <div className="flex flex-col justify-between h-full">
                   <div>
-                    <div className="flex size-10 items-center justify-center rounded-xl bg-rose-500/10 text-rose-400">
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-rose-500/15 text-rose-600 dark:text-rose-400">
                       <span className="material-symbols-outlined">person</span>
                     </div>
                     <h3 className="mt-4 text-xl font-bold text-[var(--text-main)]">About Me</h3>
@@ -471,7 +459,7 @@ export default function Home() {
                   <div className="mt-6 border-t border-[var(--glass-border)] pt-4">
                     <Link
                       href="/about"
-                      className="inline-flex items-center gap-1 text-xs font-semibold text-rose-400 transition group-hover:translate-x-1"
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-rose-600 dark:text-rose-400 transition group-hover:translate-x-1"
                     >
                       Read Bio & Values
                       <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -488,7 +476,7 @@ export default function Home() {
               <div className="mb-6 flex flex-col justify-between gap-4 border-b border-[var(--glass-border)] pb-6 sm:flex-row sm:items-center">
                 <div>
                   <div className="flex items-center gap-2.5">
-                    <span className="flex size-8 items-center justify-center rounded-lg bg-indigo-500/20 text-indigo-400">
+                    <span className="flex size-8 items-center justify-center rounded-lg bg-indigo-500/15 text-indigo-600 dark:text-indigo-400">
                       <span className="material-symbols-outlined text-lg">smart_toy</span>
                     </span>
                     <h2 className="text-xl font-bold text-[var(--text-main)]">RajatGPT Assistant</h2>
@@ -499,8 +487,8 @@ export default function Home() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-400">
-                    <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-400">
+                    <span className="size-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
                     Online · Groq 120B & pgvector
                   </span>
                 </div>

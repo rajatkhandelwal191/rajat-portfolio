@@ -1,4 +1,4 @@
-﻿@tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -23,61 +23,70 @@ body {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   LIGHT MODE DESIGN TOKENS
+   LIGHT MODE DESIGN TOKENS (REFINED TACTILE SLATE PALETTE)
    ───────────────────────────────────────────────────────────── */
 .portfolio-shell[data-theme="light"] {
-  --page-bg: #f8fafc;
-  --text-main: #0f172a;
-  --text-muted: #64748b;
-  --primary: #4f46e5;
-  --primary-glow: rgba(79, 70, 229, 0.2);
-  --primary-soft: rgba(79, 70, 229, 0.06);
-  --primary-soft-strong: rgba(79, 70, 229, 0.12);
+  --page-bg: #eef2f6;               /* Noticeable slate-100 canvas: separates cards from background */
+  --text-main: #090d16;             /* Slate-950: deep, punchy charcoal-black */
+  --text-muted: #475569;            /* Slate-600: rich contrast, avoids washed-out look */
+  --primary: #4f46e5;               /* Indigo 600 */
+  --primary-hover: #4338ca;
+  --primary-glow: rgba(79, 70, 229, 0.22);
+  --primary-soft: #eef2ff;          /* Indigo 50 */
+  --primary-soft-strong: #e0e7ff;   /* Indigo 100 */
   --cream-active: #312e81;
   --cream-text: #ffffff;
-  --title-glow: #0f172a;
+  --title-glow: #090d16;
 
-  --glass-bg: rgba(255, 255, 255, 0.82);
-  --glass-border: rgba(226, 232, 240, 0.85);
+  --glass-bg: rgba(255, 255, 255, 0.94);
+  --glass-border: #cbd5e1;          /* Slate 300: crisp structure */
 
-  --card-bg: rgba(255, 255, 255, 0.75);
-  --card-hover-bg: rgba(255, 255, 255, 0.95);
-  --card-hover-border: rgba(79, 70, 229, 0.35);
+  --card-bg: #ffffff;               /* Crisp pure white card surface */
+  --card-hover-bg: #ffffff;
+  --card-hover-border: #6366f1;
+  --card-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+  --card-hover-shadow: 0 4px 12px 0 rgba(15, 23, 42, 0.06), 0 20px 36px -8px rgba(79, 70, 229, 0.16);
 
-  --nav-bg: rgba(255, 255, 255, 0.88);
-  --nav-border: rgba(203, 213, 225, 0.6);
-  --icon-chip-bg: rgba(79, 70, 229, 0.08);
+  --nav-bg: rgba(255, 255, 255, 0.96);
+  --nav-border: #cbd5e1;
+  --icon-chip-bg: #eef2ff;
 
-  --prompt-bg: rgba(241, 245, 249, 0.8);
-  --prompt-border: rgba(203, 213, 225, 0.7);
+  --chip-bg: #f1f5f9;              /* Slate 100 pill surface */
+  --chip-border: #cbd5e1;          /* Slate 300 border */
+  --chip-text: #334155;            /* Slate 700 readable text */
+  --chip-hover-bg: #e2e8f0;
+
+  --prompt-bg: #f8fafc;
+  --prompt-border: #cbd5e1;
 
   --input-bg: #ffffff;
-  --input-border: rgba(203, 213, 225, 0.8);
-  --input-focus: rgba(79, 70, 229, 0.2);
-  --input-glow: rgba(79, 70, 229, 0.1);
-  --input-glow-strong: rgba(79, 70, 229, 0.2);
+  --input-border: #cbd5e1;
+  --input-focus: rgba(79, 70, 229, 0.25);
+  --input-glow: rgba(79, 70, 229, 0.08);
+  --input-glow-strong: rgba(79, 70, 229, 0.18);
   --text-placeholder: #94a3b8;
 
-  --footer-bg: rgba(255, 255, 255, 0.6);
-  --footer-border: rgba(226, 232, 240, 0.8);
+  --footer-bg: rgba(238, 242, 246, 0.85);
+  --footer-border: #cbd5e1;
 
-  --hero-title: #0f172a;
-  --hero-subtitle: #475569;
-  --section-title: #0f172a;
-  --section-line: rgba(203, 213, 225, 0.6);
+  --hero-title: #090d16;
+  --hero-subtitle: #334155;
+  --section-title: #090d16;
+  --section-line: #cbd5e1;
 
-  --glass-card-bg: rgba(255, 255, 255, 0.75);
-  --glass-card-border: rgba(226, 232, 240, 0.85);
+  --glass-card-bg: #ffffff;
+  --glass-card-border: #cbd5e1;
 }
 
 /* ─────────────────────────────────────────────────────────────
-   DARK MODE DESIGN TOKENS (OBSIDIAN TECH PALETTE)
+   DARK MODE DESIGN TOKENS (OBSIDIAN TECH PALETTE) - UNTOUCHED
    ───────────────────────────────────────────────────────────── */
 .portfolio-shell[data-theme="dark"] {
   --page-bg: #07090e;
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
   --primary: #6366f1;
+  --primary-hover: #4f46e5;
   --primary-glow: rgba(99, 102, 241, 0.4);
   --primary-soft: rgba(99, 102, 241, 0.1);
   --primary-soft-strong: rgba(99, 102, 241, 0.2);
@@ -91,10 +100,17 @@ body {
   --card-bg: rgba(15, 20, 32, 0.6);
   --card-hover-bg: rgba(22, 30, 48, 0.75);
   --card-hover-border: rgba(99, 102, 241, 0.45);
+  --card-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.4);
+  --card-hover-shadow: 0 20px 40px -12px rgba(99, 102, 241, 0.25);
 
   --nav-bg: rgba(13, 17, 28, 0.88);
   --nav-border: rgba(255, 255, 255, 0.1);
   --icon-chip-bg: rgba(99, 102, 241, 0.12);
+
+  --chip-bg: rgba(255, 255, 255, 0.05);
+  --chip-border: rgba(255, 255, 255, 0.1);
+  --chip-text: #cbd5e1;
+  --chip-hover-bg: rgba(255, 255, 255, 0.1);
 
   --prompt-bg: rgba(255, 255, 255, 0.04);
   --prompt-border: rgba(255, 255, 255, 0.08);
@@ -122,13 +138,14 @@ body {
    BACKGROUND PATTERNS (HIGH-TECH GRID + AMBIENT AURA)
    ───────────────────────────────────────────────────────────── */
 .light-pattern {
-  background-color: #f8fafc;
+  background-color: #eef2f6;
   background-image:
-    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(99, 102, 241, 0.1), transparent),
-    radial-gradient(ellipse 60% 40% at 90% 60%, rgba(14, 165, 233, 0.06), transparent),
-    linear-gradient(to right, rgba(15, 23, 42, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+    radial-gradient(ellipse 85% 55% at 50% -12%, rgba(99, 102, 241, 0.12), transparent 70%),
+    radial-gradient(ellipse 65% 45% at 85% 35%, rgba(139, 92, 246, 0.08), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 15% 75%, rgba(59, 130, 246, 0.06), transparent 50%),
+    linear-gradient(to right, rgba(148, 163, 184, 0.2) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.2) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px;
   background-attachment: fixed;
 }
 
@@ -151,7 +168,7 @@ body {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--card-shadow);
 }
 
 .portfolio-glass-card {
@@ -159,7 +176,7 @@ body {
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--card-shadow);
   transition: transform 220ms ease, border-color 220ms ease, background-color 220ms ease, box-shadow 220ms ease;
 }
 
@@ -167,14 +184,14 @@ body {
   transform: translateY(-2px);
   background: var(--card-hover-bg);
   border-color: var(--card-hover-border);
-  box-shadow: 0 16px 36px -12px rgba(99, 102, 241, 0.2);
+  box-shadow: var(--card-hover-shadow);
 }
 
 .nav-float {
   background: var(--nav-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--card-shadow);
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -188,14 +205,41 @@ body {
   background: var(--card-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--card-shadow);
   transition: all 260ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .bento-card:hover {
   transform: translateY(-3px);
   border-color: var(--card-hover-border);
-  box-shadow: 0 20px 40px -12px rgba(99, 102, 241, 0.22);
+  box-shadow: var(--card-hover-shadow);
+}
+
+.theme-chip {
+  background-color: var(--chip-bg);
+  border: 1px solid var(--chip-border);
+  color: var(--chip-text);
+  transition: all 200ms ease;
+}
+
+.theme-chip:hover {
+  background-color: var(--chip-hover-bg);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.theme-btn-secondary {
+  background-color: var(--chip-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 200ms ease;
+}
+
+.theme-btn-secondary:hover {
+  background-color: var(--chip-hover-bg);
+  border-color: var(--card-hover-border);
+  transform: translateY(-1px);
 }
 
 .text-gradient {
@@ -204,8 +248,35 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-.text-gradient-primary {
+.portfolio-shell[data-theme="light"] .text-gradient-primary {
+  background: linear-gradient(135deg, #4338ca 0%, #6366f1 50%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.portfolio-shell[data-theme="dark"] .text-gradient-primary {
   background: linear-gradient(135deg, #818cf8 0%, #6366f1 50%, #a855f7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   LIGHT MODE OVERRIDES FOR TRANSLUCENT SURFACES
+   Prevents washed-out/invisible elements across all pages
+   ───────────────────────────────────────────────────────────── */
+.portfolio-shell[data-theme="light"] .bg-white\/5 {
+  background-color: var(--chip-bg);
+}
+
+.portfolio-shell[data-theme="light"] .hover\:bg-white\/10:hover {
+  background-color: var(--chip-hover-bg);
+}
+
+.portfolio-shell[data-theme="light"] .border-white\/10,
+.portfolio-shell[data-theme="light"] .border-white\/5 {
+  border-color: var(--chip-border);
+}
+
+.portfolio-shell[data-theme="light"] .border-white\/20 {
+  border-color: var(--glass-border);
 }

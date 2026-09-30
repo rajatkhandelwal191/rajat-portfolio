@@ -1,11 +1,10 @@
-﻿"use client";
+"use client";
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { logUiEvent } from "../../../lib/frontendLogger";
-
-type Theme = "light" | "dark";
+import { useTheme } from "../../../context/ThemeContext";
 
 const navItems = [
   { href: "/", icon: "home", label: "Home" },
@@ -126,9 +125,8 @@ const sampleChunks = [
 ];
 
 export default function PortfolioArchitecturePage() {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const { theme, isDark, toggleTheme } = useTheme();
   const [activeTab, setActiveTab] = useState<"pipeline" | "tech" | "chunks" | "engineering">("pipeline");
-  const isDark = theme === "dark";
 
   const footerText = useMemo(
     () => `(c) ${new Date().getFullYear()} Rajat Khandelwal. Portfolio Architecture Showcase.`,
@@ -186,7 +184,7 @@ export default function PortfolioArchitecturePage() {
 
               <button
                 type="button"
-                onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
+                onClick={toggleTheme}
                 aria-label="Toggle theme"
                 className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--glass-card-border)] bg-white/5 text-[var(--text-primary)] transition hover:bg-white/10"
               >

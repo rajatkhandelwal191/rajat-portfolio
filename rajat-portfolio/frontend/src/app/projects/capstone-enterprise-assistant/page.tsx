@@ -4,7 +4,8 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { logUiEvent } from "../../../lib/frontendLogger";
 
-type Theme = "light" | "dark";
+import Link from "next/link";
+import { useTheme } from "../../../context/ThemeContext";
 
 const navItems = [
   { href: "/", icon: "home", label: "Home" },
@@ -88,8 +89,7 @@ const usageItems = [
 ];
 
 export default function CapstoneEnterpriseAssistantPage() {
-  const [theme, setTheme] = useState<Theme>("dark");
-  const isDark = theme === "dark";
+  const { theme, isDark, toggleTheme } = useTheme();
 
   const footerText = useMemo(
     () => `(c) ${new Date().getFullYear()} Rajat Khandelwal. Capstone Project details.`,
@@ -105,7 +105,7 @@ export default function CapstoneEnterpriseAssistantPage() {
     >
       <aside className="nav-float fixed left-6 top-1/2 z-50 hidden -translate-y-1/2 flex-col items-center gap-6 rounded-full border border-[var(--nav-border)] px-3 py-6 lg:flex">
         {navItems.map((item) => (
-          <a
+          <Link
             key={item.label}
             className={`group relative flex size-12 items-center justify-center rounded-full transition-all ${
               item.active
@@ -124,7 +124,7 @@ export default function CapstoneEnterpriseAssistantPage() {
             <span className="pointer-events-none absolute left-full ml-3 whitespace-nowrap rounded bg-slate-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
               {item.label}
             </span>
-          </a>
+          </Link>
         ))}
       </aside>
 
@@ -148,10 +148,7 @@ export default function CapstoneEnterpriseAssistantPage() {
           </div>
           <button
             className="portfolio-glass flex size-10 items-center justify-center rounded-xl border border-[var(--glass-border)] text-[var(--primary)] transition-all hover:bg-[var(--icon-chip-bg)]"
-            onClick={() => {
-              logUiEvent("theme_toggle_clicked", { page: "project_detail_capstone", from: theme, to: isDark ? "light" : "dark" });
-              setTheme(isDark ? "light" : "dark");
-            }}
+            onClick={toggleTheme}
             type="button"
           >
             <span className="material-symbols-outlined">{isDark ? "light_mode" : "dark_mode"}</span>

@@ -1,11 +1,10 @@
-﻿"use client";
+"use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { logUiEvent } from "../../lib/frontendLogger";
-
-type Theme = "light" | "dark";
+import { useTheme } from "../../context/ThemeContext";
 
 const navItems = [
   { href: "/", icon: "home", label: "Home" },
@@ -18,8 +17,7 @@ const navItems = [
 ];
 
 export default function ResumePage() {
-  const [theme, setTheme] = useState<Theme>("dark");
-  const isDark = theme === "dark";
+  const { theme, isDark, toggleTheme } = useTheme();
 
   const footerText = useMemo(
     () => `(c) ${new Date().getFullYear()} Rajat Khandelwal. Resume document viewer.`,
@@ -28,17 +26,7 @@ export default function ResumePage() {
 
   useEffect(() => {
     document.title = "Resume / CV | Rajat Khandelwal";
-    const savedTheme = localStorage.getItem("portfolio_theme") as Theme | null;
-    if (savedTheme === "light" || savedTheme === "dark") {
-      setTheme(savedTheme);
-    }
   }, []);
-
-  const toggleTheme = () => {
-    const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
-    localStorage.setItem("portfolio_theme", next);
-  };
 
   return (
     <div

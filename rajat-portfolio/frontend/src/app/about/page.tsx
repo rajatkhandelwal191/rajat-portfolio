@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { logUiEvent } from "../../lib/frontendLogger";
-
-type Theme = "light" | "dark";
+import { useTheme } from "../../context/ThemeContext";
 
 const navItems = [
   { href: "/", icon: "home", label: "Home" },
@@ -86,8 +86,7 @@ const experienceHighlights = [
 ];
 
 export default function AboutPage() {
-  const [theme, setTheme] = useState<Theme>("dark");
-  const isDark = theme === "dark";
+  const { theme, isDark, toggleTheme } = useTheme();
 
   const footerText = useMemo(
     () => `(c) ${new Date().getFullYear()} Rajat Khandelwal. About page.`,
@@ -107,7 +106,7 @@ export default function AboutPage() {
     >
       <aside className="nav-float fixed left-6 top-1/2 z-50 hidden -translate-y-1/2 flex-col items-center gap-6 rounded-full border border-[var(--nav-border)] px-3 py-6 lg:flex">
         {navItems.map((item) => (
-          <a
+          <Link
             key={item.label}
             className={`group relative flex size-12 items-center justify-center rounded-full transition-all ${
               item.active
@@ -126,7 +125,7 @@ export default function AboutPage() {
             <span className="pointer-events-none absolute left-full ml-3 whitespace-nowrap rounded bg-slate-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
               {item.label}
             </span>
-          </a>
+          </Link>
         ))}
       </aside>
 
@@ -150,10 +149,7 @@ export default function AboutPage() {
           </div>
           <button
             className="portfolio-glass flex size-10 items-center justify-center rounded-xl border border-[var(--glass-border)] text-[var(--primary)] transition-all hover:bg-[var(--icon-chip-bg)]"
-            onClick={() => {
-              logUiEvent("theme_toggle_clicked", { page: "about", from: theme, to: isDark ? "light" : "dark" });
-              setTheme(isDark ? "light" : "dark");
-            }}
+            onClick={toggleTheme}
             type="button"
           >
             <span className="material-symbols-outlined">{isDark ? "light_mode" : "dark_mode"}</span>
@@ -214,7 +210,7 @@ export default function AboutPage() {
             ))}
           </section>
 
-          <section className="mb-10 rounded-3xl border border-white/10 p-8" style={{ background: "linear-gradient(135deg, rgba(249,115,22,0.16) 0%, rgba(234,88,12,0.08) 45%, rgba(124,58,237,0.12) 100%)" }}>
+          <section className="mb-10 rounded-3xl border border-[var(--glass-border)] p-8 shadow-[var(--card-shadow)]" style={{ background: "linear-gradient(135deg, rgba(249,115,22,0.14) 0%, rgba(234,88,12,0.06) 45%, rgba(124,58,237,0.1) 100%)" }}>
             <h3 className="text-2xl font-semibold text-[var(--text-main)]">Professional Summary</h3>
             <p className="mt-4 leading-relaxed text-[var(--text-muted)]">
               I am a Lead AI Engineer passionate about building scalable, intelligent systems that
@@ -236,7 +232,7 @@ export default function AboutPage() {
               <div className="mt-4 flex flex-wrap gap-2">
                 {openRoles.map((role) => (
                   <span
-                    className="rounded-full border border-[var(--card-hover-border)] bg-white/5 px-3 py-1 text-xs text-[var(--text-muted)]"
+                    className="theme-chip rounded-full px-3 py-1 text-xs font-medium"
                     key={role}
                   >
                     {role}
@@ -276,7 +272,7 @@ export default function AboutPage() {
             <div className="flex flex-wrap gap-2">
               {coreSkills.map((skill) => (
                 <span
-                  className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[var(--text-muted)]"
+                  className="theme-chip rounded-full px-3 py-1 text-xs font-medium"
                   key={skill}
                 >
                   {skill}

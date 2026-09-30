@@ -5,10 +5,10 @@ import { motion } from "framer-motion";
 import { ContactSubmissionRecord, fetchContactSubmissions } from "../../../lib/api";
 import { logUiEvent } from "../../../lib/frontendLogger";
 
-type Theme = "light" | "dark";
+import { useTheme } from "../../../context/ThemeContext";
 
 export default function ContactAdminPage() {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const { theme, isDark, toggleTheme } = useTheme();
   const [password, setPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [nameFilter, setNameFilter] = useState("");
@@ -20,7 +20,6 @@ export default function ContactAdminPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [info, setInfo] = useState<string | null>(null);
-  const isDark = theme === "dark";
 
   const footerText = useMemo(
     () => `(c) ${new Date().getFullYear()} Rajat Khandelwal. Contact admin page.`,
@@ -115,7 +114,7 @@ export default function ContactAdminPage() {
             ) : null}
             <button
               className="portfolio-glass flex size-10 items-center justify-center rounded-xl border border-[var(--glass-border)] text-[var(--primary)] transition-all hover:bg-[var(--icon-chip-bg)]"
-              onClick={() => setTheme(isDark ? "light" : "dark")}
+              onClick={toggleTheme}
               type="button"
             >
               <span className="material-symbols-outlined">{isDark ? "light_mode" : "dark_mode"}</span>

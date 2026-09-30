@@ -5,7 +5,8 @@ import { motion } from "framer-motion";
 import { submitContactForm } from "../../lib/api";
 import { logUiEvent } from "../../lib/frontendLogger";
 
-type Theme = "light" | "dark";
+import Link from "next/link";
+import { useTheme } from "../../context/ThemeContext";
 
 const navItems = [
   { href: "/projects", icon: "code_blocks", label: "Projects" },
@@ -20,7 +21,7 @@ const navItems = [
 const timelineDots = [false, false, false, false, true];
 
 export default function ContactPage() {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const { theme, isDark, toggleTheme } = useTheme();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
@@ -28,7 +29,6 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const isDark = theme === "dark";
 
   const footerText = useMemo(
     () => `(c) ${new Date().getFullYear()} Rajat Khandelwal. Contact page.`,
@@ -81,7 +81,7 @@ export default function ContactPage() {
     >
       <aside className="nav-float fixed left-6 top-1/2 z-50 hidden -translate-y-1/2 flex-col items-center gap-6 rounded-full border border-[var(--nav-border)] px-3 py-6 lg:flex">
         {navItems.map((item) => (
-          <a
+          <Link
             key={item.label}
             className={`group relative flex size-12 items-center justify-center rounded-full transition-all ${
               item.active
@@ -100,7 +100,7 @@ export default function ContactPage() {
             <span className="pointer-events-none absolute left-full ml-3 whitespace-nowrap rounded bg-slate-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
               {item.label}
             </span>
-          </a>
+          </Link>
         ))}
       </aside>
 
@@ -142,10 +142,7 @@ export default function ContactPage() {
             <h2 className="font-display text-3xl text-[var(--text-main)]">Get in Touch</h2>
             <button
               className="portfolio-glass flex size-10 items-center justify-center rounded-xl border border-[var(--glass-border)] text-[var(--primary)] transition-all hover:bg-[var(--icon-chip-bg)]"
-              onClick={() => {
-                logUiEvent("theme_toggle_clicked", { page: "contact", from: theme, to: isDark ? "light" : "dark" });
-                setTheme(isDark ? "light" : "dark");
-              }}
+              onClick={toggleTheme}
               type="button"
             >
               <span className="material-symbols-outlined">{isDark ? "light_mode" : "dark_mode"}</span>
