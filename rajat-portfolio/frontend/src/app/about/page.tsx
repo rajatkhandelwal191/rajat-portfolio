@@ -52,34 +52,74 @@ const coreSkills = [
   "Vector Databases",
 ];
 
+const certifications = [
+  {
+    title: "Claude Certified Architect Professional",
+    issuer: "Anthropic",
+    badgeUrl: "https://www.credly.com/badges/7dd35d2b-d461-40a6-90da-2114681ff507/public_url",
+    desc: "Production enterprise Claude architecture, extended context reasoning, prompt engineering, agentic tool workflows, and safety guardrails.",
+    icon: "psychology",
+    tag: "Anthropic Certified",
+    highlight: true,
+  },
+  {
+    title: "Microsoft Certified: Azure AI Engineer Associate (AI-102)",
+    issuer: "Microsoft",
+    badgeUrl: "https://www.credly.com/users/rajat-khandelwal.b764d962",
+    desc: "End-to-end design and deployment of Azure AI solutions with Azure OpenAI, Azure AI Search, Cognitive Services, and multi-modal pipelines.",
+    icon: "cloud",
+    tag: "Microsoft Certified",
+    highlight: true,
+  },
+  {
+    title: "Deep Agents with LangGraph",
+    issuer: "LangChain",
+    badgeUrl: "https://www.credly.com/users/rajat-khandelwal.b764d962",
+    desc: "State machine orchestration, cyclical multi-agent graphs, checkpoint persistence, and supervisor-worker patterns.",
+    icon: "account_tree",
+    tag: "LangChain Certified",
+    highlight: false,
+  },
+  {
+    title: "AI Agents Fundamentals",
+    issuer: "Hugging Face",
+    badgeUrl: "https://www.credly.com/users/rajat-khandelwal.b764d962",
+    desc: "Autonomous agent reasoning, open-source model execution, and tool integration.",
+    icon: "smart_toy",
+    tag: "Hugging Face",
+    highlight: false,
+  },
+];
+
 const experienceHighlights = [
   {
-    title: "AI Engineer, Tata Consultancy Services",
+    title: "Full Stack / AI Engineer (Client: Enbridge), TCS",
+    period: "2024 - Present · Enterprise Cloud & AI",
+    points: [
+      "Engineered end-to-end Windows Server EOL Agent platform combining React/Vite, Python/FastAPI, and Microsoft Agent Framework.",
+      "Developed ServiceNow CMDB ingestion (apps, servers, relationships) via Azure Durable Functions and PostgreSQL Flexible Server.",
+      "Architected Azure AI Search document RAG with user-delegation SAS security and Microsoft Foundry web grounding.",
+      "Optimized agent tool routing, eliminating supervisor-specialist roundtrips and cutting latency by 30-50+ seconds.",
+    ],
+    gradient: "linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #7c3aed 100%)",
+  },
+  {
+    title: "Lead AI Engineer (Client: Exelon ITIS), TCS",
     period: "Aug 2025 - Present · Noida · Hybrid",
     points: [
-      "Leading LLM workflow architecture using LangChain, LangGraph, LlamaIndex, and Agentic AI patterns.",
-      "Built conversational and autonomous AI systems with semantic retrieval and custom embeddings.",
-      "Drove production-grade optimization for AI pipelines and deployment workflows.",
+      "Leading agentic AI workflow architecture across heatmap, incident, patch compliance, and drive cleanup operations.",
+      "Automated daily, weekly, and monthly audit-ready reporting pipelines using LangGraph, Python, FPDF, and Azure Blob Storage.",
+      "Reduced manual Infra Ops effort by 70-80% through deterministic schema validation and idempotent execution.",
     ],
     gradient: "linear-gradient(135deg, #f97316 0%, #ea580c 50%, #b45309 100%)",
   },
   {
-    title: "System Engineer, Tata Consultancy Services",
-    period: "Dec 2022 - Aug 2025 · Noida · Hybrid",
+    title: "Chatbot Developer (Client: Outokumpu), TCS",
+    period: "Dec 2021 - Oct 2024 · Enterprise AI Delivery",
     points: [
-      "Designed end-to-end Azure pipelines with Web Apps, Blob Storage, Functions, AKS, and Power BI analytics.",
-      "Built summarization, sentiment, and entity extraction solutions using Python + BART + NLP pipelines.",
-      "Led backend architecture, DevOps, cost optimization, and client-facing solution planning.",
-    ],
-    gradient: "linear-gradient(135deg, #7c3aed 0%, #6366f1 55%, #312e81 100%)",
-  },
-  {
-    title: "Earlier Roles & Internships",
-    period: "2019 - 2022 · Delhi / Gurugram / Remote",
-    points: [
-      "System Engineer Trainee at TCS with backend and React-based development responsibilities.",
-      "Pepcoding internship handling DSA + MERN learning structure and practical delivery.",
-      "Software engineering internship with Indian Railways involving data processing, analytics, and software workflows.",
+      "Developed multilingual enterprise chatbot with GenAI and RAG-based knowledge retrieval capabilities.",
+      "Delivered microservices integration across ServiceNow, Genesys, Twilio, Redis, and Microsoft Adaptive Cards.",
+      "Maintained 100% operational reliability and zero SLA breaches across 3+ years of production.",
     ],
     gradient: "linear-gradient(135deg, #0ea5e9 0%, #0284c7 55%, #1e3a8a 100%)",
   },
@@ -264,6 +304,64 @@ export default function AboutPage() {
                   LinkedIn: linkedin.com/in/rajatkhandelwal27
                 </a>
               </div>
+            </div>
+          </section>
+
+          <section className="mb-10">
+            <div className="mb-4 flex items-center justify-between">
+              <div>
+                <h3 className="text-2xl font-semibold text-[var(--text-main)]">Certifications & Verified Credentials</h3>
+                <p className="text-xs text-[var(--text-muted)]">Verified badges issued on Credly and professional certifications</p>
+              </div>
+              <a
+                href="https://www.credly.com/users/rajat-khandelwal.b764d962"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => logUiEvent("credly_profile_clicked", { page: "about" })}
+                className="inline-flex items-center gap-1.5 rounded-xl border border-indigo-500/30 bg-indigo-500/10 px-3 py-1.5 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-500/20 transition"
+              >
+                <span>View Full Credly Profile</span>
+                <span className="material-symbols-outlined text-xs">open_in_new</span>
+              </a>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {certifications.map((cert) => (
+                <div
+                  key={cert.title}
+                  className="portfolio-glass-card flex flex-col justify-between rounded-2xl p-5 border border-[var(--glass-border)]"
+                >
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-500">
+                        {cert.tag}
+                      </span>
+                      <span className="material-symbols-outlined text-lg text-[var(--text-muted)]">
+                        {cert.icon}
+                      </span>
+                    </div>
+                    <h4 className="mt-2 text-base font-bold text-[var(--text-main)]">
+                      {cert.title}
+                    </h4>
+                    <p className="mt-1 text-xs text-[var(--text-muted)] leading-relaxed">
+                      {cert.desc}
+                    </p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-[var(--glass-border)] flex items-center justify-between">
+                    <span className="text-[11px] font-medium text-[var(--text-muted)]">
+                      Issuer: {cert.issuer}
+                    </span>
+                    <a
+                      href={cert.badgeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
+                    >
+                      Verify Badge <span className="material-symbols-outlined text-xs">open_in_new</span>
+                    </a>
+                  </div>
+                </div>
+              ))}
             </div>
           </section>
 

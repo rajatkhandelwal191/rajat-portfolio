@@ -335,8 +335,24 @@ Key detailed implementation:
 
 ## Licenses and Certifications
 
-- Deep Agents with LangGraph (LangChain), Issued Oct 2025, Credential ID: nu1kb236qa
-- AI Agents Fundamentals (Hugging Face), Issued Oct 2025, Credential ID: Rajatkhandelwal27
+- **Anthropic Claude Certified Architect Professional**
+  - Verification: https://www.credly.com/badges/7dd35d2b-d461-40a6-90da-2114681ff507/public_url
+  - Credly Profile: https://www.credly.com/users/rajat-khandelwal.b764d962
+  - Focus: Production enterprise Claude architecture, prompt engineering, extended context reasoning, agentic tool workflows, guardrails, and evaluation.
+
+- **Microsoft Certified: Azure AI Engineer Associate (AI-102)**
+  - Credly Profile: https://www.credly.com/users/rajat-khandelwal.b764d962
+  - Focus: Building, managing, and deploying AI solutions leveraging Azure OpenAI, Azure AI Search, Azure Cognitive Services, speech, computer vision, and NLP pipelines.
+
+- **Deep Agents with LangGraph (LangChain)**
+  - Issued: Oct 2025
+  - Credential ID: nu1kb236qa
+  - Focus: Multi-agent state machines, cyclical graphs, supervisor-worker orchestration, dynamic tool selection, memory checkpoints, and error recovery.
+
+- **AI Agents Fundamentals (Hugging Face)**
+  - Issued: Oct 2025
+  - Credential ID: Rajatkhandelwal27
+  - Focus: Autonomous agent architectures, tool integration, reasoning loops, and open-source LLM agents.
 
 ## Projects
 

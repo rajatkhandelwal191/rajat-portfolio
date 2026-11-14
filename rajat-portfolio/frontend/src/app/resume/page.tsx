@@ -117,7 +117,7 @@ export default function ResumePage() {
 
                 <div className="mt-4 flex flex-wrap gap-2 text-xs">
                   <span className="rounded-md border border-white/5 bg-white/5 px-2.5 py-1 text-[var(--text-muted)]">
-                    4.29+ Years Exp
+                    5+ Years Exp
                   </span>
                   <span className="rounded-md border border-white/5 bg-white/5 px-2.5 py-1 text-[var(--text-muted)]">
                     TCS ITIS & Innovista
@@ -169,6 +169,39 @@ export default function ResumePage() {
                   Download
                 </a>
               </div>
+            </div>
+          </motion.div>
+
+          {/* Verified Credentials Quick Links */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.05 }}
+            className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[var(--glass-card-border)] bg-[var(--glass-card-bg)] px-5 py-3 text-xs"
+          >
+            <div className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-base text-purple-400">verified</span>
+              <span className="font-semibold text-[var(--text-primary)]">Verified Industry Certifications:</span>
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <a
+                href="https://www.credly.com/badges/7dd35d2b-d461-40a6-90da-2114681ff507/public_url"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 rounded-lg border border-purple-500/30 bg-purple-500/10 px-3 py-1 font-semibold text-purple-700 dark:text-purple-300 hover:bg-purple-500/20 transition"
+              >
+                <span>Claude Certified Architect Badge</span>
+                <span className="material-symbols-outlined text-xs">open_in_new</span>
+              </a>
+              <a
+                href="https://www.credly.com/users/rajat-khandelwal.b764d962"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 rounded-lg border border-blue-500/30 bg-blue-500/10 px-3 py-1 font-semibold text-blue-700 dark:text-blue-300 hover:bg-blue-500/20 transition"
+              >
+                <span>Azure AI Engineer (AI-102) & Credly Profile</span>
+                <span className="material-symbols-outlined text-xs">open_in_new</span>
+              </a>
             </div>
           </motion.div>
 

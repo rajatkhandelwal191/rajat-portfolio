@@ -20,19 +20,22 @@ const navItems = [
 ];
 
 const techPills = [
+  { name: "MS Agent Framework", icon: "psychology", highlight: true },
   { name: "LangGraph", icon: "account_tree", highlight: true },
-  { name: "FastAPI", icon: "api", highlight: true },
-  { name: "Next.js 15", icon: "terminal", highlight: true },
-  { name: "Groq Cloud LPU", icon: "bolt", highlight: true },
-  { name: "Supabase pgvector", icon: "database", highlight: false },
-  { name: "Azure AKS & Blob", icon: "cloud", highlight: false },
-  { name: "PyTorch & Transformers", icon: "psychology", highlight: false },
-  { name: "Docker & CI/CD", icon: "deployed_code", highlight: false },
-  { name: "TypeScript", icon: "code", highlight: false },
+  { name: "FastAPI (Python 3.12)", icon: "api", highlight: true },
+  { name: "React & TypeScript", icon: "terminal", highlight: true },
+  { name: "Azure AI Search", icon: "search", highlight: true },
+  { name: "Azure OpenAI & Foundry", icon: "bolt", highlight: false },
+  { name: "PostgreSQL Flexible Server", icon: "database", highlight: false },
+  { name: "ServiceNow CMDB", icon: "dns", highlight: false },
+  { name: "Azure Durable Functions", icon: "hourglass_top", highlight: false },
+  { name: "Bicep IaC & GitHub Actions", icon: "deployed_code", highlight: false },
+  { name: "Entra ID & MSAL SSO", icon: "security", highlight: false },
+  { name: "Docker & Container Apps", icon: "inventory_2", highlight: false },
 ];
 
 const keyMetrics = [
-  { label: "Experience", value: "4.29+", suffix: "Years", desc: "Production AI & Full-Stack" },
+  { label: "Experience", value: "5+", suffix: "Years", desc: "Production AI & Full-Stack" },
   { label: "Ops Automated", value: "70-80%", suffix: "Reduction", desc: "TCS ITIS Infra Operations" },
   { label: "NLP Ingestion", value: "100K+", suffix: "Records", desc: "Automated ITSM Classification" },
   { label: "Uptime & Reliability", value: "0", suffix: "SLA Breaches", desc: "3+ Years Enterprise Delivery" },
@@ -155,16 +158,33 @@ export default function Home() {
         {/* Hero Section */}
         <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-10 sm:px-6 lg:px-8">
           <section id="home" className="mb-16 pt-4 sm:pt-8">
-            {/* Live Availability Pill */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="inline-flex items-center gap-2.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-400"
-            >
-              <span className="size-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
-              <span>Available for Lead AI & Full-Stack Opportunities</span>
-            </motion.div>
+            {/* Live Availability & Certifications Pills */}
+            <div className="flex flex-wrap items-center gap-3">
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="inline-flex items-center gap-2.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-400"
+              >
+                <span className="size-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
+                <span>Available for Lead AI & Full-Stack Opportunities</span>
+              </motion.div>
+
+              <motion.a
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.1 }}
+                href="https://www.credly.com/badges/7dd35d2b-d461-40a6-90da-2114681ff507/public_url"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => logUiEvent("credly_badge_clicked", { source: "hero_pill" })}
+                className="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-4 py-1.5 text-xs font-semibold text-purple-700 dark:text-purple-300 transition hover:scale-105 hover:bg-purple-500/20"
+              >
+                <span className="material-symbols-outlined text-sm text-purple-600 dark:text-purple-400">verified</span>
+                <span>Claude Certified Architect Professional · Azure AI Engineer (AI-102)</span>
+                <span className="material-symbols-outlined text-xs">open_in_new</span>
+              </motion.a>
+            </div>
 
             {/* Main Headline with Typewriter Effect */}
             <motion.h1
@@ -192,7 +212,7 @@ export default function Home() {
               transition={{ duration: 0.4, delay: 0.2 }}
               className="mt-6 max-w-2xl text-base leading-relaxed text-[var(--text-muted)] sm:text-lg"
             >
-              Lead AI Engineer with <strong>4.29+ years of experience</strong> designing multi-agent LangGraph workflows, high-throughput RAG retrieval pipelines, and scalable cloud-native backends across Azure & Supabase.
+              Lead AI Engineer with <strong>5+ years of experience</strong> designing multi-agent LangGraph workflows, Microsoft Agent Framework architectures, high-throughput RAG retrieval pipelines, and scalable enterprise cloud backends.
             </motion.p>
 
             {/* Hero Action Buttons */}
@@ -333,7 +353,7 @@ export default function Home() {
 
                   <div className="mt-8 flex items-center justify-between border-t border-[var(--glass-border)] pt-5">
                     <span className="text-xs font-medium text-[var(--text-muted)]">
-                      Includes 29-chunk RAG explorer & dataflow diagram
+                      Includes 66-chunk RAG explorer & dataflow diagram
                     </span>
                     <Link
                       href="/projects/portfolio-architecture"
@@ -353,23 +373,29 @@ export default function Home() {
                     <div className="flex size-10 items-center justify-center rounded-xl bg-orange-500/15 text-orange-600 dark:text-orange-400">
                       <span className="material-symbols-outlined">history_edu</span>
                     </div>
-                    <h3 className="mt-4 text-xl font-bold text-[var(--text-main)]">Experience</h3>
+                    <h3 className="mt-4 text-xl font-bold text-[var(--text-main)]">Enterprise Solutions</h3>
                     <p className="mt-2 text-xs leading-relaxed text-[var(--text-muted)]">
-                      Lead AI Engineer @ TCS ITIS designing agentic reporting pipelines, heatmap analysis, and Azure infrastructure.
+                      Lead AI Engineer & Full-Stack Developer at TCS delivering mission-critical platforms for enterprise clients:
                     </p>
 
-                    <div className="mt-4 space-y-2 text-xs text-[var(--text-muted)]">
-                      <div className="flex items-center gap-2">
-                        <span className="size-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
-                        <span>TCS Lead AI Engineer (2025 - Present)</span>
+                    <div className="mt-4 space-y-2.5 text-xs text-[var(--text-muted)]">
+                      <div className="flex items-start gap-2">
+                        <span className="mt-1 size-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 shrink-0" />
+                        <div>
+                          <strong className="text-[var(--text-main)]">Enbridge:</strong> EOL Agent Platform (React, FastAPI, MS Agent Framework, AI Search)
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <span className="size-1.5 rounded-full bg-blue-500 dark:bg-blue-400" />
-                        <span>TCS Innovista Lead Dev (2024 - 2025)</span>
+                      <div className="flex items-start gap-2">
+                        <span className="mt-1 size-1.5 rounded-full bg-blue-500 dark:bg-blue-400 shrink-0" />
+                        <div>
+                          <strong className="text-[var(--text-main)]">Exelon:</strong> ITIS Agentic AI Workflows & Audit-Ready Reporting
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <span className="size-1.5 rounded-full bg-amber-500 dark:bg-amber-400" />
-                        <span>Outokumpu Core Chatbot Dev (2021 - 2024)</span>
+                      <div className="flex items-start gap-2">
+                        <span className="mt-1 size-1.5 rounded-full bg-amber-500 dark:bg-amber-400 shrink-0" />
+                        <div>
+                          <strong className="text-[var(--text-main)]">Outokumpu:</strong> OTK Multilingual Enterprise Chatbot & RAG
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -379,7 +405,7 @@ export default function Home() {
                       href="/experience"
                       className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-600 dark:text-indigo-400 transition group-hover:translate-x-1"
                     >
-                      See Career Timeline
+                      See Career & Client Timeline
                       <span className="material-symbols-outlined text-sm">arrow_forward</span>
                     </Link>
                   </div>
@@ -428,27 +454,58 @@ export default function Home() {
                 <div className="flex flex-col justify-between h-full">
                   <div>
                     <div className="flex size-10 items-center justify-center rounded-xl bg-purple-500/15 text-purple-600 dark:text-purple-400">
-                      <span className="material-symbols-outlined">description</span>
+                      <span className="material-symbols-outlined">verified</span>
                     </div>
-                    <h3 className="mt-4 text-xl font-bold text-[var(--text-main)]">Resume & Credentials</h3>
+                    <h3 className="mt-4 text-xl font-bold text-[var(--text-main)]">Certifications & Credentials</h3>
                     <p className="mt-2 text-xs leading-relaxed text-[var(--text-muted)]">
-                      Verified curriculum vitae, B.Tech (2021) degree details, and LangGraph certifications.
+                      Verified industry credentials in Enterprise AI Architecture and Azure Cloud engineering:
                     </p>
 
-                    <div className="mt-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-xs text-[var(--text-muted)]">
-                      <div className="font-mono text-emerald-700 dark:text-emerald-400 font-semibold">✓ Verified PDF Ready</div>
-                      <div className="mt-1">Full-screen document viewer & 1-click download</div>
+                    <div className="mt-4 space-y-2">
+                      <a
+                        href="https://www.credly.com/badges/7dd35d2b-d461-40a6-90da-2114681ff507/public_url"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between rounded-xl border border-purple-500/30 bg-purple-500/10 p-2.5 text-xs transition hover:border-purple-500 hover:bg-purple-500/20"
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className="size-2 rounded-full bg-purple-500 dark:bg-purple-400" />
+                          <span className="font-semibold text-purple-700 dark:text-purple-300">Claude Certified Architect</span>
+                        </div>
+                        <span className="material-symbols-outlined text-xs text-purple-500">open_in_new</span>
+                      </a>
+
+                      <a
+                        href="https://www.credly.com/users/rajat-khandelwal.b764d962"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between rounded-xl border border-blue-500/30 bg-blue-500/10 p-2.5 text-xs transition hover:border-blue-500 hover:bg-blue-500/20"
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className="size-2 rounded-full bg-blue-500 dark:bg-blue-400" />
+                          <span className="font-semibold text-blue-700 dark:text-blue-300">Azure AI Engineer (AI-102)</span>
+                        </div>
+                        <span className="material-symbols-outlined text-xs text-blue-500">open_in_new</span>
+                      </a>
                     </div>
                   </div>
 
-                  <div className="mt-6 border-t border-[var(--glass-border)] pt-4">
+                  <div className="mt-6 flex items-center justify-between border-t border-[var(--glass-border)] pt-4">
                     <Link
                       href="/resume"
                       className="inline-flex items-center gap-1 text-xs font-semibold text-purple-600 dark:text-purple-400 transition group-hover:translate-x-1"
                     >
-                      Open Resume Viewer
+                      Resume Viewer
                       <span className="material-symbols-outlined text-sm">arrow_forward</span>
                     </Link>
+                    <a
+                      href="https://www.credly.com/users/rajat-khandelwal.b764d962"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[11px] font-medium text-[var(--text-muted)] underline hover:text-[var(--text-main)]"
+                    >
+                      Credly Profile ↗
+                    </a>
                   </div>
                 </div>
               </div>

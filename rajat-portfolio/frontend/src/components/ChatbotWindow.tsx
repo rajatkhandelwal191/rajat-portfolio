@@ -18,12 +18,20 @@ type ChatMessage = {
   links?: { label: string; href: string }[];
 };
 
-type ChatIntent = "about" | "projects" | "experience" | "contact" | "resume" | "generic";
+type ChatIntent = "about" | "projects" | "experience" | "contact" | "resume" | "certifications" | "generic";
 
 const followUpByIntent: Record<ChatIntent, { text: string; links: { label: string; href: string }[] }> = {
   about: {
     text: "Do you want to know more about Rajat?",
     links: [{ label: "Go to About", href: "/about" }],
+  },
+  certifications: {
+    text: "Verify Rajat's credentials on Credly?",
+    links: [
+      { label: "🏅 Credly Profile", href: "https://www.credly.com/users/rajat-khandelwal.b764d962" },
+      { label: "Claude Certified Architect Badge", href: "https://www.credly.com/badges/7dd35d2b-d461-40a6-90da-2114681ff507/public_url" },
+      { label: "View Resume", href: "/resume" },
+    ],
   },
   projects: {
     text: "Do you want to go to the Projects page?",
@@ -212,6 +220,19 @@ function detectIntent(message: string): ChatIntent {
   }
 
   if (
+    text.includes("certif") ||
+    text.includes("license") ||
+    text.includes("badge") ||
+    text.includes("credly") ||
+    text.includes("claude certified") ||
+    text.includes("azure ai") ||
+    text.includes("ai-102") ||
+    text.includes("credential")
+  ) {
+    return "certifications";
+  }
+
+  if (
     text.includes("contact") ||
     text.includes("hire") ||
     text.includes("email") ||
@@ -237,8 +258,9 @@ export default function ChatbotWindow({ name, isDark }: ChatbotWindowProps) {
   const prompts = [
     "Who is Rajat?",
     "Tell me about your work & clients",
+    "What are your certifications & Credly badges?",
+    "Tell me about the Enbridge EOL platform",
     "What is your tech stack?",
-    "Are you available for hire?",
   ];
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
