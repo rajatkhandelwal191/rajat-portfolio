@@ -250,6 +250,15 @@ function detectIntent(message: string): ChatIntent {
     text.includes("mobile app") ||
     text.includes("android app") ||
     text.includes("flutter app") ||
+    text.includes("flutter") ||
+    text.includes("android") ||
+    text.includes("kotlin") ||
+    text.includes("ios") ||
+    text.includes("xcode") ||
+    text.includes("android studio") ||
+    text.includes("jetpack compose") ||
+    text.includes("app architect") ||
+    text.includes("app developer") ||
     text.includes("apps")
   ) {
     return "apps";
@@ -326,6 +335,7 @@ export default function ChatbotWindow({ name, isDark }: ChatbotWindowProps) {
   const prompts = [
     "Who is Rajat?",
     "Tell me about your Play Store apps (DeepDisk, Vaulet & WhiteFrame)",
+    "What are your mobile & app dev skills (Flutter, Android, iOS)?",
     "Tell me about your work & clients",
     "What are your certifications & Credly badges?",
     "Tell me about the Enbridge EOL platform",

@@ -34,6 +34,17 @@ const techPills = [
   { name: "Docker & Container Apps", icon: "inventory_2", highlight: false },
 ];
 
+const mobileTechPills = [
+  { name: "Flutter & Dart", icon: "phone_android", highlight: true },
+  { name: "Native Android (Kotlin)", icon: "android", highlight: true },
+  { name: "Jetpack Compose", icon: "widgets", highlight: true },
+  { name: "Android Studio & Gradle", icon: "build", highlight: false },
+  { name: "Xcode & iOS", icon: "phone_iphone", highlight: false },
+  { name: "Room DB & SQLite", icon: "database", highlight: false },
+  { name: "Hardware Keystore / TEE", icon: "security", highlight: false },
+  { name: "GPU Canvas (dart:ui)", icon: "speed", highlight: false },
+];
+
 const keyMetrics = [
   { label: "Experience", value: "5+", suffix: "Years", desc: "Production AI & Full-Stack" },
   { label: "Ops Automated", value: "70-80%", suffix: "Reduction", desc: "TCS ITIS Infra Operations" },
@@ -123,11 +134,11 @@ export default function Home() {
                   Rajat Khandelwal
                 </span>
                 <span className="hidden rounded-full border border-indigo-500/30 bg-indigo-500/10 px-2 py-0.5 text-[10px] font-semibold text-indigo-400 sm:inline-block">
-                  Lead AI Engineer
+                  Lead AI Engineer & Mobile Architect
                 </span>
               </div>
               <p className="text-[11px] font-medium text-[var(--text-muted)]">
-                Agentic Workflows · LangGraph · Azure Cloud
+                Agentic Workflows · LangGraph · Azure Cloud · Mobile (Flutter & Native Android)
               </p>
             </div>
           </div>
@@ -212,7 +223,7 @@ export default function Home() {
               transition={{ duration: 0.4, delay: 0.2 }}
               className="mt-6 max-w-2xl text-base leading-relaxed text-[var(--text-muted)] sm:text-lg"
             >
-              Lead AI Engineer with <strong>5+ years of experience</strong> designing multi-agent LangGraph workflows, Microsoft Agent Framework architectures, high-throughput RAG retrieval pipelines, and scalable enterprise cloud backends.
+              Lead AI Engineer with <strong>5+ years of experience</strong> designing multi-agent LangGraph workflows, Microsoft Agent Framework architectures, high-throughput RAG retrieval pipelines, and scalable enterprise cloud backends. Also an active <strong>Mobile App Architect & Developer (Android & iOS)</strong> with 3 live Google Play Store production apps.
             </motion.p>
 
             {/* Hero Action Buttons */}
@@ -281,24 +292,46 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.5 }}
-              className="mt-8 flex flex-wrap items-center gap-2"
+              className="mt-8 space-y-3"
             >
-              <span className="mr-2 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
-                Core Stack:
-              </span>
-              {techPills.map((pill) => (
-                <span
-                  key={pill.name}
-                  className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1 text-xs font-medium transition hover:scale-105 ${
-                    pill.highlight
-                      ? "border-indigo-500/40 bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 font-semibold"
-                      : "theme-chip"
-                  }`}
-                >
-                  <span className="material-symbols-outlined text-sm">{pill.icon}</span>
-                  {pill.name}
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="mr-2 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
+                  Core Stack (AI & Cloud):
                 </span>
-              ))}
+                {techPills.map((pill) => (
+                  <span
+                    key={pill.name}
+                    className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1 text-xs font-medium transition hover:scale-105 ${
+                      pill.highlight
+                        ? "border-indigo-500/40 bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 font-semibold"
+                        : "theme-chip"
+                    }`}
+                  >
+                    <span className="material-symbols-outlined text-sm">{pill.icon}</span>
+                    {pill.name}
+                  </span>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 pt-1">
+                <span className="mr-2 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400">
+                  <span className="material-symbols-outlined text-sm">phone_android</span>
+                  Mobile Engineering (Android & iOS):
+                </span>
+                {mobileTechPills.map((pill) => (
+                  <span
+                    key={pill.name}
+                    className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1 text-xs font-medium transition hover:scale-105 ${
+                      pill.highlight
+                        ? "border-sky-500/40 bg-sky-500/10 text-sky-700 dark:text-sky-300 font-semibold"
+                        : "theme-chip"
+                    }`}
+                  >
+                    <span className="material-symbols-outlined text-sm">{pill.icon}</span>
+                    {pill.name}
+                  </span>
+                ))}
+              </div>
             </motion.div>
           </section>
 
@@ -417,11 +450,11 @@ export default function Home() {
                 <div className="flex flex-col justify-between h-full">
                   <div>
                     <div className="flex size-10 items-center justify-center rounded-xl bg-cyan-500/15 text-cyan-600 dark:text-cyan-400">
-                      <span className="material-symbols-outlined">code_blocks</span>
+                      <span className="material-symbols-outlined">phone_android</span>
                     </div>
-                    <h3 className="mt-4 text-xl font-bold text-[var(--text-main)]">Featured Projects</h3>
+                    <h3 className="mt-4 text-xl font-bold text-[var(--text-main)]">Mobile Apps & Projects</h3>
                     <p className="mt-2 text-xs leading-relaxed text-[var(--text-muted)]">
-                      Google Play Store apps (DeepDisk, Vaulet & WhiteFrame), Interactive RAG Playground, and Exam Parser Pipeline.
+                      Solo architect & engineer of 3 live Google Play Store production apps (DeepDisk, Vaulet & WhiteFrame) engineered with Native Android (Kotlin), Flutter, Jetpack Compose, and low-level GPU rendering.
                     </p>
 
                     <div className="mt-4 flex flex-wrap gap-1.5">
@@ -446,12 +479,14 @@ export default function Home() {
                         <span className="material-symbols-outlined text-[13px]">photo_camera</span>
                         WhiteFrame (Play Store)
                       </Link>
-                      <span className="theme-chip rounded-md px-2 py-0.5 text-[11px]">
-                        RAG Playground
-                      </span>
-                      <span className="theme-chip rounded-md px-2 py-0.5 text-[11px]">
-                        Exam Parser
-                      </span>
+                    </div>
+
+                    <div className="mt-3 flex flex-wrap gap-1 text-[10px] font-mono text-[var(--text-muted)]">
+                      <span className="theme-chip rounded px-1.5 py-0.5">Kotlin</span>
+                      <span className="theme-chip rounded px-1.5 py-0.5">Flutter</span>
+                      <span className="theme-chip rounded px-1.5 py-0.5">Compose</span>
+                      <span className="theme-chip rounded px-1.5 py-0.5">Android Studio</span>
+                      <span className="theme-chip rounded px-1.5 py-0.5">Xcode</span>
                     </div>
                   </div>
 
@@ -460,7 +495,7 @@ export default function Home() {
                       href="/projects"
                       className="inline-flex items-center gap-1 text-xs font-semibold text-cyan-600 dark:text-cyan-400 transition group-hover:translate-x-1"
                     >
-                      View All Projects
+                      Explore All 3 Apps & Websites
                       <span className="material-symbols-outlined text-sm">arrow_forward</span>
                     </Link>
                   </div>

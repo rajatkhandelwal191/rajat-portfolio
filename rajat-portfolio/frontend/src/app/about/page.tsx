@@ -24,10 +24,11 @@ const profileStats = [
 ];
 
 const openRoles = [
+  "Lead AI Engineer",
   "Full Stack Engineer",
+  "Mobile App Architect / Developer (Android & iOS)",
   "Web Developer",
   "Back End Developer",
-  "Artificial Intelligence Engineer",
   "Generative AI Engineer",
 ];
 
@@ -47,6 +48,11 @@ const coreSkills = [
   "React",
   "Node.js",
   "Python",
+  "Flutter & Dart",
+  "Native Android (Kotlin)",
+  "Jetpack Compose",
+  "Android Studio & Xcode",
+  "Room DB & SQLite",
   "Machine Learning",
   "Semantic Search",
   "Vector Databases",

@@ -11,6 +11,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.6.1] - 2026-11-14
+
+### Added
+- **Mobile Engineering & App Architecture Skills Showcase:**
+  - Added dedicated **Mobile Engineering (Android & iOS)** stack section on the Home page (`Flutter & Dart`, `Native Android (Kotlin)`, `Jetpack Compose`, `Android Studio & Gradle`, `Xcode & iOS`, `Room DB & SQLite`, `Hardware Keystore / TEE`, `GPU Canvas`).
+  - Updated home header to display `Lead AI Engineer & Mobile Architect` and highlighted mobile engineering across subheadings and the Bento Grid project spotlight.
+  - Added mobile app skills to `About` page core skills and preferences (`Mobile App Architect / Developer (Android & iOS)`).
+  - Enhanced Chatbot (`RajatGPT`) with expanded intent detection for Flutter, Android, Kotlin, iOS, Xcode, Android Studio, and Compose, with a new suggested prompt chip.
+  - Re-indexed 87 semantic chunks into Supabase pgvector and local FAISS.
+
+---
+
 ## [0.6.0] - 2026-11-14
 
 ### Added

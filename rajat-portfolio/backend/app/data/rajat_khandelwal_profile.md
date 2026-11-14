@@ -17,6 +17,7 @@ Specialized in Agentic AI workflows, Microsoft Agent Framework, LangChain/LangGr
 
 Core skills & competencies:
 - Generative AI, Conversational AI, Agentic AI Systems, Microsoft Agent Framework, LangGraph, LangChain, LlamaIndex
+- Mobile App Architecture & Engineering (Android & iOS): Flutter 3.x, Native Android (Kotlin 2.4), Dart, Jetpack Compose, Android Studio, Xcode, Room DB (WAL), SQLite, WorkManager, Scoped Storage, MediaStore, Hardware Keystore / TEE cryptography, biometrics, low-level GPU `dart:ui` Canvas rendering, Gradle Kotlin DSL
 - Cloud and DevOps: Azure (Web Apps, Container Apps, Functions, Durable Functions, Blob Storage, Cosmos DB, PostgreSQL Flexible Server), Bicep, Docker, Kubernetes, GitHub Actions CI/CD
 - Full-stack & APIs: React, TypeScript, Vite, Python 3.12, FastAPI, Node.js, Next.js, MSAL, NGINX
 - RAG, Semantic Search & Web Grounding: Azure AI Search, Blob documents, text-embedding-3-small, Microsoft Foundry web grounding, SAS URLs, Qdrant, FAISS, pgvector
@@ -26,7 +27,7 @@ Core skills & competencies:
 
 ## Current Preferences
 
-- Open to work for: Full Stack Engineer, Web Developer, Back End Developer, Artificial Intelligence Engineer, and Generative AI Engineer roles
+- Open to work for: Lead AI Engineer, Full Stack Engineer, Mobile App Architect / Developer (Android & iOS), Web Developer, Back End Developer, Artificial Intelligence Engineer, and Generative AI Engineer roles
 - Followers: 528
 - Connections: 462
 
@@ -528,11 +529,12 @@ Tech tags: Next.js 14, TypeScript, Supabase, PostgreSQL, Cloudflare R2, Google O
 ## Technical Skills
 
 - AI/ML & LLMs: Microsoft Agent Framework, LangChain, LangGraph, LlamaIndex, HuggingFace Transformers, Azure OpenAI, Microsoft Foundry, RAG, Azure AI Search, Vector Databases (Qdrant, FAISS, pgvector), Agentic AI
-- Languages: Python 3.12, JavaScript/TypeScript, Node.js, SQL, KQL (Kusto Query Language)
+- Mobile Development & Architecture (Android & iOS): Flutter 3.x, Native Android (Kotlin 2.4), Dart, Jetpack Compose, Android Studio, Xcode (iOS target), Room DB (WAL mode), SQLite, WorkManager, Scoped Storage, MediaStore APIs, Android Keystore & TEE Hardware Encryption, Biometric Authentication, low-level GPU `dart:ui` Canvas rendering, Material Design 3, Gradle Kotlin DSL, Google Play Console release engineering
+- Languages: Python 3.12, Kotlin, Dart, JavaScript/TypeScript, Node.js, SQL, KQL (Kusto Query Language)
 - Cloud, IaC & DevOps: Azure (Web Apps, Container Apps, Functions, Durable Functions, Blob Storage, Cosmos DB, PostgreSQL Flexible Server, Key Vault, ACR), Azure Bicep, Docker, Kubernetes, CI/CD, GitHub Actions (OIDC)
 - Networking & Security: Azure VNets, Private Endpoints, Private DNS, NSGs, Microsoft Entra ID (SSO, MSAL), Managed Identities, Service Principals, RBAC, Secretless Architecture
 - Frameworks & Web: FastAPI, React, Vite, Next.js, Flask, Streamlit, NGINX
 - Databases & Data Engineering: Azure Database for PostgreSQL Flexible Server, ServiceNow CMDB APIs, Supabase, MongoDB, Redis, Cosmos DB
 - Observability & Monitoring: Azure Application Insights, Log Analytics, OpenTelemetry, Azure Workbooks
-- Tools & Quality: Azure CLI, Azurite, VS Code, Git, Postman, pytest, Ruff, Power BI, Jupyter
+- Tools & Quality: Android Studio, Xcode, Gradle, Azure CLI, Azurite, VS Code, Git, Postman, pytest, Ruff, Power BI, Jupyter
 
