@@ -9,7 +9,7 @@ Resume / CV: [Download Rajat's Resume](/Rajat_Khandelwal_Resume.pdf)
 
 ## Summary
 
-Lead AI Engineer, Full Stack Developer, and Mobile Architect with 5+ years of experience at Tata Consultancy Services Ltd (TCS) and as an independent software engineer. Architected and deployed enterprise-grade AI systems, agentic workflows, cloud-native platforms for Fortune 500 clients (Enbridge, Exelon, Outokumpu), and creator of the live Google Play Store application DeepDisk: Storage Analyzer.
+Lead AI Engineer, Full Stack Developer, and Mobile Architect with 5+ years of experience at Tata Consultancy Services Ltd (TCS) and as an independent software engineer. Architected and deployed enterprise-grade AI systems, agentic workflows, cloud-native platforms for Fortune 500 clients (Enbridge, Exelon, Outokumpu), and creator of two live Google Play Store applications: DeepDisk: Storage Analyzer and Vaulet: Private Digital Vault (CardVault by CloudCubit).
 
 Currently working at TCS as a Lead AI Engineer and Full Stack Developer, delivering solutions across major enterprise client engagements including Enbridge’s EOL Agent platform, Exelon’s Infra Operations agentic workflows, and Outokumpu’s multilingual enterprise chatbot.
 
@@ -381,6 +381,33 @@ Built for everyday Android users, power users, and developers frustrated by dece
 - Testing & Quality: 210+ passing unit tests covering coroutine flows via Turbine 1.2.0, Room DAO transactions, and Espresso UI automation.
 
 Tech tags: Native Android, Kotlin 2.4.10, Jetpack Compose, Compose Material 3, Room DB 2.8.5 (WAL), WorkManager 2.12.0, Dagger Hilt 2.60.1, Coroutines, DataStore, MediaStore, StorageStatsManager, 100% Offline, Google Play Live.
+
+### Vaulet: Private Digital Vault (CardVault by CloudCubit) (Live on Google Play Store)
+- Google Play Store Link: https://play.google.com/store/apps/details?id=com.cloudcubit.vaulet&pcampaignid=web_share
+- Package Name / Application ID: `com.cloudcubit.vaulet` / `com.cloudcubit.card_vault_by_cloudcubit`
+- Tagline: "A private digital vault by CloudCubit — zero cloud architecture, hardware-encrypted locally, everything stays on your phone."
+- Role: Solo Creator & Lead Mobile Architect (End-to-end product architecture, UI/UX design system, cryptographic engineering, state management, automated testing, and Play Store release).
+- Case Study Page on Portfolio: `/projects/vaulet`
+
+#### 1. App Overview & Problem Solved
+Built for privacy-conscious individuals, families, and professionals requiring a consolidated, secure digital vault for payment cards, government IDs (Aadhaar, PAN, Passport, DL), academic credentials, travel tickets, warranty bills, and bank passbooks. It solves the critical vulnerability of cloud-based password managers and digital wallets by eliminating cloud servers, third-party databases, and telemetry entirely. Every byte of sensitive data is stored and encrypted strictly on-device, protected by hardware-backed platform security.
+
+#### 2. Core Technical Stack & Zero-Cloud Topology
+- True Zero-Cloud / 100% Offline: Completely omits `android.permission.INTERNET` from its `AndroidManifest.xml`, ensuring cryptographic isolation and verifiable zero-telemetry at the Android OS sandbox level.
+- Framework & Language: Flutter (SDK `^3.11.1` / Dart 3.x), Kotlin (`FlutterFragmentActivity` on Android 14+ / Java 17 JVM target).
+- State Management: Clean MVVM with Reactive Repositories built on Flutter's built-in `ChangeNotifier` and reactive UI primitives (`ListenableBuilder`, `AnimatedBuilder`). Dependency injection is wired via a decoupled, testable `ServiceLocator`.
+- Hardware Security Module (TEE / StrongBox): Platform-backed `flutter_secure_storage` utilizing `AndroidOptions(encryptedSharedPreferences: true)` (AES-256-GCM + RSA hardware-backed KeyStore keys).
+- Encrypted Binary Object Storage: Custom `EncryptedImageStorageService` for high-resolution document scans and PDF attachments stored as encrypted ciphertext blobs (`[12-byte nonce][16-byte MAC tag][AES-256-GCM ciphertext]`) in the sandboxed private documents directory.
+
+#### 3. Key Features Delivered
+- Zero-Cloud Payment Card & Passbook Hub: Full lifecycle management for credit/debit cards (featuring offline Luhn verification, offline BIN/IIN network identification for Visa, Mastercard, RuPay, and American Express, card limits, annual maintenance fee tracking, and 3D card flipping) and bank passbooks (IFSC, MICR, account numbers). Sensitive numbers are masked by default with explicit biometric/PIN reveals and a self-clearing 30-second clipboard.
+- Hardware-Encrypted Document Vault & Multi-Page PDF Export: Secure offline repository for national IDs, marksheets, and user-defined custom categories. Supports multi-image front/back flip views, camera capture with local image cropping/rotation, and on-the-fly vector PDF compilation for merged or individual document printing and sharing.
+- Offline Travel & Purchase Manager (Tickets & Bills): Dual-segmented financial tracking for travel/event tickets and recurring/one-time purchase bills with warranty/guarantee expiration timelines and encrypted PDF/image attachments.
+- Cross-Entity Family Member Attribution: Unified "Belongs to" family categorization shared across cards, documents, bills, tickets, and bank accounts.
+- Military-Grade Portable Vault Backup & Restore (`.vaultbackup`): Single-file encrypted vault migration bundling all structured entity data and decrypted binary attachments. Secured with PBKDF2-HMAC-SHA256 (100,000 iterations, 256-bit derived key) from a 6-digit user PIN + 16-byte cryptographically secure random salt into an authenticated AES-256-GCM envelope with an atomic merge-by-ID restore engine.
+- 57 Automated Production Test Suites: Comprehensive testing pyramid covering cryptographic tamper verification, widget/view-model tests, and rate-limiting timers.
+
+Tech tags: Flutter, Dart, Kotlin, AES-256-GCM, PBKDF2, Android KeyStore, Biometrics, Clean MVVM, 100% Offline, Zero Cloud, Google Play Live.
 
 ### RAG Playground - Interactive RAG Pipeline (2024)
 Live URL: https://ragtutorial.netlify.app/

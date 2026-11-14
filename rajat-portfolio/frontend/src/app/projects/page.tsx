@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { logUiEvent } from "../../lib/frontendLogger";
 import { useTheme } from "../../context/ThemeContext";
 
-type LogoType = "enterprise" | "anass" | "parser" | "deepdisk";
+type LogoType = "enterprise" | "anass" | "parser" | "deepdisk" | "vaulet";
 
 type ProjectSection = "websites" | "apps";
 
@@ -179,9 +179,57 @@ const featuredProjects: FeaturedProject[] = [
       "Google Play Production: 5.71 MB AAB (88% R8 code shrinking, 16KB memory page size compliant, 210+ passing unit tests).",
     ],
   },
+  {
+    title: "Vaulet: Private Digital Vault",
+    category: "Zero-Cloud FinTech & Cryptographic Vault (Google Play Live)",
+    section: "apps",
+    description:
+      "Hardware-encrypted personal digital vault for payment cards, government IDs, passbooks, and bills. True zero-cloud architecture with zero network permissions. Employs AES-256-GCM, PBKDF2-HMAC-SHA256, biometric authentication, and sandboxed encrypted binary storage.",
+    tags: [
+      "Flutter 3.x",
+      "Dart",
+      "Kotlin",
+      "AES-256-GCM",
+      "Hardware KeyStore",
+      "Biometrics",
+      "MVVM",
+      "100% Offline",
+      "Google Play Live",
+      "Zero Cloud",
+    ],
+    gradient: "linear-gradient(135deg, #059669 0%, #047857 45%, #064e3b 100%)",
+    accent: "#34d399",
+    logo: "vaulet",
+    primaryCta: "Google Play Store",
+    primaryHref: "https://play.google.com/store/apps/details?id=com.cloudcubit.vaulet&pcampaignid=web_share",
+    secondaryCta: "Case Study",
+    secondaryHref: "/projects/vaulet",
+    detailHref: "/projects/vaulet",
+    architectureSummary: [
+      "Zero-Cloud & Zero Network: android.permission.INTERNET omitted entirely; verifiable zero telemetry at OS sandbox level.",
+      "Hardware KeyStore & Enclave: AES-256-GCM master keys generated via Random.secure() and kept in Android KeyStore (TEE/StrongBox).",
+      "Encrypted Object Storage: Custom binary streaming with 96-bit nonces preventing TransactionTooLargeException and Keystore OOMs.",
+      "Portable Vault Backup (.vaultbackup): PBKDF2-HMAC-SHA256 (100,000 iterations) from user PIN + 16-byte cryptographically secure salt.",
+      "Sensory & Privacy UI: Custom 3D perspective matrix transforms for card flipping, haptic feedback, Luhn check, and 30s auto-wiping clipboard.",
+    ],
+  },
 ];
 
 function ProjectLogo({ logo }: { logo: LogoType }) {
+  if (logo === "vaulet") {
+    return (
+      <div className="feature-logo-shell bg-slate-900/60 p-2 border border-emerald-500/30">
+        <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-slate-950">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/apps/vaulet/logo.webp"
+            alt="Vaulet Logo"
+            className="h-20 w-20 object-contain drop-shadow-[0_0_15px_rgba(16,185,129,0.4)] md:h-24 md:w-24 rounded-2xl"
+          />
+        </div>
+      </div>
+    );
+  }
   if (logo === "deepdisk") {
     return (
       <div className="feature-logo-shell bg-slate-900/60 p-2 border border-sky-500/30">

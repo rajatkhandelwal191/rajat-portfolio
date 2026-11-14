@@ -18,7 +18,7 @@ type ChatMessage = {
   links?: { label: string; href: string }[];
 };
 
-type ChatIntent = "about" | "projects" | "experience" | "contact" | "resume" | "certifications" | "deepdisk" | "generic";
+type ChatIntent = "about" | "projects" | "experience" | "contact" | "resume" | "certifications" | "deepdisk" | "vaulet" | "apps" | "generic";
 
 const followUpByIntent: Record<ChatIntent, { text: string; links: { label: string; href: string }[] }> = {
   about: {
@@ -30,6 +30,21 @@ const followUpByIntent: Record<ChatIntent, { text: string; links: { label: strin
     links: [
       { label: "📱 Google Play Store", href: "https://play.google.com/store/apps/details?id=com.cloudcubit.deepdisk&pcampaignid=web_share" },
       { label: "DeepDisk Case Study", href: "/projects/deepdisk" },
+    ],
+  },
+  vaulet: {
+    text: "Explore Vaulet: Private Digital Vault?",
+    links: [
+      { label: "🔒 Google Play Store", href: "https://play.google.com/store/apps/details?id=com.cloudcubit.vaulet&pcampaignid=web_share" },
+      { label: "Vaulet Case Study", href: "/projects/vaulet" },
+    ],
+  },
+  apps: {
+    text: "Explore Rajat's Google Play Store apps?",
+    links: [
+      { label: "📱 DeepDisk: Storage Analyzer", href: "/projects/deepdisk" },
+      { label: "🔒 Vaulet: Private Vault", href: "/projects/vaulet" },
+      { label: "All Projects", href: "/projects" },
     ],
   },
   certifications: {
@@ -195,14 +210,30 @@ function detectIntent(message: string): ChatIntent {
   const text = message.toLowerCase();
 
   if (
+    text.includes("vaulet") ||
+    text.includes("cardvault") ||
+    text.includes("card vault") ||
+    text.includes("digital vault")
+  ) {
+    return "vaulet";
+  }
+
+  if (
     text.includes("deepdisk") ||
+    text.includes("storage analyzer")
+  ) {
+    return "deepdisk";
+  }
+
+  if (
     text.includes("play store") ||
     text.includes("playstore") ||
     text.includes("mobile app") ||
     text.includes("android app") ||
-    text.includes("storage analyzer")
+    text.includes("flutter app") ||
+    text.includes("apps")
   ) {
-    return "deepdisk";
+    return "apps";
   }
 
   if (
@@ -275,7 +306,7 @@ function detectIntent(message: string): ChatIntent {
 export default function ChatbotWindow({ name, isDark }: ChatbotWindowProps) {
   const prompts = [
     "Who is Rajat?",
-    "Tell me about your Play Store app DeepDisk",
+    "Tell me about your Play Store apps (DeepDisk & Vaulet)",
     "Tell me about your work & clients",
     "What are your certifications & Credly badges?",
     "Tell me about the Enbridge EOL platform",

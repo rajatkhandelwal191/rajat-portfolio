@@ -421,7 +421,7 @@ export default function Home() {
                     </div>
                     <h3 className="mt-4 text-xl font-bold text-[var(--text-main)]">Featured Projects</h3>
                     <p className="mt-2 text-xs leading-relaxed text-[var(--text-muted)]">
-                      DeepDisk Storage Analyzer (Google Play Live), Interactive RAG Playground, and Exam Parser Pipeline.
+                      Google Play Store apps (DeepDisk & Vaulet), Interactive RAG Playground, and Exam Parser Pipeline.
                     </p>
 
                     <div className="mt-4 flex flex-wrap gap-1.5">
@@ -432,14 +432,18 @@ export default function Home() {
                         <span className="material-symbols-outlined text-[13px]">phone_android</span>
                         DeepDisk (Play Store)
                       </Link>
+                      <Link
+                        href="/projects/vaulet"
+                        className="inline-flex items-center gap-1 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 transition"
+                      >
+                        <span className="material-symbols-outlined text-[13px]">lock</span>
+                        Vaulet (Play Store)
+                      </Link>
                       <span className="theme-chip rounded-md px-2 py-0.5 text-[11px]">
                         RAG Playground
                       </span>
                       <span className="theme-chip rounded-md px-2 py-0.5 text-[11px]">
                         Exam Parser
-                      </span>
-                      <span className="theme-chip rounded-md px-2 py-0.5 text-[11px]">
-                        Enterprise Assistant
                       </span>
                     </div>
                   </div>
