@@ -18,7 +18,7 @@ type ChatMessage = {
   links?: { label: string; href: string }[];
 };
 
-type ChatIntent = "about" | "projects" | "experience" | "contact" | "resume" | "certifications" | "deepdisk" | "vaulet" | "apps" | "generic";
+type ChatIntent = "about" | "projects" | "experience" | "contact" | "resume" | "certifications" | "deepdisk" | "vaulet" | "whiteframe" | "apps" | "generic";
 
 const followUpByIntent: Record<ChatIntent, { text: string; links: { label: string; href: string }[] }> = {
   about: {
@@ -39,11 +39,19 @@ const followUpByIntent: Record<ChatIntent, { text: string; links: { label: strin
       { label: "Vaulet Case Study", href: "/projects/vaulet" },
     ],
   },
+  whiteframe: {
+    text: "Explore WhiteFrame: Canvas Studio?",
+    links: [
+      { label: "📸 Google Play Store", href: "https://play.google.com/store/apps/details?id=com.cloudcubit.whiteframe&pcampaignid=web_share" },
+      { label: "WhiteFrame Case Study", href: "/projects/whiteframe" },
+    ],
+  },
   apps: {
     text: "Explore Rajat's Google Play Store apps?",
     links: [
       { label: "📱 DeepDisk: Storage Analyzer", href: "/projects/deepdisk" },
       { label: "🔒 Vaulet: Private Vault", href: "/projects/vaulet" },
+      { label: "📸 WhiteFrame: Canvas Studio", href: "/projects/whiteframe" },
       { label: "All Projects", href: "/projects" },
     ],
   },
@@ -210,6 +218,17 @@ function detectIntent(message: string): ChatIntent {
   const text = message.toLowerCase();
 
   if (
+    text.includes("whiteframe") ||
+    text.includes("whitespace") ||
+    text.includes("white frame") ||
+    text.includes("canvas studio") ||
+    text.includes("instagram frame") ||
+    text.includes("photo frame")
+  ) {
+    return "whiteframe";
+  }
+
+  if (
     text.includes("vaulet") ||
     text.includes("cardvault") ||
     text.includes("card vault") ||
@@ -306,7 +325,7 @@ function detectIntent(message: string): ChatIntent {
 export default function ChatbotWindow({ name, isDark }: ChatbotWindowProps) {
   const prompts = [
     "Who is Rajat?",
-    "Tell me about your Play Store apps (DeepDisk & Vaulet)",
+    "Tell me about your Play Store apps (DeepDisk, Vaulet & WhiteFrame)",
     "Tell me about your work & clients",
     "What are your certifications & Credly badges?",
     "Tell me about the Enbridge EOL platform",

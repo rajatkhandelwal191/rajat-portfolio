@@ -9,7 +9,7 @@ Resume / CV: [Download Rajat's Resume](/Rajat_Khandelwal_Resume.pdf)
 
 ## Summary
 
-Lead AI Engineer, Full Stack Developer, and Mobile Architect with 5+ years of experience at Tata Consultancy Services Ltd (TCS) and as an independent software engineer. Architected and deployed enterprise-grade AI systems, agentic workflows, cloud-native platforms for Fortune 500 clients (Enbridge, Exelon, Outokumpu), and creator of two live Google Play Store applications: DeepDisk: Storage Analyzer and Vaulet: Private Digital Vault (CardVault by CloudCubit).
+Lead AI Engineer, Full Stack Developer, and Mobile Architect with 5+ years of experience at Tata Consultancy Services Ltd (TCS) and as an independent software engineer. Architected and deployed enterprise-grade AI systems, agentic workflows, cloud-native platforms for Fortune 500 clients (Enbridge, Exelon, Outokumpu), and creator of three live Google Play Store applications: DeepDisk: Storage Analyzer, Vaulet: Private Digital Vault, and WhiteFrame: Canvas Studio.
 
 Currently working at TCS as a Lead AI Engineer and Full Stack Developer, delivering solutions across major enterprise client engagements including Enbridge’s EOL Agent platform, Exelon’s Infra Operations agentic workflows, and Outokumpu’s multilingual enterprise chatbot.
 
@@ -408,6 +408,31 @@ Built for privacy-conscious individuals, families, and professionals requiring a
 - 57 Automated Production Test Suites: Comprehensive testing pyramid covering cryptographic tamper verification, widget/view-model tests, and rate-limiting timers.
 
 Tech tags: Flutter, Dart, Kotlin, AES-256-GCM, PBKDF2, Android KeyStore, Biometrics, Clean MVVM, 100% Offline, Zero Cloud, Google Play Live.
+
+### WhiteFrame: Canvas Studio (formerly Whitespace) (Live on Google Play Store)
+- Google Play Store Link: https://play.google.com/store/apps/details?id=com.cloudcubit.whiteframe&pcampaignid=web_share
+- Package Name / Application ID: `com.cloudcubit.whiteframe` (Google Play Store release ID) / `com.surroundiing.whiteframe` (build.gradle.kts)
+- Tagline: "Create pristine, Instagram-ready white-space posts with sub-second GPU canvas rendering, aspect presets, and branded watermark attributions."
+- Role: Solo Creator & Lead Mobile Architect (End-to-end Flutter development, GPU rendering pipeline, Supabase cloud auth, UI/UX design, and Play Store release engineering).
+- Case Study Page on Portfolio: `/projects/whiteframe`
+
+#### 1. App Overview & Problem Solved
+Built for photographers, visual artists, and digital creators who want to publish non-standard aspect ratio photos on Instagram without awkward platform auto-crops, poor compression artifacts, or clunky multi-app editing steps. Solves high-resolution canvas formatting (1:1 square & 4:5 portrait) with localized export bundle management.
+
+#### 2. Core Technical Architecture & GPU Pipeline
+- Low-Level GPU Canvas Pipeline: Replaced CPU-bound pixel processing with Flutter's low-level GPU `dart:ui` Canvas pipeline (`instantiateImageCodec`, `PictureRecorder`, `drawImageRect`), slashing export rendering time from ~15 seconds to under 100 milliseconds per photo.
+- Zero-Latency Viewport Scaling: Applies `Matrix4.diagonal3Values` real-time transformations during pinch/drag/slider adjustments, maintaining 60 FPS fluid responsiveness and deferring heavy rasterization until final export.
+- Framework & Language: Flutter 3.x with Dart SDK ^3.5.0, Android Gradle Plugin 8.x with Kotlin JVM Target 17, Skia/Impeller GPU backend.
+- Cloud Authentication & Session State: Supabase BaaS (Authentication, OAuth 2.0 handshake via `signInWithIdToken`, session auto-refresh) and Google Identity Services.
+- Dual-Layer Persistence: Concurrently injects exported PNGs into phone's public MediaStore album (`WhiteFrame`) via `gal` while archiving an isolated, sandboxed bundle manifest (`bundles.json`) with rename, delete, and 1-tap re-editing of original source images.
+
+#### 3. Key Features Delivered
+- Multi-Ratio Instagram Presets: Real-time aspect ratio engine supporting standard formats—1:1 Square (1080x1080) and 4:5 Portrait (1080x1350)—with independent per-axis scaling (uniform zoom, horizontal, vertical).
+- Branded Watermark & Glassmorphic Overlay Subsystem: In-canvas graphics compositor using `TextPainter` and native `ui.RRect` rendering, blending custom brand logos, creator @handles, and dynamic rounded-pill frosted glass badges into final assets at native resolution.
+- Dual-Layer Storage & Re-Hydration: Users can browse past export batches in the in-app bundle manager and tap any archived photo to re-hydrate the photo editor with original source photos and watermark settings intact.
+- Google Play Compliant Soft Deletion: Integrated Google OAuth with Supabase identity tokens and a compliant account deletion flow marking user records via metadata before signing out.
+
+Tech tags: Flutter, Dart, GPU dart:ui, Skia/Impeller, Supabase Auth, Google OAuth, gal MediaStore, Scoped Storage, Google Play Live.
 
 ### RAG Playground - Interactive RAG Pipeline (2024)
 Live URL: https://ragtutorial.netlify.app/

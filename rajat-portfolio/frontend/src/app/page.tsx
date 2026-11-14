@@ -421,7 +421,7 @@ export default function Home() {
                     </div>
                     <h3 className="mt-4 text-xl font-bold text-[var(--text-main)]">Featured Projects</h3>
                     <p className="mt-2 text-xs leading-relaxed text-[var(--text-muted)]">
-                      Google Play Store apps (DeepDisk & Vaulet), Interactive RAG Playground, and Exam Parser Pipeline.
+                      Google Play Store apps (DeepDisk, Vaulet & WhiteFrame), Interactive RAG Playground, and Exam Parser Pipeline.
                     </p>
 
                     <div className="mt-4 flex flex-wrap gap-1.5">
@@ -438,6 +438,13 @@ export default function Home() {
                       >
                         <span className="material-symbols-outlined text-[13px]">lock</span>
                         Vaulet (Play Store)
+                      </Link>
+                      <Link
+                        href="/projects/whiteframe"
+                        className="inline-flex items-center gap-1 rounded-md border border-pink-500/30 bg-pink-500/10 px-2 py-0.5 text-[11px] font-semibold text-pink-600 dark:text-pink-400 hover:bg-pink-500/20 transition"
+                      >
+                        <span className="material-symbols-outlined text-[13px]">photo_camera</span>
+                        WhiteFrame (Play Store)
                       </Link>
                       <span className="theme-chip rounded-md px-2 py-0.5 text-[11px]">
                         RAG Playground

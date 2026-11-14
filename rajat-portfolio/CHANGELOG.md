@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Mobile Applications Showcase (Google Play Store Live):**
   - **DeepDisk: Storage Analyzer (`com.cloudcubit.deepdisk`):** Solo architect & engineer for a forensic-grade, on-device Android storage intelligence utility (Kotlin 2.4, Jetpack Compose, Material 3, Room DB WAL, WorkManager, 100% Offline, 5.71 MB AAB, 210+ tests). Dedicated case study page at `/projects/deepdisk`.
   - **Vaulet: Private Digital Vault (`com.cloudcubit.vaulet`):** Solo architect & engineer for a zero-cloud, hardware-encrypted personal vault for cards, IDs, and passbooks (Flutter 3.x, Dart, Kotlin, AES-256-GCM, PBKDF2-HMAC-SHA256, Android KeyStore TEE, biometrics, 57 tests). Dedicated case study page at `/projects/vaulet`.
+  - **WhiteFrame: Canvas Studio (`com.cloudcubit.whiteframe`):** Solo architect & engineer for a GPU-accelerated Instagram photo framing and canvas studio (Flutter 3.x, Dart, GPU dart:ui Canvas, Matrix4 transforms, Supabase Auth, Google OAuth, gal MediaStore, sub-100ms render). Dedicated case study page at `/projects/whiteframe`.
 - **Projects Page Categorization & Tab Filter:**
   - Separated projects into dedicated **Websites & Web Platforms** (AI Portfolio, RAG Playground, Exam Parser, Capstone Enterprise Assistant, MobiKwik Tracker) and **Apps** (DeepDisk, Vaulet).
   - Implemented interactive tab switching: `All Projects`, `Websites`, and `Apps (Google Play)` with real-time counters.

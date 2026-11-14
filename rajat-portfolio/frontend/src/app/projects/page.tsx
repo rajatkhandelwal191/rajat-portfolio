@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { logUiEvent } from "../../lib/frontendLogger";
 import { useTheme } from "../../context/ThemeContext";
 
-type LogoType = "enterprise" | "anass" | "parser" | "deepdisk" | "vaulet";
+type LogoType = "enterprise" | "anass" | "parser" | "deepdisk" | "vaulet" | "whiteframe";
 
 type ProjectSection = "websites" | "apps";
 
@@ -213,9 +213,56 @@ const featuredProjects: FeaturedProject[] = [
       "Sensory & Privacy UI: Custom 3D perspective matrix transforms for card flipping, haptic feedback, Luhn check, and 30s auto-wiping clipboard.",
     ],
   },
+  {
+    title: "WhiteFrame: Canvas Studio",
+    category: "GPU-Accelerated Content Creation (Google Play Live)",
+    section: "apps",
+    description:
+      "High-performance Instagram photo framing and canvas studio with sub-second GPU rendering. Solves awkward platform auto-crops with 1:1 and 4:5 aspect presets, real-time Matrix4 viewport scaling, branded glassmorphic watermarks, and MediaStore export bundles.",
+    tags: [
+      "Flutter 3.x",
+      "Dart",
+      "GPU dart:ui",
+      "Skia / Impeller",
+      "Supabase Auth",
+      "Google OAuth",
+      "Scoped Storage",
+      "Google Play Live",
+      "sub-100ms Render",
+    ],
+    gradient: "linear-gradient(135deg, #db2777 0%, #be185d 45%, #831843 100%)",
+    accent: "#f472b6",
+    logo: "whiteframe",
+    primaryCta: "Google Play Store",
+    primaryHref: "https://play.google.com/store/apps/details?id=com.cloudcubit.whiteframe&pcampaignid=web_share",
+    secondaryCta: "Case Study",
+    secondaryHref: "/projects/whiteframe",
+    detailHref: "/projects/whiteframe",
+    architectureSummary: [
+      "Sub-Second GPU Pipeline: Low-level dart:ui PictureRecorder & Canvas slashing export render times from ~15s to <100ms.",
+      "Zero-Latency Viewport: Real-time Matrix4 scale transformations maintaining 60fps responsiveness during pinch and pan gestures.",
+      "Branded Watermark Subsystem: TextPainter and native ui.RRect graphics compositor embedding logos and creator @handles at native resolution.",
+      "Dual-Layer Persistence: Simultaneously registers high-res PNGs in MediaStore while archiving sandboxed bundles.json manifests for 1-tap re-editing.",
+      "Compliant Cloud Auth: Google OAuth handshake via Supabase identity tokens with Play Store compliant account soft-deletion.",
+    ],
+  },
 ];
 
 function ProjectLogo({ logo }: { logo: LogoType }) {
+  if (logo === "whiteframe") {
+    return (
+      <div className="feature-logo-shell bg-slate-900/60 p-2 border border-pink-500/30">
+        <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-slate-950">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/apps/whiteframe/logo.webp"
+            alt="WhiteFrame Logo"
+            className="h-20 w-20 object-contain drop-shadow-[0_0_15px_rgba(244,114,182,0.4)] md:h-24 md:w-24 rounded-2xl"
+          />
+        </div>
+      </div>
+    );
+  }
   if (logo === "vaulet") {
     return (
       <div className="feature-logo-shell bg-slate-900/60 p-2 border border-emerald-500/30">
