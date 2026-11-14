@@ -9,19 +9,20 @@ Resume / CV: [Download Rajat's Resume](/Rajat_Khandelwal_Resume.pdf)
 
 ## Summary
 
-Lead AI Engineer with 4.29+ years of experience architecting and deploying enterprise-grade AI systems. Specialized in Agentic AI workflows, RAG pipelines, LLM orchestration using LangChain/LangGraph, and Azure cloud infrastructure. Proven track record of reducing manual operations effort by 70-80% through intelligent automation and delivering zero-SLA-breach production systems for Fortune 500 clients.
+Lead AI Engineer and Full Stack Developer with 4.5+ years of experience at Tata Consultancy Services Ltd (TCS), architecting and deploying enterprise-grade AI systems, agentic workflows, and cloud-native platforms for Fortune 500 clients such as Enbridge, Exelon, and Outokumpu.
 
-I bring strong experience in end-to-end delivery, from data preprocessing and model fine-tuning to API deployment, Azure cloud pipelines, and production monitoring. I have designed and deployed enterprise-grade systems leveraging Azure Kubernetes Service, Azure Functions, Web Apps, and Power BI analytics.
+Currently working at TCS as a Lead AI Engineer and Full Stack Developer, delivering solutions across major enterprise client engagements including Enbridge’s EOL Agent platform, Exelon’s Infra Operations agentic workflows, and Outokumpu’s multilingual enterprise chatbot.
 
-Alongside AI, I have a solid foundation in full-stack development (MERN), DevOps, and cloud-native architecture. My background also includes vector database integration, semantic retrieval, and context-aware reasoning at scale. I thrive in client-facing roles and cross-functional teams.
+Specialized in Agentic AI workflows, Microsoft Agent Framework, LangChain/LangGraph, RAG pipelines, full-stack web architectures, and Azure cloud infrastructure. Proven track record of reducing manual operations effort by 70-80% through intelligent automation, designing resilient agent orchestration patterns, and delivering zero-SLA-breach production systems.
 
 Core skills & competencies:
-- Generative AI, Conversational AI, Agentic AI Systems
-- LLM workflows & Orchestration: LangChain, LangGraph, LlamaIndex, Autogen, CrewAI
-- Cloud and DevOps: Azure (AKS, Functions, Web Apps, Blob Storage, Cosmos DB), Docker, Kubernetes, CI/CD
-- Full-stack & APIs: FastAPI, Next.js, React, Node.js, Flask, Python
-- ML, NLP & RAG: RAG & Vector Search, BART, T5, Pegasus, HuggingFace Transformers, semantic search
-- Vector databases & embeddings: Qdrant, FAISS, pgvector, Supabase
+- Generative AI, Conversational AI, Agentic AI Systems, Microsoft Agent Framework, LangGraph, LangChain, LlamaIndex
+- Cloud and DevOps: Azure (Web Apps, Container Apps, Functions, Durable Functions, Blob Storage, Cosmos DB, PostgreSQL Flexible Server), Bicep, Docker, Kubernetes, GitHub Actions CI/CD
+- Full-stack & APIs: React, TypeScript, Vite, Python 3.12, FastAPI, Node.js, Next.js, MSAL, NGINX
+- RAG, Semantic Search & Web Grounding: Azure AI Search, Blob documents, text-embedding-3-small, Microsoft Foundry web grounding, SAS URLs, Qdrant, FAISS, pgvector
+- Data Engineering & Ingestion: ServiceNow CMDB (cmdb_ci_business_app, cmdb_ci_win_server, cmdb_rel_ci), PostgreSQL Flexible Server, snapshot reconciliation, SHA-256 deterministic IDs
+- Identity, Security & Networking: Microsoft Entra ID (SSO), Managed Identities, Service Principals, GitHub OIDC, RBAC, Key Vault secretless architecture, VNets, Private Endpoints, Private DNS, NSGs
+- Observability: Application Insights, Log Analytics, OpenTelemetry, KQL, Azure Workbooks
 
 ## Current Preferences
 
@@ -31,10 +32,195 @@ Core skills & competencies:
 
 ## Experience
 
-### Tata Consultancy Services Ltd
+### Tata Consultancy Services Ltd (TCS) (December 2021 - Present)
 
-#### Lead AI Engineer - Agentic AI Workflow for Infra Operations (ITIS) (August 2025 - Present)
-- Designed and implemented an agentic AI ecosystem across heatmap, incident, patch compliance, and drive cleanup workflows.
+Rajat Khandelwal is currently working at Tata Consultancy Services (TCS) as a Lead AI Engineer and Full Stack Developer. Across his tenure at TCS, he has engineered and delivered enterprise-grade AI, full-stack, and cloud solutions for major global clients including **Enbridge**, **Exelon**, and **Outokumpu**.
+
+#### Lead AI Engineer / Full Stack Developer - EOL Agent Platform (Client: Enbridge) (2025 - Present)
+
+##### 1. Overall Role and Solution Scope
+- Full Stack Developer / AI Engineer at TCS working on the EOL Agent platform for client Enbridge.
+- End-to-end engineering of an AI-assisted Windows Server End-of-Life (EOL) management solution.
+- Scope spans: React-based user experience, Python/FastAPI backend services, Microsoft Agent Framework agents and tools, ServiceNow CMDB ingestion and relationship mapping, PostgreSQL data persistence, Azure AI Search document retrieval, Microsoft Foundry and Azure OpenAI integration, containerized application hosting, Azure networking, identity, and access configuration, Infrastructure as Code (Bicep) and automated deployment workflows (GitHub Actions), application telemetry, operational troubleshooting, and technical documentation.
+- Documented delivery scope explicitly includes: backend AI development, frontend development, Azure cloud configuration, networking, RBAC, ACR, and GitHub Actions.
+
+##### 2. What the EOL Agent Use Case Does
+The platform brings together CMDB inventory, lifecycle evidence, application ownership, AI-generated recommendations, and operational workflows.
+Key capabilities developed as part of the solution:
+- Application-to-server mapping: Identify which Windows servers support a business application.
+- Server-to-application mapping: Search a server and inspect its associated applications and ownership.
+- Owner-focused inventory views: Display application and server estates with lifecycle status, operating system, criticality, and environment information.
+- EOL identification: Identify expired assets and assets approaching end of support within a selected time window.
+- EOL chatbot: Answer inventory, ownership, lifecycle, and remediation questions using approved tools and evidence.
+- Remediation planning: Generate grouped recommendations covering upgrade, migrate, replace, defer through ESU (Extended Security Updates), or retire.
+- Evidence-backed answers: Provide references to retrieved documents and authoritative lifecycle sources.
+- ServiceNow workflow handoff: Direct users to existing lifecycle-management forms for operational requests.
+- Notification integration: Support the wider owner-notification workflow and subsequent inventory refresh.
+- Scope & MVP boundaries: The current MVP is recommendation-oriented, not an autonomous remediation engine. It does not automatically upgrade, migrate, or retire servers. Windows Server is the initial scope; Linux, hardware, and additional discovery sources are broader roadmap items.
+
+##### 3. Full-Stack Frontend Development
+- Technologies: React, TypeScript, JavaScript, Vite, Node.js/npm, MSAL, NGINX.
+- Developed and integrated the React/Vite application with FastAPI APIs.
+- Built and enhanced key UI components: Agentic AI Hub, dashboard, inventory views, EOL chatbot, remediation-plan interface, ticket-navigation components, server/workspace panels, ticket-generator, and notification interface.
+- Managed frontend environment configuration through VITE_* variables.
+- Configured backend API connectivity for local and deployed environments.
+- Integrated Microsoft Entra ID sign-in through MSAL (Microsoft Authentication Library), handling login, logout, protected routes, and authentication redirects.
+- Packaged frontend via multi-stage Docker build: Node.js build stage -> NGINX runtime Docker image serving the compiled SPA on port 8080 with NGINX SPA fallback routing.
+- Accurate Node.js positioning: Node.js is primarily part of the frontend development and build toolchain. The main application backend is Python/FastAPI, rather than a separately evidenced Node.js backend.
+
+##### 4. Python and FastAPI Backend Engineering
+- Technologies: Python 3.12, FastAPI, Azure SDKs, uv, pytest, Ruff.
+- Built high-performance REST APIs for chatbot, inventory, ingestion handoff, and remediation capabilities.
+- Defined typed request/response contracts and citation models with Pydantic.
+- Integrated PostgreSQL, Azure AI Search, Microsoft Foundry, Azure OpenAI, Blob Storage, and Azure Key Vault.
+- Architecture: Clean separation of routes, agents, tools, repositories, configuration, and workflow logic.
+- Restructured backend from a monolithic chatbot workflow toward capability-based agent packages and clearer shared-tool boundaries.
+- Managed dependencies through pyproject.toml and uv.lock; built reproducible container images using `uv sync --frozen`.
+- Implemented environment-specific configuration, authentication behavior, code comments, docstrings, Ruff linting, and automated pytest suites.
+
+##### 5. Microsoft Agent Framework and Agentic AI
+- Implemented orchestration using Microsoft Agent Framework.
+- Connected agents to structured CMDB inventory tools and unstructured document-search tools.
+- Defined agent instructions, system prompts, tool schemas/descriptions, and strict domain boundaries.
+- Distinguished inventory questions (queried from structured PostgreSQL CMDB data) from lifecycle-document questions (retrieved via Azure AI Search).
+- Required approved tool use instead of relying on model parametric memory.
+- Separated conversational tool use from genuinely multi-stage, stateful workflows.
+- Organized EOL-specific agents and prompts separately from reusable platform capabilities.
+- Supervisor-to-Specialist Optimization: Tested supervisor-to-specialist delegation and identified unnecessary model round trips. Provided the supervisor direct access to inventory and document-search tools, reducing avoidable orchestration overhead and eliminating 30–50+ seconds of additional latency reported in the earlier nested-call pattern.
+- Evidence and Citation Controls: Implemented request-scoped evidence tracking through `RunEvidence`. Built citations strictly from actual tool execution results, avoiding treating model-generated citation markers as proof of retrieval, and strengthened routing and grounding instructions.
+
+##### 6. Azure AI Search and RAG
+- Integrated Azure AI Search as the document-retrieval layer for lifecycle policy and documentation.
+- Implemented Blob-backed document ingestion, index schema design, metadata extraction, retrieval configuration, and embedding-based search using `text-embedding-3-small`.
+- Connected retrieved lifecycle guidance directly into chatbot and remediation-plan responses.
+- Maintained clear architectural separation: structured CMDB inventory queries in PostgreSQL vs. unstructured document retrieval in Azure AI Search.
+- Evaluated embedding choices and resolved document extraction, indexing, metadata, and source-link issues.
+- Secure Document Citations: Restored `document_sas_url` through search and citation response models. Implemented account-key SAS for local testing and user-delegation SAS through managed identity for cloud execution, including delegation-key caching. Prioritized `metadata_storage_path` with a `document_id` decoding fallback when source metadata is empty.
+
+##### 7. Microsoft Foundry, Azure OpenAI, and Web Grounding
+- Integrated Azure-hosted models (Azure OpenAI) with agent workflows, configuring model endpoints, authentication, and environment settings.
+- Implemented Microsoft Foundry-based web grounding for authoritative Windows Server lifecycle dates.
+- Restricted lifecycle evidence strictly to approved Microsoft official sources.
+- Normalized equivalent operating-system labels into canonical versions (e.g. mapping varied OS string representations to standard releases).
+- Validated returned source URLs, confidence metrics, and date formats before ingestion.
+- Persisted validated lifecycle evidence and mappings in PostgreSQL.
+- Security enhancement: Replaced initial Foundry API-key implementation with secretless Managed Identity authentication, validating Entra bearer-token grounding requests and applying validated lifecycle dates to matching CMDB relationships.
+
+##### 8. ServiceNow CMDB Integration and Data Engineering
+- Ingestion pipeline consuming ServiceNow REST Table APIs for:
+  - `cmdb_ci_business_app` (Business Applications)
+  - `cmdb_ci_win_server` (Windows Servers)
+  - `cmdb_rel_ci` (CI Relationships)
+- Investigated complex application-to-server relationship paths, resolving relationships through intermediary Configuration Items (CIs) where direct links were absent.
+- Handled paginated API extraction, schema normalization, and validation of source records.
+- Built relationship bridges and merged application/server datasets while preserving raw responses and audit information.
+- Implemented deterministic relationship identifiers using SHA-256 hashing.
+- Applied transactional PostgreSQL staging, upserts, and snapshot reconciliation: full-snapshot refresh with relationship resolution, transactional updates, and pruning/removal of rows absent from a successfully completed snapshot.
+- Status distinction: Implemented robust CMDB ingestion and reconciliation, with subsequent incremental/delta-ingestion enhancements.
+
+##### 9. PostgreSQL Flexible Server
+- Connected backend services and Azure Functions workloads to Azure Database for PostgreSQL Flexible Server.
+- Designed relational schemas for source snapshots, CI relationships, merged inventory, lifecycle evidence, and audit logs.
+- Implemented optimized application/server mapping queries and indexing.
+- Validated ACID transactions, updates, rollback behavior, and fine-grained database permissions.
+- Configured private networking and secure connection pooling.
+- Handled credentials via Azure Key Vault where password authentication was used, and engineered Managed Identity / Entra ID authentication configurations where enabled.
+
+##### 10. Azure Functions, Durable Functions, and Azurite
+- Developed Python Azure Functions for both scheduled (timer-triggered) and manually triggered CMDB ingestion.
+- Utilized Azure Durable Functions to orchestrate long-running, multi-step asynchronous processing: extraction, transformation, validation, persistence, enrichment, and run-status activities.
+- Packaged Functions as custom Linux containers and deployed/validated workloads on Azure Container Apps.
+- Configured runtime identities, storage access (Blob, Queue, Table), secrets, and health endpoints.
+- Leveraged Azure Functions Core Tools and Azurite emulator for local development and integration testing.
+
+##### 11. Docker, ACR, and Azure Application Hosting
+- Maintained separate container images for backend (FastAPI), frontend (NGINX), and ingestion (Functions).
+- Created multi-stage Dockerfiles and `.dockerignore` configurations optimized for small image footprints and fast builds.
+- Published container images to Azure Container Registry (ACR) using immutable Git commit SHA tags.
+- Configured container-based Azure Web Apps (App Service) with managed-identity ACR image pull.
+- Managed Azure Container Apps revisions for the Functions ingestion workload.
+- Troubleshot private ACR network access, runner build capabilities, image pull permissions, container startup sequences, and deployment failures.
+
+##### 12. Azure Networking and Private Connectivity
+- Configured and validated application private connectivity, and coordinated centrally owned network, DNS, firewall, NSG, and NSP changes.
+- Designed and validated Virtual Networks (VNets) and delegated subnets.
+- Configured App Service outbound VNet integration and dedicated private-endpoint subnets.
+- Implemented and validated Private Endpoints for application and data services (PostgreSQL, Storage, Key Vault, AI Search).
+- Configured Private DNS Zones, resolution, and VNet zone-link ownership.
+- Validated Network Security Groups (NSGs), route tables, firewall egress rules, and service reachability.
+- Coordinated cross-region application/service connectivity dependencies across East US 2, West US 2, and Canada Central.
+- Managed Blob, Queue, and Table private connectivity for Durable Functions and Container Apps environment subnets.
+- Conducted Network Security Perimeter (NSP) access-policy troubleshooting.
+
+##### 13. Identity, IAM, and Secretless Authentication
+Architected a strict three-layer identity model separating privileges:
+1. Infrastructure Service Principal: Used for Bicep provisioning, ARM validation, and infrastructure configuration.
+2. GitHub Deployment Identity: Used for container build/push to ACR and application releases via GitHub OIDC federation.
+3. Runtime Managed Identity: Used by running applications for secretless access to Azure services (Key Vault, PostgreSQL, AI Search, Storage, Azure OpenAI, Foundry).
+- Implemented `DefaultAzureCredential` with runtime `AZURE_CLIENT_ID`.
+- Configured resource-scoped Role-Based Access Control (RBAC): ACR push/pull, Managed Identity Operator, Key Vault Secrets User, Storage Blob Data Contributor/Reader, Search Index Data Contributor, Cognitive Services OpenAI User.
+- Achieved secretless architecture where managed identity or OIDC is supported, with remaining legacy integration credentials securely vaulted in Azure Key Vault.
+
+##### 14. Microsoft Entra ID, SSO, and User Access
+- Frontend Single Sign-On (SSO) via Microsoft Entra ID using MSAL (Microsoft Authentication Library).
+- Configured Azure App Registrations, tenant/client IDs, redirect URIs, and logout URIs.
+- Backend JWT bearer-token validation: verified token signature, tenant ID, and audience claims (`aud`).
+- Architectural separation between user-facing API authentication and internal service-to-service API access.
+- Coordinated AD/Entra security-group memberships for role-based authorization of approved users.
+- Prepared independent QA authentication configuration, internal API-key validation, and environment-specific Key Vault handling.
+
+##### 15. Bicep, IAM Workflows, and GitHub Actions CI/CD
+- Authored modular Infrastructure as Code (IaC) using Azure Bicep for application hosting, container apps, and private endpoints.
+- Maintained environment-specific `.bicepparam` parameter files across DEV, QA, and PROD.
+- Automated CI pipeline steps: Bicep linting, ARM template validation, and `what-if` deployment checks (e.g. validated QA hosting deployment with 5 creates, 0 modifications, 0 deletions).
+- Maintained GitHub Actions CI/CD workflows for infrastructure deployment, IAM alignment, and container deployment.
+- Configured OIDC login to Azure without stored secrets, environment approvals, designated reviewers, and branch-based deployment gates.
+- Built, tagged (immutable Git commit SHA), pushed, and deployed backend, frontend, and Functions containers.
+- Strictly separated infrastructure provisioning workflows from application release pipelines.
+
+##### 16. Application Insights, Log Analytics, and Observability
+- Configured Azure Application Insights connected to a shared Log Analytics workspace.
+- Implemented backend OpenTelemetry-based telemetry export capturing request, trace, session, and job identifiers.
+- Designed authenticated-user attribution using privacy-aware actor identifiers.
+- Tracked capability usage, agent execution, tool calls, model invocations, token consumption, latency, and operational outcomes.
+- Built custom Azure Workbook dashboards for operational visibility and monitoring.
+- Analyzed App Service diagnostic logs and telemetry via Kusto Query Language (KQL).
+- Troubleshot ingestion connection resets, coordinating firewall and Network Security Perimeter (NSP) diagnostics.
+
+##### 17. Azure CLI, Testing, Documentation, and Knowledge Transfer
+- Utilized Azure CLI for deep resource inspection, RBAC auditing, container logs, and network connectivity validation.
+- Performed local development authentication via `az login` for Azure SDK integration testing.
+- Conducted comprehensive API testing using Postman collections.
+- Maintained code quality and reliability with `pytest` unit/integration test suites and `Ruff` linting/formatting.
+- Conducted database transaction validation, rollback verification, and data-quality reconciliation checks.
+- Prepared user acceptance testing (UAT) scenarios and supported stakeholder demonstrations.
+- Authored comprehensive architecture blueprints, build books, Standard Operating Procedures (SOPs), runbooks, data lineage diagrams, and troubleshooting guides.
+- Onboarded team members to the codebase, Azure infrastructure, SSO configurations, branching strategies, PR workflows, and deployment lifecycles.
+
+##### Consolidated Technical Stack (Enbridge EOL Agent Platform)
+- Frontend: React, TypeScript, JavaScript, Vite, Node.js/npm, MSAL, NGINX
+- Backend: Python 3.12, FastAPI, REST APIs, Azure SDKs, uv, Ruff, pytest
+- Agentic AI: Microsoft Agent Framework, agent orchestration, tool calling, system prompts, RunEvidence tracking
+- Models & Grounding: Azure OpenAI, Microsoft Foundry, embeddings, approved-source web grounding
+- Retrieval: Azure AI Search, Blob documents, RAG, metadata, citations, SAS URLs (user-delegation & account-key)
+- Data: Azure Database for PostgreSQL Flexible Server, SQL, CMDB relationships, normalization, reconciliation
+- Background Processing: Azure Functions, Azure Durable Functions, timers, HTTP triggers, Azurite
+- Hosting: Docker, Azure Container Registry (ACR), Azure Web Apps (App Service), Azure Container Apps
+- Security: Microsoft Entra ID (SSO), Managed Identities, Service Principals, RBAC, GitHub OIDC, Azure Key Vault
+- Networking: VNets, delegated subnets, private endpoints, private DNS, NSGs, firewall/NSP coordination
+- Automation: Azure Bicep, GitHub Actions CI/CD, IAM configuration, approval-gated deployments
+- Observability: Azure Application Insights, Log Analytics, OpenTelemetry, KQL, Azure Workbooks
+- Engineering Tools: Azure CLI, VS Code, Git, Postman, pytest, Ruff
+
+##### Reusable Professional Summary
+"I am currently working at Tata Consultancy Services (TCS) as a Lead AI Engineer and Full Stack Developer, delivering enterprise AI systems, full-stack applications, and cloud solutions for major global clients including Enbridge, Exelon, and Outokumpu. For Enbridge, I engineered the EOL Agent platform, developing React/TypeScript interfaces, Python/FastAPI services, Microsoft Agent Framework workflows, and evidence-grounded AI capabilities using Azure OpenAI, Microsoft Foundry, and Azure AI Search. My responsibilities also include ServiceNow CMDB ingestion through Azure Durable Functions, PostgreSQL data engineering, Docker-based Azure hosting, Bicep infrastructure automation, GitHub Actions CI/CD, Entra SSO, managed identities, private connectivity, and application observability."
+
+##### Supporting Technical References & Status Distinction
+- Wording clearly distinguishes completed hands-on implementation from shared-team capabilities, centrally managed infrastructure changes, and deployment-readiness activities (e.g. Bicep QA what-if validated with 5 creates, ready for gated deployment).
+- Current MVP is recommendation-oriented for Windows Server End-of-Life management; Linux, hardware, and additional discovery sources represent roadmap items.
+
+#### Lead AI Engineer - Agentic AI Workflow for Infra Operations (ITIS) (Client: Exelon) (August 2025 - Present)
+- Designed and implemented an agentic AI ecosystem for enterprise client Exelon across heatmap, incident, patch compliance, and drive cleanup workflows.
 - Automated daily, weekly, and monthly audit-ready reporting pipelines using LangGraph, Python, FPDF, and Azure Blob Storage.
 - Built resilient orchestration with schema-driven outputs, chunking and retry logic, and spawned long-running task handling.
 - Implemented blob leasing and locking with idempotent execution to prevent race conditions and duplicate report generation.
@@ -247,10 +433,12 @@ Tech tags: Next.js 14, TypeScript, Supabase, PostgreSQL, Cloudflare R2, Google O
 
 ## Technical Skills
 
-- AI/ML & LLMs: LangChain, LangGraph, LlamaIndex, HuggingFace Transformers, OpenAI, RAG, Vector Databases (Qdrant, FAISS, pgvector), Agentic AI
-- Languages: Python, JavaScript/TypeScript, Node.js, SQL
-- Cloud & DevOps: Azure (AKS, Functions, Blob Storage, Cosmos DB, DevOps), Docker, Kubernetes, CI/CD, GitHub Actions
-- Frameworks & Web: FastAPI, Next.js, React, Flask, Streamlit
-- Databases & Storage: PostgreSQL, Supabase, MongoDB, Redis, Cosmos DB
-- Tools & Analytics: Git, Power BI, Jupyter, Postman
+- AI/ML & LLMs: Microsoft Agent Framework, LangChain, LangGraph, LlamaIndex, HuggingFace Transformers, Azure OpenAI, Microsoft Foundry, RAG, Azure AI Search, Vector Databases (Qdrant, FAISS, pgvector), Agentic AI
+- Languages: Python 3.12, JavaScript/TypeScript, Node.js, SQL, KQL (Kusto Query Language)
+- Cloud, IaC & DevOps: Azure (Web Apps, Container Apps, Functions, Durable Functions, Blob Storage, Cosmos DB, PostgreSQL Flexible Server, Key Vault, ACR), Azure Bicep, Docker, Kubernetes, CI/CD, GitHub Actions (OIDC)
+- Networking & Security: Azure VNets, Private Endpoints, Private DNS, NSGs, Microsoft Entra ID (SSO, MSAL), Managed Identities, Service Principals, RBAC, Secretless Architecture
+- Frameworks & Web: FastAPI, React, Vite, Next.js, Flask, Streamlit, NGINX
+- Databases & Data Engineering: Azure Database for PostgreSQL Flexible Server, ServiceNow CMDB APIs, Supabase, MongoDB, Redis, Cosmos DB
+- Observability & Monitoring: Azure Application Insights, Log Analytics, OpenTelemetry, Azure Workbooks
+- Tools & Quality: Azure CLI, Azurite, VS Code, Git, Postman, pytest, Ruff, Power BI, Jupyter
 

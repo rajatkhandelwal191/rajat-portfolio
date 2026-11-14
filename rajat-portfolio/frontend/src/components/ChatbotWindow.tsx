@@ -200,7 +200,13 @@ function detectIntent(message: string): ChatIntent {
     text.includes("experience") ||
     text.includes("career") ||
     text.includes("work history") ||
-    text.includes("job")
+    text.includes("job") ||
+    text.includes("tcs") ||
+    text.includes("client") ||
+    text.includes("enbridge") ||
+    text.includes("exelon") ||
+    text.includes("outokumpu") ||
+    text.includes("eol")
   ) {
     return "experience";
   }
@@ -228,7 +234,12 @@ function detectIntent(message: string): ChatIntent {
 }
 
 export default function ChatbotWindow({ name, isDark }: ChatbotWindowProps) {
-  const prompts = ["Who is Rajat?", "What is your tech stack?", "Are you available for hire?"];
+  const prompts = [
+    "Who is Rajat?",
+    "Tell me about your work & clients",
+    "What is your tech stack?",
+    "Are you available for hire?",
+  ];
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);

@@ -1,70 +1,66 @@
 # Rajat Portfolio
 
-Monorepo for a personal portfolio website with an AI assistant.
+Decoupled monorepo for a personal portfolio website with an AI assistant (**RajatGPT**).
 
-## Stack
-- Frontend: Next.js (App Router), Tailwind CSS, Framer Motion
-- Backend: FastAPI, Poetry, LangChain
-- Data: Supabase + pgvector
-- Deploy: Vercel (frontend), fly.io (backend)
+* **Frontend:** Next.js 15 (App Router), React 19, Tailwind CSS, Framer Motion (Hosted on [Vercel](https://rajat-portfolio-ten.vercel.app/))
+* **Backend:** FastAPI, Python 3.12, LangGraph, Groq Cloud, Psycopg 3 (Hosted on [Fly.io](https://rajat-khandelwal.fly.dev/))
+* **Database & Vectors:** Supabase PostgreSQL + pgvector (Mumbai `ap-south-1`) with local FAISS fallback
+* **Author:** Rajat Khandelwal — Lead AI Engineer & Full Stack Developer at Tata Consultancy Services (TCS)
 
-## Project Structure
-- `frontend/` Next.js app
-- `backend/` FastAPI + LangChain app
-- `ARCHITECTURE.md` complete system architecture (frontend, backend, LangGraph, pgvector, schemas)
-- `OPERATIONS_GUIDE.md` comprehensive operations, account IDs, chatbot flow & maintenance guide
-- `.env` local environment configuration
-- `tracking.md` implementation and bug-fix log
+---
 
-## Quick Start
-### 1) Clone and configure
-1. Copy `.env.example` values into `.env` and fill real keys.
+## 📚 Master Documentation Hub
 
-### 2) Frontend
+All architecture, operational runbooks, technical decisions, and specifications are centralized in the `docs/` directory. **Always refer to these documents for context:**
+
+| Document | Purpose |
+| :--- | :--- |
+| 🚀 **[`docs/RUNBOOK.md`](docs/RUNBOOK.md)** | **Definitive operating runbook:** local setup, execution, vector re-indexing, testing commands, production deployment, and troubleshooting. |
+| 🤖 **[`docs/AGENTS.md`](docs/AGENTS.md)** | **RajatGPT AI agent specification:** LangGraph state machine, tools (`search_faiss`, `search_postgres`), multi-layer guardrails, prompt rules. |
+| ⚖️ **[`docs/DECISIONS.md`](docs/DECISIONS.md)** | **Architectural Decision Records (ADRs):** Rationale behind LangGraph, dual vector store, Groq, dependency decoupling, PgBouncer fix, etc. |
+| 💻 **[`docs/FRONTEND.md`](docs/FRONTEND.md)** | **Frontend specification:** Next.js 15 App Router, component trees, glassmorphism design tokens, theme engine, and telemetry logging. |
+| ⚙️ **[`docs/BACKEND.md`](docs/BACKEND.md)** | **Backend specification:** FastAPI service architecture, endpoints, dual vector retrieval coordinator, and Poetry dependency groups. |
+| 🏛️ **[`ARCHITECTURE.md`](ARCHITECTURE.md)** | **System architecture overview:** End-to-end Mermaid diagrams, monorepo layout, and persistence schemas. |
+| 📜 **[`CHANGELOG.md`](CHANGELOG.md)** | **Release changelog:** Chronological record of all updates, features, optimizations, and bug fixes. |
+
+---
+
+## Quick Start Summary
+
+For the complete, step-by-step operating guide, see **[`docs/RUNBOOK.md`](docs/RUNBOOK.md)**.
+
+### 1) Frontend (Next.js)
 ```bash
 cd frontend
 npm install
 npm run dev
+# Running on http://localhost:3000
 ```
 
-### 3) Backend
+### 2) Backend (FastAPI)
 ```bash
 cd backend
-poetry install
+# Lean install (default):
+poetry install --no-root
+
+# Or with local embedding / FAISS support:
+poetry install --with local --no-root
+
 poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+# API running on http://localhost:8000
+# Interactive docs on http://localhost:8000/docs
 ```
 
-### Embedding modes
-- Cloud recommended: `EMBEDDING_PROVIDER=gemini`, `GEMINI_API_KEY=...`, `USE_FAISS=false`
-- Local only: `EMBEDDING_PROVIDER=local`, `USE_LOCAL_EMBEDDINGS=true`, `USE_FAISS=true`
-- No embeddings fallback: `EMBEDDING_PROVIDER=none` (keyword search only)
-
-For local embedding/FAISS workflows only (not needed on Fly):
+### 3) Re-indexing Vector Embeddings
 ```bash
 cd backend
-poetry install --with local
+poetry run python -c "from app.services.retrieval_service import retrieval_service; print(retrieval_service.ingest_profile(reset=True))"
+# Or via HTTP:
+# POST http://localhost:8000/api/chat/ingest with body {"reset": true}
 ```
 
-## Backend Endpoints
-- `GET /health` - API health check
-- `GET /bootstrap` - startup indexing/bootstrap status
-- `POST /api/chat` - RajatGPT chat endpoint
-- `POST /api/chat/ingest` - force re-ingest profile markdown and refresh vectors
-- `GET /api/chat/embedding-status` - provider/model/key presence + live embedding probe
+---
 
-Sample chat request:
-```bash
-curl -X POST http://localhost:8000/api/chat \
-  -H "Content-Type: application/json" \
-  -d "{\"message\":\"Tell me about Rajat's AI experience\"}"
-```
+## Security Note
 
-Embedding diagnostics:
-```bash
-cd backend
-python scripts/check_embedding_status.py --base-url https://rajat-khandelwal.fly.dev
-```
-
-## Notes
-- Keep secrets in `.env` only.
-- Update `tracking.md` after each change or bug fix.
+Keep all secrets in `.env` or deployment environment secret managers (Fly Secrets, Vercel Environment Variables). Never commit credentials to version control. All documentation files use safe placeholders.

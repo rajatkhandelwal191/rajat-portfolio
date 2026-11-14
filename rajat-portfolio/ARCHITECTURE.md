@@ -4,6 +4,21 @@ This document provides a comprehensive, end-to-end architectural breakdown of th
 
 ---
 
+## 📖 Master Documentation Hub
+
+From now on, all context, architectural decisions, and operational instructions are maintained in this unified documentation suite:
+
+| Document | Description | Target Audience / Use Case |
+| :--- | :--- | :--- |
+| **[`docs/RUNBOOK.md`](docs/RUNBOOK.md)** | Step-by-step operating guide (setup, local run, ingestion, testing, deployment, troubleshooting) | Daily developer workflows & operational maintenance |
+| **[`docs/AGENTS.md`](docs/AGENTS.md)** | RajatGPT agentic architecture, LangGraph state machine, guardrails, tools, and prompts | AI engineering & conversational agent design |
+| **[`docs/DECISIONS.md`](docs/DECISIONS.md)** | Architectural Decision Records (ADRs 001–010) explaining key technical choices | Architecture reviews & context rationale |
+| **[`docs/FRONTEND.md`](docs/FRONTEND.md)** | Next.js 15 App Router, React 19, Tailwind design tokens, components, and telemetry | Frontend engineers & UI design |
+| **[`docs/BACKEND.md`](docs/BACKEND.md)** | FastAPI service architecture, routes, dual vector search, repositories, and dependencies | Backend engineers & cloud ops |
+| **[`CHANGELOG.md`](CHANGELOG.md)** | Chronological record of all updates, features, optimizations, and bug fixes | Release management & audit trail |
+
+---
+
 ## 1. High-Level System Architecture
 
 The project is structured as a **modern decoupled monorepo** with a Next.js client-facing web application and an asynchronous, agentic FastAPI backend powered by LangGraph, Groq LLM inference, and dual vector storage (Supabase pgvector + local FAISS).
@@ -53,164 +68,43 @@ graph TB
 
 ---
 
-## 2. Frontend Architecture (`frontend/`)
+## 2. Frontend Subsystem (`frontend/`)
 
-### 2.1 Technology Stack
-* **Framework:** Next.js 15 (App Router architecture)
-* **Library:** React 19 (Server & Client Components)
-* **Language:** TypeScript 5
-* **Styling:** Tailwind CSS with CSS Variables & Glassmorphism design tokens
-* **Animations:** Framer Motion (page transitions, hover states, chat drawer)
-* **Networking:** Axios for HTTP client requests
-
-### 2.2 Directory Structure
-```
-frontend/
-├── public/
-│   └── Rajat_Khandelwal_Resume.pdf      # Static downloadable resume served at /Rajat_Khandelwal_Resume.pdf
-├── src/
-│   ├── app/
-│   │   ├── layout.tsx                   # Root HTML layout, font setup, theme providers
-│   │   ├── page.tsx                     # Landing / Home screen with Hero, interactive cards, sidebar nav
-│   │   ├── about/
-│   │   │   └── page.tsx                 # Detailed About page (Background, philosophy, strengths)
-│   │   ├── experience/
-│   │   │   └── page.tsx                 # Timeline of TCS, Outokumpu, Pepcoding + Resume Download CTA
-│   │   ├── projects/
-│   │   │   ├── page.tsx                 # Featured project gallery
-│   │   │   ├── rag-playground/page.tsx  # Interactive RAG Pipeline deep dive
-│   │   │   ├── capstone-enterprise-assistant/page.tsx # Agentic AI platform deep dive
-│   │   │   ├── mobikwik-scam-tracker/page.tsx         # Next.js/Supabase tracker deep dive
-│   │   │   └── exam-parser-pipeline/page.tsx          # Data parsing project deep dive
-│   │   ├── contact/
-│   │   │   ├── page.tsx                 # Contact form with backend persistence
-│   │   │   └── admin/page.tsx           # Password-protected admin view for contact messages
-│   │   └── api/
-│   │       └── frontend-log/route.ts    # Server endpoint logging frontend actions to terminal
-│   ├── components/
-│   │   ├── ChatbotWindow.tsx            # Floating / docked RajatGPT chatbot drawer
-│   │   └── ProjectCard.tsx              # Reusable project card with animated hover rails
-│   ├── lib/
-│   │   ├── api.ts                       # Axios configuration with NEXT_PUBLIC_API_BASE_URL
-│   │   └── frontendLogger.ts            # Client-side analytics and error logging bridge
-│   └── styles/
-│       └── globals.css                  # Theme CSS variables, dark/light modes, scrollbars
-├── package.json
-└── tsconfig.json
-```
-
-### 2.3 Key Frontend Subsystems
-
-#### A. Routing & Navigation
-* **Universal Left Rail Navigation:** Persistent across all pages with icons for Home (`home`), About (`person`), Experience (`work`), Projects (`code`), Contact (`mail`), and Chatbot (`smart_toy`).
-* **Dual Theme Engine:** CSS variables defined in `globals.css` with a smooth toggle between light and dark modes without layout shift.
-* **Resume Download:**
-  - Located on `/experience` as a direct `<a download="Rajat_Khandelwal_Resume.pdf" href="/Rajat_Khandelwal_Resume.pdf">` button.
-  - Served statically by Next.js from `frontend/public/`.
-
-#### B. RajatGPT Chat Interface (`ChatbotWindow.tsx`)
-* State-managed conversational drawer supporting:
-  - Markdown message rendering (including clickable links for projects and `/Rajat_Khandelwal_Resume.pdf`).
-  - Suggested prompts based on intent (e.g., *"Tell me about Rajat's AI experience"*, *"Can you give me Rajat's resume?"*).
-  - Error recovery with user-friendly alerts.
-  - Asynchronous event logging to backend `/api/chat/frontend-event`.
+* **Framework:** Next.js 15 (App Router), React 19, TypeScript 5, Tailwind CSS, Framer Motion.
+* **Hosting:** Vercel (`https://rajat-portfolio-ten.vercel.app/`).
+* **Key Components:**
+  - `ChatbotWindow.tsx`: Interactive AI drawer with intent-based suggestion chips and markdown parsing.
+  - `ProjectCard.tsx`: Glassmorphism cards with animated hover rails.
+  - `/contact/admin`: Password-authenticated submissions viewer.
+* *Detailed documentation:* See **[`docs/FRONTEND.md`](docs/FRONTEND.md)**.
 
 ---
 
-## 3. Backend Architecture (`backend/`)
+## 3. Backend Subsystem (`backend/`)
 
-### 3.1 Technology Stack
-* **Web Framework:** FastAPI (ASGI)
-* **Agentic Orchestration:** LangGraph (StateGraph) & LangChain Core
-* **LLM Inference:** Groq API (`openai/gpt-oss-120b`)
-* **Vector Store & Retrieval:** Supabase PostgreSQL with `pgvector` extension + local FAISS
-* **Embeddings:** `sentence-transformers/all-MiniLM-L6-v2` (384-dimensional dense vectors)
-* **Database Driver:** `psycopg` 3 with JSONB and pgvector adapter
-* **Package & Dependency Manager:** Poetry
-
-### 3.2 Directory Structure
-```
-backend/
-├── app/
-│   ├── main.py                          # FastAPI instantiation, CORS, and lifespan management
-│   ├── core/
-│   │   ├── config.py                    # Pydantic BaseSettings loading .env and ../.env
-│   │   └── logging_config.py            # Structured logging setup
-│   ├── api/
-│   │   ├── chat_routes.py               # /api/chat, /api/chat/ingest, /api/chat/embedding-status
-│   │   └── contact_routes.py            # /api/contact, /api/contact/submissions
-│   ├── services/
-│   │   ├── langgraph_agent.py           # Multi-step Agentic RAG graph with tool execution
-│   │   ├── retrieval_service.py         # Dual vector search coordinator (Supabase + FAISS fallback)
-│   │   ├── embedding_service.py         # Embedding model wrapper (SentenceTransformer / Gemini)
-│   │   ├── knowledge_base.py            # Markdown loader & 900-character paragraph chunker
-│   │   └── chat_service.py              # Chat invocation wrapper
-│   ├── database/
-│   │   ├── vector_repository.py         # Supabase pgvector CRUD & cosine distance search
-│   │   └── contact_repository.py        # Supabase contact submissions persistence
-│   └── data/
-│       └── rajat_khandelwal_profile.md  # Ground truth knowledge base (29 chunks)
-├── storage/
-│   └── faiss/                           # Serialized local FAISS index files (.faiss + .pkl)
-├── scripts/
-│   └── check_embedding_status.py        # Diagnostic script for deployed backend embedding probe
-├── Dockerfile                           # Production container build definition
-├── fly.toml                             # Fly.io deployment configuration
-├── pyproject.toml                       # Python package dependencies
-└── poetry.lock
-```
+* **Framework:** FastAPI with Python 3.11/3.12, Uvicorn, Poetry.
+* **Hosting:** Fly.io (`rajat-khandelwal`, region `sin`).
+* **Services:**
+  - `knowledge_base.py`: Paragraph-aware chunking yielding **66 grounded chunks**.
+  - `retrieval_service.py`: Hybrid search coordinator (Supabase pgvector + FAISS fallback).
+  - `vector_repository.py`: Schema management with `prepare_threshold=None` for PgBouncer transaction poolers.
+  - `contact_repository.py`: Secure inquiry storage in Supabase PostgreSQL.
+* *Detailed documentation:* See **[`docs/BACKEND.md`](docs/BACKEND.md)**.
 
 ---
 
 ## 4. Agentic RAG Workflow (LangGraph)
 
-The chatbot (`RajatGPT`) uses an agentic architecture rather than a simple one-shot prompt.
-
-### 4.1 State Machine Graph
-```mermaid
-stateDiagram-v2
-    [*] --> START
-    START --> seed_tools: Initialize question & pre-seed search calls
-    seed_tools --> tools: ToolNode executes search_postgres & search_faiss
-    tools --> agent: Context chunks passed to LLM Node
-    agent --> END: Grounded response generated
-    END --> [*]
-```
-
-### 4.2 State Graph Lifecycle
-1. **User Request:** `POST /api/chat` receives `{"message": "..."}`.
-2. **`_seed_tools_node`:**
-   - Injects pre-seeded tool calls into the state message history:
-     - `search_faiss(query=state.question)`
-     - `search_postgres(query=state.question)`
-3. **`ToolNode`:**
-   - Executes `retrieval_service.search_postgres` (queries Supabase via pgvector cosine distance).
-   - Executes `retrieval_service.search_faiss` (queries local FAISS index).
-   - Formats the top-4 chunks with similarity scores into context blocks.
-4. **`_agent_node`:**
-   - Compiles the system prompt rules:
-     - Rule 1: Ground answers strictly in profile knowledge.
-     - Rule 2: Admit missing details gracefully without inventing facts.
-     - Rule 3: Keep responses concise and professional.
-     - Rule 4: Zero fabrication of companies, dates, or achievements.
-     - Rule 5: Provide `[Download Rajat's Resume](/Rajat_Khandelwal_Resume.pdf)` for any CV/resume requests.
-   - Invokes `ChatGroq(model="openai/gpt-oss-120b", temperature=0.2)`.
-5. **Output Delivery:** The resulting answer is returned to the client in JSON format: `{"reply": "..."}`.
+* **Architecture:** StateGraph with pre-seeded tool invocation (`seed_tools` -> `tools` -> `agent` -> `final`).
+* **Model:** Groq Cloud `openai/gpt-oss-120b` (low latency, temperature 0.2).
+* **Guardrails:** Pre-execution regex firewall intercepting pronoun mutations, profile modifications, and prompt injections.
+* *Detailed documentation:* See **[`docs/AGENTS.md`](docs/AGENTS.md)**.
 
 ---
 
-## 5. Retrieval & Vector Database Subsystem
+## 5. Persistence & Vector Schemas
 
-### 5.1 Document Ingestion & Chunking
-* **Knowledge Source:** `app/data/rajat_khandelwal_profile.md`
-* **Chunking Algorithm (`chunk_profile_markdown`):**
-  - Splits text along paragraph boundaries (`\n\n`).
-  - Aggregates paragraphs up to a limit of **900 characters** per chunk.
-  - Retains semantic integrity without breaking mid-sentence.
-  - Total chunks generated: **29 chunks**.
-* **Vector Embeddings:** Generated via `sentence-transformers/all-MiniLM-L6-v2` producing a 384-dimensional dense vector for each chunk.
-
-### 5.2 Supabase PostgreSQL Schema
+### 5.1 Supabase PostgreSQL Schema
 ```sql
 -- 1. Enable pgvector extension
 CREATE EXTENSION IF NOT EXISTS vector;
@@ -242,7 +136,7 @@ ON rajat_profile_embeddings
 USING gin (to_tsvector('english', content));
 ```
 
-### 5.3 Contact Submissions Schema
+### 5.2 Contact Submissions Schema
 ```sql
 CREATE TABLE IF NOT EXISTS contact_submissions (
     id BIGSERIAL PRIMARY KEY,
@@ -258,31 +152,9 @@ CREATE INDEX IF NOT EXISTS idx_contact_submissions_created_at
 ON contact_submissions(created_at DESC);
 ```
 
-### 5.4 PgBouncer Connection Pooler Fix
-When connecting to Supabase transaction poolers (port 6543):
-* Standard Postgres drivers attempt to create server-side prepared statements (e.g. `_pg3_0`).
-* PgBouncer closes or reuses connections across queries, which triggers `DuplicatePreparedStatement` errors.
-* **Solution Implemented:** In `vector_repository.py` and `contact_repository.py`, all connections use:
-  ```python
-  psycopg.connect(self.db_url, autocommit=True, prepare_threshold=None)
-  ```
-  This disables prepared statements and guarantees 100% stable connection pooling.
-
 ---
 
-## 6. Cloud Deployment Pipeline
+## 6. Operational Execution & Runbook
 
-| Component | Cloud Host | Configuration / Command | Secrets / Env Vars |
-| :--- | :--- | :--- | :--- |
-| **Frontend** | **Vercel** | Root directory: `frontend/`<br>Build: `npm run build`<br>Output: `.next` | `NEXT_PUBLIC_API_BASE_URL=https://rajat-khandelwal.fly.dev` |
-| **Backend** | **Fly.io** | Region: `sin` (Singapore)<br>Config: `backend/fly.toml`<br>Deploy: `fly deploy` | `GROQ_API_KEY`<br>`GROQ_MODEL=openai/gpt-oss-120b`<br>`SUPABASE_DB_URL`<br>`ALLOWED_ORIGINS` |
-| **Database** | **Supabase** | Region: `ap-south-1` (Mumbai)<br>Pooler port: `6543`<br>Direct port: `5432` | Managed by Supabase |
-| **LLM Inference** | **Groq Cloud** | High-throughput LPU Inference | `GROQ_API_KEY` |
-
----
-
-## 7. Security & Operational Guardrails
-1. **CORS Governance:** Configured dynamically via `ALLOWED_ORIGINS` in FastAPI (`http://localhost:3000` for local dev, portfolio domain in production).
-2. **Contact Admin Protection:** Submissions retrieval (`GET /api/contact/submissions`) requires the `X-Admin-Password` header validated against `CONTACT_ADMIN_PASSWORD`.
-3. **Graceful Vector Fallback:** If Supabase is paused or unreachable, the retrieval service automatically falls back to local FAISS indexing without crashing the application.
-4. **Static CDN Resumes:** The resume file is kept out of database BLOBs and hosted statically in `frontend/public/` to avoid bandwidth costs and signed URL timeouts.
+For verified startup commands, local execution, vector re-indexing, deployment steps, and troubleshooting FAQs, refer directly to:
+👉 **[`docs/RUNBOOK.md`](docs/RUNBOOK.md)**
