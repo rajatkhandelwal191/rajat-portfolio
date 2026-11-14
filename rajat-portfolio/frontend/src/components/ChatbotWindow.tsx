@@ -18,12 +18,19 @@ type ChatMessage = {
   links?: { label: string; href: string }[];
 };
 
-type ChatIntent = "about" | "projects" | "experience" | "contact" | "resume" | "certifications" | "generic";
+type ChatIntent = "about" | "projects" | "experience" | "contact" | "resume" | "certifications" | "deepdisk" | "generic";
 
 const followUpByIntent: Record<ChatIntent, { text: string; links: { label: string; href: string }[] }> = {
   about: {
     text: "Do you want to know more about Rajat?",
     links: [{ label: "Go to About", href: "/about" }],
+  },
+  deepdisk: {
+    text: "Explore DeepDisk: Storage Analyzer?",
+    links: [
+      { label: "📱 Google Play Store", href: "https://play.google.com/store/apps/details?id=com.cloudcubit.deepdisk&pcampaignid=web_share" },
+      { label: "DeepDisk Case Study", href: "/projects/deepdisk" },
+    ],
   },
   certifications: {
     text: "Verify Rajat's credentials on Credly?",
@@ -188,6 +195,17 @@ function detectIntent(message: string): ChatIntent {
   const text = message.toLowerCase();
 
   if (
+    text.includes("deepdisk") ||
+    text.includes("play store") ||
+    text.includes("playstore") ||
+    text.includes("mobile app") ||
+    text.includes("android app") ||
+    text.includes("storage analyzer")
+  ) {
+    return "deepdisk";
+  }
+
+  if (
     text.includes("resume") ||
     text.includes("cv") ||
     text.includes("curriculum vitae")
@@ -257,6 +275,7 @@ function detectIntent(message: string): ChatIntent {
 export default function ChatbotWindow({ name, isDark }: ChatbotWindowProps) {
   const prompts = [
     "Who is Rajat?",
+    "Tell me about your Play Store app DeepDisk",
     "Tell me about your work & clients",
     "What are your certifications & Credly badges?",
     "Tell me about the Enbridge EOL platform",

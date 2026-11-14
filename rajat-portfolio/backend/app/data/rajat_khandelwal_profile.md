@@ -9,7 +9,7 @@ Resume / CV: [Download Rajat's Resume](/Rajat_Khandelwal_Resume.pdf)
 
 ## Summary
 
-Lead AI Engineer and Full Stack Developer with 4.5+ years of experience at Tata Consultancy Services Ltd (TCS), architecting and deploying enterprise-grade AI systems, agentic workflows, and cloud-native platforms for Fortune 500 clients such as Enbridge, Exelon, and Outokumpu.
+Lead AI Engineer, Full Stack Developer, and Mobile Architect with 5+ years of experience at Tata Consultancy Services Ltd (TCS) and as an independent software engineer. Architected and deployed enterprise-grade AI systems, agentic workflows, cloud-native platforms for Fortune 500 clients (Enbridge, Exelon, Outokumpu), and creator of the live Google Play Store application DeepDisk: Storage Analyzer.
 
 Currently working at TCS as a Lead AI Engineer and Full Stack Developer, delivering solutions across major enterprise client engagements including Enbridge’s EOL Agent platform, Exelon’s Infra Operations agentic workflows, and Outokumpu’s multilingual enterprise chatbot.
 
@@ -355,6 +355,32 @@ Key detailed implementation:
   - Focus: Autonomous agent architectures, tool integration, reasoning loops, and open-source LLM agents.
 
 ## Projects
+
+### DeepDisk: Storage Analyzer (Live on Google Play Store)
+- Google Play Store Link: https://play.google.com/store/apps/details?id=com.cloudcubit.deepdisk&pcampaignid=web_share
+- Package Name: `com.cloudcubit.deepdisk` (Namespace: `com.deepdisk.android`)
+- Tagline: "Find where your storage actually went." — Forensic-grade storage intelligence, reconciliation, and transparent cleanup for Android.
+- Role: Lead Mobile Architect & Solo Android Engineer (Designed, engineered, and shipped the end-to-end architecture from bootstrap to live Google Play production deployment).
+- Case Study Page on Portfolio: `/projects/deepdisk`
+
+#### 1. App Overview & Problem Solved
+Built for everyday Android users, power users, and developers frustrated by deceptive "one-tap cleaner" apps that manufacture fake scan percentages, delete files blindly, and fail to explain large "System" or "Other" unaccounted disk space. DeepDisk provides forensic-grade on-device storage accounting that honestly audits, reconciles, and visualizes filesystem consumption across Scoped Storage, MediaStore, and private app sectors.
+
+#### 2. Core Technical Architecture & 100% Offline Topology
+- 100% Local-First & Zero Telemetry: Completely offline; operates with zero remote servers, zero cloud telemetry, and zero network tracking. The `android.permission.INTERNET` manifest declaration is omitted entirely, guaranteeing zero byte leakage of user metadata.
+- Clean Architecture & Reactive UDF: Domain, Data, and Presentation layers. ViewModels expose immutable `StateFlow<UiState>` with sealed `UiEvent` inputs and one-shot `Channel`/`SharedFlow` side-effects.
+- OS Subsystem Integration: Direct integration with `StorageManager` (geometry & block allocation), `StorageStatsManager` (app code, data, cache stats), `MediaStore` (indexed media and trash intents), and `UserManager`/`AppOpsManager` (work profile and capability calibration).
+- Local Data Persistence: Room Database 2.8.5 with SQLite Write-Ahead Logging (WAL mode, automated KSP schema export) for scan snapshots, duplicate hashes, and historical storage metrics; Jetpack DataStore Preferences 1.1.7 for scan configurations.
+- Concurrency & Smooth 120 FPS UI: Kotlinx Coroutines 1.10.2 with cooperative `yield()` cancellation checkpoints during heavy disk I/O, preventing ANRs and keeping animations butter-smooth.
+
+#### 3. Key Features Delivered
+- Multi-Source Storage Reconciliation Engine: Overcomes Android Scoped Storage fragmentation by reconciling disparate metrics from `StorageManager`, `StorageStatsManager`, and `MediaStore`. Mathematically computes overlaps, isolates known vs. unknown bytes, and attributes "System and Protected" storage rather than displaying misleading `0 B` values.
+- Forensic 3-Tier Duplicate & Bloat Identification: High-throughput duplicate detection combining exact file-size grouping (Tier 1), partial 4KB header hashing (Tier 2), and streaming cryptographic SHA-256 verification (Tier 3). Includes dedicated analyzers for massive files, dormant downloads, and WhatsApp media archives (sent vs. received voice notes, videos, documents).
+- Three-Tier Risk-Governed Cleanup Engine: Classifies every candidate into strict risk tiers: `SAFE` (temporary/cache), `REVIEW` (duplicates and large files requiring explicit user confirmation), and `PROTECTED` (system files and user-starred items). Leverages Android's native `MediaStore.createTrashRequest` for 30-day reversible trash recovery.
+- Google Play Production & Android 14 WorkManager Migration: Successfully transitioned long-running storage audits from legacy Foreground Services to `AndroidX WorkManager 2.12.0` under Android 13/14 `POST_NOTIFICATIONS` guidelines. Configured ProGuard/R8 minification (shrunk bundle to 5.71 MB, an 88% reduction) and 16KB memory page size alignment for Android 15 compatibility.
+- Testing & Quality: 210+ passing unit tests covering coroutine flows via Turbine 1.2.0, Room DAO transactions, and Espresso UI automation.
+
+Tech tags: Native Android, Kotlin 2.4.10, Jetpack Compose, Compose Material 3, Room DB 2.8.5 (WAL), WorkManager 2.12.0, Dagger Hilt 2.60.1, Coroutines, DataStore, MediaStore, StorageStatsManager, 100% Offline, Google Play Live.
 
 ### RAG Playground - Interactive RAG Pipeline (2024)
 Live URL: https://ragtutorial.netlify.app/
