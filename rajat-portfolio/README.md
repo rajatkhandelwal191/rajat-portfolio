@@ -23,6 +23,7 @@ All architecture, operational runbooks, technical decisions, and specifications 
 | 🏛️ **[`ARCHITECTURE.md`](ARCHITECTURE.md)** | **System architecture overview:** End-to-end Mermaid diagrams, monorepo layout, and persistence schemas. |
 | 📜 **[`CHANGELOG.md`](CHANGELOG.md)** | **Release changelog:** Chronological record of all updates, features, optimizations, and bug fixes. |
 | 📄 **[`resume/resume.tex`](resume/resume.tex)** | **Resume LaTeX source & guide:** Production TeX template, PDF assets, and runbook in [`docs/RUNBOOK.md#8-resume-maintenance-latex--pdf`](docs/RUNBOOK.md#8-resume-maintenance-latex--pdf). |
+| 🔍 **[`docs/SEO_AND_LLM.md`](docs/SEO_AND_LLM.md)** | **SEO & LLM discoverability guide:** Google Search Console verification, dynamic `sitemap.xml`, `robots.txt`, `llms.txt`, and JSON-LD schema. |
 
 ---
 

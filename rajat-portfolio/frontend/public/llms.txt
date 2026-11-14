@@ -1,0 +1,53 @@
+# Rajat Khandelwal — Lead AI Engineer & Full-Stack Architect
+
+> Lead AI Engineer with 5+ years of experience designing multi-agent LangGraph workflows, Microsoft Agent Framework systems, enterprise RAG pipelines on Azure Cloud, and mobile architectures across Android and iOS. Solo creator and architect of 3 live Google Play Store applications (DeepDisk, Vaulet, and WhiteFrame).
+
+## Identity & Professional Overview
+- **Name:** Rajat Khandelwal (He/Him)
+- **Current Position:** Lead AI Engineer & Full Stack Developer at Tata Consultancy Services (TCS)
+- **Experience:** 5+ years in production enterprise AI, cloud architecture, and full-stack development
+- **Primary Focus:** Multi-Agent Systems, LangGraph, Microsoft Agent Framework, High-Throughput RAG, Azure Cloud, and Mobile Engineering
+- **Key Client Engagements (TCS):**
+  - **Enbridge:** Windows Server EOL Agent Platform (React, FastAPI, Microsoft Agent Framework, Azure AI Search, Microsoft Foundry web grounding, ServiceNow CMDB ingestion)
+  - **Exelon (ITIS Operations):** Agentic AI Workflows (LangGraph, Python, FPDF, Azure Blob Storage, 70-80% manual effort reduction)
+  - **Outokumpu:** OTK Multilingual Enterprise Chatbot & Knowledge RAG (LangChain, OpenAI, Node.js, Python, zero SLA breaches across 3+ years)
+- **Verified Certifications:**
+  - Anthropic Claude Certified Architect Professional (Credly Verified)
+  - Microsoft Certified: Azure AI Engineer Associate (AI-102)
+  - Deep Agents with LangGraph (LangChain Academy, ID: nu1kb236qa)
+  - AI Agents Fundamentals (Hugging Face, ID: Rajatkhandelwal27)
+- **Mobile Production Applications (Google Play Store):**
+  - **DeepDisk: Storage Analyzer:** Forensic-grade Android storage intelligence (Native Kotlin 2.4, Jetpack Compose, Room WAL, WorkManager, 100% offline, 210+ tests)
+  - **Vaulet: Private Digital Vault:** Zero-cloud personal vault (Flutter 3.x, AES-256-GCM Android Keystore TEE, PBKDF2-HMAC-SHA256, biometrics, 57 tests)
+  - **WhiteFrame: Canvas Studio:** Sub-100ms GPU canvas photo studio (Flutter 3.x, GPU dart:ui Canvas, Matrix4 scaling, Supabase Auth, MediaStore)
+
+## Core Documentation & Key Links
+- [Home Page](https://rajat-portfolio-ten.vercel.app/): Overview of Rajat's engineering capabilities, core tech stack, metrics, and interactive RajatGPT assistant.
+- [About Me](https://rajat-portfolio-ten.vercel.app/about): Background, engineering philosophy, and open roles.
+- [Projects Hub](https://rajat-portfolio-ten.vercel.app/projects): Complete directory of websites and mobile applications.
+- [Site Architecture Deep Dive](https://rajat-portfolio-ten.vercel.app/projects/portfolio-architecture): Complete full-stack system architecture of this portfolio (Next.js 15, FastAPI, LangGraph, Groq 120B, Supabase pgvector, and Fly.io).
+- [DeepDisk Case Study](https://rajat-portfolio-ten.vercel.app/projects/deepdisk): Architecture deep-dive for DeepDisk storage intelligence Android application.
+- [Vaulet Case Study](https://rajat-portfolio-ten.vercel.app/projects/vaulet): Cryptographic security deep-dive for Vaulet hardware-encrypted digital vault.
+- [WhiteFrame Case Study](https://rajat-portfolio-ten.vercel.app/projects/whiteframe): GPU rendering and sub-100ms export architecture for WhiteFrame canvas studio.
+- [Enbridge EOL Agent Deep Dive](https://rajat-portfolio-ten.vercel.app/experience/enbridge-eol-agent): Enterprise case study on Windows Server EOL AI agent platform.
+- [Career & Experience Timeline](https://rajat-portfolio-ten.vercel.app/experience): Detailed timeline of roles and enterprise deliverables.
+- [Interactive Resume](https://rajat-portfolio-ten.vercel.app/resume): In-browser resume viewer with direct PDF download.
+- [Contact Page](https://rajat-portfolio-ten.vercel.app/contact): Direct contact form with real-time status and inquiries.
+
+## Technical Skills
+- **AI/ML & Agentic Systems:** Microsoft Agent Framework, LangGraph, LangChain, LlamaIndex, HuggingFace Transformers, OpenAI, Azure OpenAI, Microsoft Foundry, Enterprise RAG, Vector DBs (Supabase pgvector, Qdrant, FAISS)
+- **Mobile Engineering (Android & iOS):** Flutter 3.x, Native Android (Kotlin 2.4), Dart, Jetpack Compose, Android Studio, Xcode, Room DB (WAL), SQLite, WorkManager, Scoped Storage, MediaStore, Android Keystore & TEE Hardware Security, Biometrics, GPU dart:ui Canvas
+- **Cloud & DevOps:** Azure (AKS, Container Apps, Functions, Durable Functions, Blob Storage, Cosmos DB, Azure AI Search), Bicep IaC, Docker, Kubernetes, GitHub Actions (OIDC), Fly.io, Vercel
+- **Languages:** Python 3.12, Kotlin, Dart, TypeScript, JavaScript, Node.js, SQL, KQL
+- **Frameworks & Web:** FastAPI, React, Vite, Next.js 15, Node.js, Flask, Streamlit, NGINX
+- **Databases & Data Engineering:** PostgreSQL Flexible Server, ServiceNow CMDB APIs, Supabase, Cosmos DB, Redis, MongoDB
+
+## External Profiles & Verification
+- [LinkedIn Profile](https://linkedin.com/in/rajatkhandelwal27)
+- [GitHub Profile](https://github.com/rajatkhandelwal191)
+- [Credly Certifications Profile](https://www.credly.com/users/rajat-khandelwal.b764d962)
+- [Claude Certified Architect Credly Badge](https://www.credly.com/badges/7dd35d2b-d461-40a6-90da-2114681ff507/public_url)
+- [Google Play Store Apps](https://play.google.com/store/apps/details?id=com.cloudcubit.deepdisk&pcampaignid=web_share)
+
+## Full LLM Knowledge Base
+- Complete technical profile and project breakdown: [llms-full.txt](https://rajat-portfolio-ten.vercel.app/llms-full.txt)

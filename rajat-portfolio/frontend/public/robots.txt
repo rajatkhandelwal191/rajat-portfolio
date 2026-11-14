@@ -1,0 +1,31 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /contact/admin
+
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /contact/admin
+
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+Disallow: /contact/admin
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /api/
+Disallow: /contact/admin
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+Disallow: /contact/admin
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /api/
+Disallow: /contact/admin
+
+Sitemap: https://rajat-portfolio-ten.vercel.app/sitemap.xml
