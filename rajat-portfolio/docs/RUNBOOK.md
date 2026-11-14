@@ -303,3 +303,41 @@ curl -X POST "http://localhost:8000/api/keepalive/trigger?target=all"
 ### Issue 4: Next.js Port 3000 Collision
 * **Root Cause:** Another Node or dev process is already listening on port 3000.
 * **Resolution:** Run `npm run dev -- -p 3001` to start the frontend on port 3001.
+
+---
+
+## 8. Resume Maintenance (LaTeX & PDF)
+
+The portfolio hosts Rajat's verified resume with an interactive in-browser PDF viewer and direct downloads on the `/resume` page.
+
+### File Locations
+* **LaTeX Source Code:** [`resume/resume.tex`](../resume/resume.tex) (Clean, updated TeX source).
+* **Original LaTeX Archive:** [`resume/resume_original.tex`](../resume/resume_original.tex) (Historical template reference).
+* **Production Web PDF:** [`frontend/public/Rajat_Khandelwal_Resume.pdf`](../frontend/public/Rajat_Khandelwal_Resume.pdf) (Served directly by Next.js at `/Rajat_Khandelwal_Resume.pdf`).
+* **Repository PDF Copy:** [`resume/Rajat_Khandelwal_Resume.pdf`](../resume/Rajat_Khandelwal_Resume.pdf).
+* **Desktop Convenience Copy:** `Rajat Khandelwal Resume.pdf` in the workspace root.
+
+### How to Update the Resume
+1. **Edit LaTeX:** Modify [`resume/resume.tex`](../resume/resume.tex) with any new experience, metrics, or credentials.
+2. **Compile to PDF:** Compile `resume.tex` via Overleaf, TeXstudio, or `pdflatex resume.tex`.
+3. **Replace Public Asset:**
+   ```powershell
+   # Copy the compiled PDF into the Next.js public directory
+   Copy-Item "C:\path\to\new\RESUME.pdf" "rajat-portfolio\frontend\public\Rajat_Khandelwal_Resume.pdf" -Force
+   
+   # Also update the repository copy and workspace root
+   Copy-Item "C:\path\to\new\RESUME.pdf" "rajat-portfolio\resume\Rajat_Khandelwal_Resume.pdf" -Force
+   Copy-Item "C:\path\to\new\RESUME.pdf" "C:\Users\rajat\OneDrive\Desktop\rajat_portfolio\Rajat Khandelwal Resume.pdf" -Force
+   ```
+4. **Test Frontend Build:**
+   ```powershell
+   cd rajat-portfolio\frontend
+   npm run build
+   ```
+5. **Commit & Deploy:**
+   ```powershell
+   git add rajat-portfolio/frontend/public/Rajat_Khandelwal_Resume.pdf rajat-portfolio/resume/ "Rajat Khandelwal Resume.pdf"
+   git commit -m "chore: update resume PDF and LaTeX source"
+   git push origin main
+   ```
+   *Pushing to `main` automatically triggers Vercel static rebuild and serves the new resume immediately.*

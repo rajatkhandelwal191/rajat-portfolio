@@ -22,6 +22,7 @@ All architecture, operational runbooks, technical decisions, and specifications 
 | ⚙️ **[`docs/BACKEND.md`](docs/BACKEND.md)** | **Backend specification:** FastAPI service architecture, endpoints, dual vector retrieval coordinator, and Poetry dependency groups. |
 | 🏛️ **[`ARCHITECTURE.md`](ARCHITECTURE.md)** | **System architecture overview:** End-to-end Mermaid diagrams, monorepo layout, and persistence schemas. |
 | 📜 **[`CHANGELOG.md`](CHANGELOG.md)** | **Release changelog:** Chronological record of all updates, features, optimizations, and bug fixes. |
+| 📄 **[`resume/resume.tex`](resume/resume.tex)** | **Resume LaTeX source & guide:** Production TeX template, PDF assets, and runbook in [`docs/RUNBOOK.md#8-resume-maintenance-latex--pdf`](docs/RUNBOOK.md#8-resume-maintenance-latex--pdf). |
 
 ---
 
@@ -58,6 +59,9 @@ poetry run python -c "from app.services.retrieval_service import retrieval_servi
 # Or via HTTP:
 # POST http://localhost:8000/api/chat/ingest with body {"reset": true}
 ```
+
+### 4) Updating the Resume
+Place your new compiled resume PDF at `frontend/public/Rajat_Khandelwal_Resume.pdf` and update `resume/resume.tex`. Detailed steps are in **[`docs/RUNBOOK.md Section 8`](docs/RUNBOOK.md#8-resume-maintenance-latex--pdf)**.
 
 ---
 

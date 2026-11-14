@@ -1,225 +1,251 @@
 \documentclass[10pt,a4paper]{article}
 
-\usepackage[top=1.5cm,bottom=1.5cm,left=1.5cm,right=1.5cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[top=1.05cm,bottom=1.05cm,left=1.15cm,right=1.15cm]{geometry}
 \usepackage[dvipsnames,svgnames,x11names]{xcolor}
 \usepackage{amsmath,amssymb}
 \usepackage{hyperref}
 \usepackage{fontawesome5}
 \usepackage{tabularx}
 \usepackage{booktabs}
+\usepackage{enumitem}
 
 \hypersetup{
     colorlinks=true,
     urlcolor=SteelBlue,
     linkcolor=SteelBlue,
     pdfauthor={Rajat Khandelwal},
-    pdftitle={Rajat Khandelwal - Resume}
+    pdftitle={Rajat Khandelwal - Lead AI Engineer & Full-Stack Architect}
 }
 
+\pagestyle{empty}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{2.5pt}
+\setlength{\parskip}{1.5pt}
+
+% Custom tight bullet list settings
+\setlist[itemize]{leftmargin=1.2em, itemsep=1pt, topsep=1.5pt, parsep=0pt, partopsep=0pt}
 
 \definecolor{primary}{RGB}{35, 78, 126}
 \definecolor{subtitle}{RGB}{95, 105, 115}
-\definecolor{tagbg}{RGB}{230, 233, 238}
-\definecolor{tagtxt}{RGB}{50, 50, 50}
+\definecolor{tagbg}{RGB}{235, 238, 242}
+\definecolor{tagtxt}{RGB}{45, 45, 45}
 
 \newcommand{\sectiontitle}[1]{%
-    \vspace{5pt}
-    {\large\textbf{\textcolor{primary}{#1}}}
-    \vspace{-2pt}
+    \vspace{4pt}
+    {\normalsize\textbf{\uppercase{\textcolor{primary}{#1}}}}
+    \vspace{-3pt}
     \par\textcolor{primary}{\rule{\textwidth}{0.6pt}}
     \vspace{2pt}
 }
 
 \newcommand{\skilltag}[1]{%
-    \colorbox{tagbg}{\footnotesize\textcolor{tagtxt}{\textsf{#1}}}\hspace{2pt}%
+    \colorbox{tagbg}{\scriptsize\textcolor{tagtxt}{\textsf{#1}}}\hspace{1.5pt}%
 }
 
 \begin{document}
 
-% Header
+% ==================== HEADER ====================
 \begin{center}
-    {\Huge\textbf{\textcolor{primary}{Rajat Khandelwal}}}\\[3pt]
-    {\normalsize\textbf{\textcolor{subtitle}{Lead AI Engineer \quad\textbar\quad Full-Stack Architect}}}\\[4pt]
+    {\LARGE\textbf{\textcolor{primary}{Rajat Khandelwal}}}\\[2pt]
+    {\small\textbf{\textcolor{subtitle}{Lead AI Engineer \quad\textbar\quad Full-Stack Architect}}}\\[3pt]
     {\footnotesize
-        \faEnvelope\ \href{mailto:rajatkhandelwal191@gmail.com}{rajatkhandelwal191@gmail.com} \quad\textbar\quad
-        \faPhone*\ +91-9461115167 \quad\textbar\quad
-        \faLinkedin\ \href{https://linkedin.com/in/rajatkhandelwal27}{linkedin.com/in/rajatkhandelwal27} \quad\textbar\quad
-        \faGithub\ \href{https://github.com/rajatkhandelwal191}{github.com/rajatkhandelwal191} \quad\textbar\quad
+        \faEnvelope\ \href{mailto:rajatkhandelwal191@gmail.com}{rajatkhandelwal191@gmail.com} \ \textbar\ 
+        \faPhone*\ +91-9461115167 \ \textbar\ 
+        \faLinkedin\ \href{https://linkedin.com/in/rajatkhandelwal27}{linkedin.com/in/rajatkhandelwal27} \ \textbar\ 
+        \faGithub\ \href{https://github.com/rajatkhandelwal191}{github.com/rajatkhandelwal191} \ \textbar\ 
         \faCertificate\ \href{https://www.credly.com/users/rajat-khandelwal.b764d962}{credly.com/users/rajat-khandelwal}
     }
 \end{center}
 
-\vspace{-4pt}
+\vspace{-5pt}
 
-% Professional Summary
+% ==================== PROFESSIONAL SUMMARY ====================
 \sectiontitle{Professional Summary}
-Lead AI Engineer and Full-Stack Architect with \textbf{5+ years} of experience designing, architecting, and deploying enterprise-grade AI systems, multi-agent workflows, and cloud-native backends. Specialized in \textbf{Agentic AI Orchestration} (LangGraph, Microsoft Agent Framework), \textbf{High-Throughput RAG Retrieval Pipelines}, \textbf{Azure Cloud Infrastructure}, and \textbf{Mobile Architecture} (Flutter \& Native Android). Proven track record delivering zero-SLA-breach production solutions for Fortune 500 clients (\textbf{Enbridge}, \textbf{Exelon}, \textbf{Outokumpu}) and solo architect of \textbf{3 live Google Play Store production applications}.
+{\small Lead AI Engineer and Full-Stack Architect with \textbf{5+ years} of experience designing, architecting, and deploying enterprise-grade AI systems, multi-agent workflows, and cloud-native backends. Specialized in \textbf{Agentic AI Orchestration} (LangGraph, Microsoft Agent Framework), \textbf{High-Throughput RAG Retrieval Pipelines}, \textbf{Azure Cloud Infrastructure (Bicep IaC)}, and \textbf{Mobile Architecture} (Flutter \& Native Android). Proven track record delivering zero-SLA-breach production solutions for Fortune 500 clients (\textbf{Enbridge}, \textbf{Exelon}, \textbf{Outokumpu}) and solo architect of \textbf{3 live Google Play Store applications}.}
 
-% Core Competencies
+% ==================== CORE COMPETENCIES ====================
 \sectiontitle{Core Competencies}
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lll@{}}
+{\footnotesize
+\begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X @{}}
 $\bullet$ Generative AI \& Agentic Workflows & $\bullet$ Microsoft Agent Framework \& LangGraph & $\bullet$ Enterprise RAG \& Semantic Search \\
-$\bullet$ Azure Cloud Infrastructure (Bicep IaC) & $\bullet$ Full-Stack Development (FastAPI, React) & $\bullet$ Mobile Architecture (Flutter, Android) \\
+$\bullet$ Azure Cloud Infrastructure (Bicep IaC) & $\bullet$ Full-Stack Engineering (FastAPI, React) & $\bullet$ Mobile Architecture (Flutter, Android) \\
 $\bullet$ Microservices \& Docker Containers & $\bullet$ Data Pipelines \& ServiceNow CMDB & $\bullet$ Hardware Keystore / TEE Cryptography
-\end{tabular*}
+\end{tabularx}
+}
 
-% Certifications & Verified Credentials
+% ==================== CERTIFICATIONS ====================
 \sectiontitle{Certifications \& Verified Credentials}
+{\footnotesize
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
-\textbf{Anthropic Claude Certified Architect Professional} \faExternalLink* & \href{https://www.credly.com/badges/7dd35d2b-d461-40a6-90da-2114681ff507/public_url}{\textit{\textcolor{subtitle}{Anthropic (Credly Verified)}}} \\
-\textbf{Microsoft Certified: Azure AI Engineer Associate (AI-102)} \faExternalLink* & \href{https://www.credly.com/users/rajat-khandelwal.b764d962}{\textit{\textcolor{subtitle}{Microsoft (Credly Verified)}}} \\
-\textbf{Deep Agents with LangGraph} \hfill \textit{\textcolor{subtitle}{Credential ID: nu1kb236qa}} & \textit{\textcolor{subtitle}{LangChain Academy (2025)}} \\
-\textbf{AI Agents Fundamentals} \hfill \textit{\textcolor{subtitle}{Credential ID: Rajatkhandelwal27}} & \textit{\textcolor{subtitle}{Hugging Face (2024)}}
+\textbf{Anthropic Claude Certified Architect Professional} \ \href{https://www.credly.com/badges/7dd35d2b-d461-40a6-90da-2114681ff507/public_url}{\faExternalLink}
+& \href{https://www.credly.com/badges/7dd35d2b-d461-40a6-90da-2114681ff507/public_url}{\textit{\textcolor{subtitle}{Anthropic (Credly Verified)}}} \\
+\textbf{Microsoft Certified: Azure AI Engineer Associate (AI-102)} \ \href{https://www.credly.com/users/rajat-khandelwal.b764d962}{\faExternalLink}
+& \href{https://www.credly.com/users/rajat-khandelwal.b764d962}{\textit{\textcolor{subtitle}{Microsoft (Credly Verified)}}} \\
+\textbf{Deep Agents with LangGraph} \ (\textit{\textcolor{subtitle}{Credential ID: nu1kb236qa}}) & \textit{\textcolor{subtitle}{LangChain Academy (2025)}} \\
+\textbf{AI Agents Fundamentals} \ (\textit{\textcolor{subtitle}{Credential ID: Rajatkhandelwal27}}) & \textit{\textcolor{subtitle}{Hugging Face (2024)}}
 \end{tabular*}
+}
 
-% Professional Experience
+% ==================== TECHNICAL SKILLS (MOVED TO PAGE 1 FOR ATS) ====================
+\sectiontitle{Technical Skills}
+{\footnotesize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}p{3.4cm} X @{}}
+\textbf{AI/ML \& Agents:} & Microsoft Agent Framework, LangGraph, LangChain, LlamaIndex, Hugging Face Transformers, OpenAI, Azure OpenAI, Microsoft Foundry, Enterprise RAG, Vector DBs (Supabase pgvector, Qdrant, FAISS) \\
+\textbf{Cloud \& DevOps:} & Azure (AKS, Container Apps, Functions, Durable Functions, Blob Storage, Cosmos DB, Azure AI Search), Bicep IaC, Docker, Kubernetes, GitHub Actions (OIDC) \\
+\textbf{Frameworks \& Web:} & FastAPI, React, Vite, Next.js 15, TypeScript, Node.js, Flask, Streamlit, NGINX \\
+\textbf{Languages \& Data:} & Python 3.12, TypeScript/JavaScript, Kotlin 2.4, Dart, SQL, KQL, PostgreSQL Flexible Server, ServiceNow CMDB, Supabase, Cosmos DB, Redis, MongoDB \\
+\textbf{Mobile Engineering:} & Flutter 3.x, Native Android, Jetpack Compose, Room DB (WAL mode), SQLite, WorkManager, Scoped Storage, Android Keystore TEE, GPU \texttt{dart:ui} Canvas \\
+\textbf{Security \& Tools:} & Microsoft Entra ID (SSO, MSAL), Managed Identities, Azure Key Vault, OpenTelemetry, Git, pytest, Power BI
+\end{tabularx}
+\renewcommand{\arraystretch}{1.0}
+}
+
+% ==================== PROFESSIONAL EXPERIENCE ====================
 \sectiontitle{Professional Experience}
 
-{\textbf{\textcolor{primary}{Tata Consultancy Services Ltd}}} \hfill \textcolor{subtitle}{December 2021 -- Present}
+{\normalsize\textbf{\textcolor{primary}{Tata Consultancy Services Ltd}}} \hfill {\footnotesize\textbf{\textcolor{subtitle}{Dec 2021 -- Present}}}
+\vspace{1pt}
 
-\vspace{3pt}
-
+% --- Role 1: Enbridge ---
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
-\textbf{Lead AI Engineer / Full-Stack Developer} & \textcolor{subtitle}{2025 -- Present} \\
-\textit{Windows Server End-of-Life (EOL) Agent Platform (Client: Enbridge)} & \textit{\textcolor{subtitle}{Current Role}}
+{\small\textbf{Lead AI Engineer / Full-Stack Developer}} & {\footnotesize\textcolor{subtitle}{2025 -- Present}} \\
+{\footnotesize\textit{Windows Server End-of-Life (EOL) Agent Platform (Client: Enbridge)}} & {\footnotesize\textit{\textcolor{subtitle}{Enterprise AI Platform}}}
 \end{tabular*}
+{\footnotesize
 \begin{itemize}
-    \setlength{\itemsep}{1pt}
-    \setlength{\parskip}{0pt}
     \item Architected and delivered an end-to-end AI-assisted Windows Server EOL management solution combining \textbf{React/Vite}, \textbf{Python 3.12/FastAPI}, and \textbf{Microsoft Agent Framework}.
     \item Engineered ServiceNow CMDB ingestion pipeline (\texttt{cmdb\_ci\_business\_app}, \texttt{cmdb\_ci\_win\_server}, \texttt{cmdb\_rel\_ci}) using \textbf{Azure Durable Functions} and transactional \textbf{PostgreSQL Flexible Server} snapshot reconciliation with SHA-256 deterministic IDs.
     \item Built hybrid RAG pipeline with \textbf{Azure AI Search}, \textbf{Microsoft Foundry} web grounding for official lifecycle evidence, and secure user-delegation SAS token generation.
     \item Optimized supervisor-to-specialist agent delegation to direct tool routing, eliminating redundant model round-trips and cutting execution latency by \textbf{30--50+ seconds}.
     \item Implemented secretless security via \textbf{Microsoft Entra ID} (SSO/MSAL), Managed Identities, \textbf{Bicep IaC}, and \textbf{GitHub Actions CI/CD}.
 \end{itemize}
-\skilltag{Microsoft Agent Framework} \skilltag{FastAPI} \skilltag{React} \skilltag{TypeScript} \skilltag{Azure AI Search} \skilltag{PostgreSQL} \skilltag{ServiceNow} \skilltag{Bicep} \skilltag{Docker}
+}
+\skilltag{Microsoft Agent Framework} \skilltag{FastAPI} \skilltag{React} \skilltag{TypeScript} \skilltag{Azure AI Search} \skilltag{PostgreSQL} \skilltag{ServiceNow} \skilltag{Bicep IaC} \skilltag{Docker}
 
-\vspace{5pt}
+\vspace{3pt}
 
+% --- Role 2: Exelon ---
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
-\textbf{Lead AI Engineer} & \textcolor{subtitle}{August 2025 -- Present} \\
-\textit{Agentic AI Workflow for Infra Operations (Client: Exelon ITIS)} & \textit{\textcolor{subtitle}{Current Role}}
+{\small\textbf{Lead AI Engineer}} & {\footnotesize\textcolor{subtitle}{Aug 2025 -- Present}} \\
+{\footnotesize\textit{Agentic AI Workflow for Infra Operations (Client: Exelon ITIS)}} & {\footnotesize\textit{\textcolor{subtitle}{Infra Automation}}}
 \end{tabular*}
+{\footnotesize
 \begin{itemize}
-    \setlength{\itemsep}{1pt}
-    \setlength{\parskip}{0pt}
     \item Architected and implemented a complete \textbf{Agentic AI ecosystem} spanning heatmap analysis, incident management, patch compliance, and drive cleanup workflows using \textbf{LangGraph} and Python.
     \item Built automated audit-ready reporting pipelines (daily/weekly/monthly) with \textbf{FPDF}, \textbf{Azure Blob Storage}, and schema-driven AI outputs.
     \item Implemented resilient orchestration with token chunking, retry logic, and idempotent execution using blob leasing/locking to eliminate race conditions.
     \item Achieved \textbf{70--80\% reduction} in manual Infra Ops effort while standardizing governance, triage, and multi-team reporting.
 \end{itemize}
+}
 \skilltag{LangGraph} \skilltag{LangChain} \skilltag{Python} \skilltag{Azure Blob Storage} \skilltag{Streamlit} \skilltag{Plotly} \skilltag{FPDF} \skilltag{GitHub Actions}
 
-\vspace{5pt}
+\vspace{3pt}
 
+% --- Role 3: TCS Innovista ---
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
-\textbf{Developer / Core Chatbot Developer} & \textcolor{subtitle}{December 2021 -- October 2024} \\
-\textit{OTK Enterprise Multilingual Chatbot (Client: Outokumpu)} & 
+{\small\textbf{Lead Developer}} & {\footnotesize\textcolor{subtitle}{Nov 2024 -- Aug 2025}} \\
+{\footnotesize\textit{User Analysis Project (TCS Innovista)}} & {\footnotesize\textit{\textcolor{subtitle}{ITSM AI Pipeline}}}
 \end{tabular*}
+{\footnotesize
 \begin{itemize}
-    \setlength{\itemsep}{1pt}
-    \setlength{\parskip}{0pt}
+    \item Built end-to-end AI automation pipeline for ITSM user analysis with event-driven \textbf{Azure Functions} for scalable processing of $\sim$100K ticket datasets.
+    \item Implemented ticket classification and summarization using \textbf{Hugging Face Transformers} (BART, T5), \textbf{Cosmos DB}, and \textbf{Power BI}.
+\end{itemize}
+}
+\skilltag{Python} \skilltag{Hugging Face} \skilltag{Azure Functions} \skilltag{Cosmos DB} \skilltag{Power BI} \skilltag{AKS}
+
+\vspace{3pt}
+
+% --- Role 4: Outokumpu ---
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
+{\small\textbf{Developer / Core Chatbot Developer}} & {\footnotesize\textcolor{subtitle}{Dec 2021 -- Oct 2024}} \\
+{\footnotesize\textit{OTK Enterprise Multilingual Chatbot (Client: Outokumpu)}} & {\footnotesize\textit{\textcolor{subtitle}{Conversational AI}}}
+\end{tabular*}
+{\footnotesize
+\begin{itemize}
     \item Developed multilingual enterprise chatbot with \textbf{GenAI} and \textbf{RAG-based retrieval} capabilities using OpenAI APIs and vector embeddings.
     \item Integrated \textbf{LangChain} workflows for knowledge-driven responses, prompt automation, and action-oriented conversational flows.
     \item Built Node.js chatbot backend with Python Flask ML services in a scalable \textbf{microservice architecture}.
     \item Delivered enterprise integrations across \textbf{ServiceNow}, \textbf{Genesys Chat}, \textbf{Twilio}, \textbf{Redis}, and Microsoft Adaptive Cards with \textbf{zero SLA breaches} over 3+ years.
 \end{itemize}
+}
 \skilltag{LangChain} \skilltag{OpenAI} \skilltag{Node.js} \skilltag{Python} \skilltag{ServiceNow} \skilltag{Redis} \skilltag{Azure DevOps}
 
-\vspace{5pt}
+% ==================== MOBILE APPLICATIONS ====================
+\sectiontitle{Independent Mobile Applications (Live on Google Play)}
 
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
-\textbf{Lead Developer} & \textcolor{subtitle}{November 2024 -- August 2025} \\
-\textit{User Analysis Project (TCS Innovista)} & 
+{\small\textbf{DeepDisk: Storage Analyzer}} \ \faGooglePlay
+& \href{https://play.google.com/store/apps/details?id=com.cloudcubit.deepdisk}{\footnotesize\textit{\textcolor{subtitle}{Live on Google Play Store \ \faExternalLink}}}
 \end{tabular*}
+{\footnotesize
 \begin{itemize}
-    \setlength{\itemsep}{1pt}
-    \setlength{\parskip}{0pt}
-    \item Built end-to-end AI automation pipeline for ITSM user analysis with event-driven \textbf{Azure Functions} for scalable processing of $\sim$100K ticket datasets.
-    \item Implemented ticket classification and summarization using \textbf{HuggingFace Transformers} (BART, T5), \textbf{Cosmos DB}, and \textbf{Power BI}.
+    \item Solo architect \& developer of a forensic-grade, on-device Android storage intelligence app with a 100\% offline, zero-network architecture (\texttt{android.permission.INTERNET} omitted).
+    \item Engineered Scoped Storage / MediaStore reconciliation, Room WAL caching, a compact 5.71 MB production AAB, and \textbf{210+ passing automated tests}.
 \end{itemize}
-\skilltag{Python} \skilltag{HuggingFace} \skilltag{Azure Functions} \skilltag{Cosmos DB} \skilltag{Power BI} \skilltag{AKS}
-
-% Mobile Applications (Google Play Store Live)
-\sectiontitle{Mobile Applications (Google Play Store Live)}
-
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
-\textbf{DeepDisk: Storage Analyzer} \faGooglePlay\ \faExternalLink* & \href{https://play.google.com/store/apps/details?id=com.cloudcubit.deepdisk&pcampaignid=web_share}{\textit{\textcolor{subtitle}{Google Play: com.cloudcubit.deepdisk}}}
-\end{tabular*}
-\begin{itemize}
-    \setlength{\itemsep}{1pt}
-    \setlength{\parskip}{0pt}
-    \item Solo architect \& developer of a forensic-grade, on-device Android storage intelligence app live on Google Play.
-    \item Engineered 100\% offline, zero-network architecture (\texttt{android.permission.INTERNET} omitted), Scoped Storage / MediaStore reconciliation, Room WAL caching, 5.71 MB production AAB, and \textbf{210+ passing automated tests}.
-\end{itemize}
+}
 \skilltag{Native Android} \skilltag{Kotlin 2.4} \skilltag{Jetpack Compose} \skilltag{Room DB (WAL)} \skilltag{WorkManager} \skilltag{Material 3}
 
-\vspace{5pt}
+\vspace{2.5pt}
 
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
-\textbf{Vaulet: Private Digital Vault} \faGooglePlay\ \faExternalLink* & \href{https://play.google.com/store/apps/details?id=com.cloudcubit.vaulet&pcampaignid=web_share}{\textit{\textcolor{subtitle}{Google Play: com.cloudcubit.vaulet}}}
+{\small\textbf{Vaulet: Private Digital Vault}} \ \faGooglePlay
+& \href{https://play.google.com/store/apps/details?id=com.cloudcubit.vaulet}{\footnotesize\textit{\textcolor{subtitle}{Live on Google Play Store \ \faExternalLink}}}
 \end{tabular*}
+{\footnotesize
 \begin{itemize}
-    \setlength{\itemsep}{1pt}
-    \setlength{\parskip}{0pt}
-    \item Solo architect \& developer of a zero-cloud, hardware-encrypted personal digital vault for payment cards, government IDs, and documents live on Google Play.
-    \item Engineered \textbf{AES-256-GCM} cryptography backed by Android Keystore TEE/StrongBox, PBKDF2-HMAC-SHA256 encrypted backups, biometrics, 3D card flip UI, and \textbf{57 passing automated test suites}.
+    \item Solo architect of a zero-cloud, hardware-encrypted personal digital vault for payment cards, IDs, and documents.
+    \item Engineered \textbf{AES-256-GCM} cryptography backed by Android Keystore TEE/StrongBox, PBKDF2-HMAC-SHA256 encrypted backups, biometric auth, 3D card flip UI, and \textbf{57 passing automated test suites}.
 \end{itemize}
+}
 \skilltag{Flutter 3.x} \skilltag{Dart} \skilltag{Kotlin} \skilltag{Android Keystore TEE} \skilltag{Biometrics} \skilltag{Zero-Cloud Security}
 
-\vspace{5pt}
+\vspace{2.5pt}
 
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
-\textbf{WhiteFrame: Canvas Studio} \faGooglePlay\ \faExternalLink* & \href{https://play.google.com/store/apps/details?id=com.cloudcubit.whiteframe&pcampaignid=web_share}{\textit{\textcolor{subtitle}{Google Play: com.cloudcubit.whiteframe}}}
+{\small\textbf{WhiteFrame: Canvas Studio}} \ \faGooglePlay
+& \href{https://play.google.com/store/apps/details?id=com.cloudcubit.whiteframe}{\footnotesize\textit{\textcolor{subtitle}{Live on Google Play Store \ \faExternalLink}}}
 \end{tabular*}
+{\footnotesize
 \begin{itemize}
-    \setlength{\itemsep}{1pt}
-    \setlength{\parskip}{0pt}
-    \item Solo creator \& mobile architect of an Instagram-ready canvas studio app live on Google Play.
-    \item Slashed export rendering times from 15s to \textbf{<100ms} per photo via Flutter's low-level GPU \texttt{dart:ui} Canvas pipeline; features 60 FPS Matrix4 scaling, branded glassmorphic watermarks, and dual-layer MediaStore persistence.
+    \item Solo creator \& mobile architect of a high-performance canvas studio app; slashed export rendering times from 15s to \textbf{<100ms} per photo via Flutter's low-level GPU \texttt{dart:ui} Canvas pipeline with 60 FPS Matrix4 scaling and dual-layer MediaStore persistence.
 \end{itemize}
-\skilltag{Flutter 3.x} \skilltag{Dart} \skilltag{GPU dart:ui Canvas} \skilltag{Matrix4 Scaling} \skilltag{Supabase Auth} \skilltag{gal MediaStore}
+}
+\skilltag{Flutter 3.x} \skilltag{Dart} \skilltag{GPU dart:ui Canvas} \skilltag{Matrix4 Scaling} \skilltag{Supabase Auth} \skilltag{MediaStore}
 
-% Featured Web & AI Systems
+% ==================== FEATURED WEB & AI SYSTEMS ====================
 \sectiontitle{Featured Web \& AI Systems}
 
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
-\textbf{AI Portfolio \& Agentic RAG Platform} \faExternalLink* & \textit{\textcolor{subtitle}{Next.js 15, FastAPI, LangGraph, Supabase pgvector, Groq 120B, Fly.io}}
+{\small\textbf{AI Portfolio \& Agentic RAG Platform}}
+& {\footnotesize\textit{\textcolor{subtitle}{Next.js 15, FastAPI, LangGraph, Supabase pgvector, Groq 120B, Fly.io}}}
 \end{tabular*}
+{\footnotesize
 \begin{itemize}
-    \setlength{\itemsep}{1pt}
-    \setlength{\parskip}{0pt}
-    \item Decoupled monorepo architecture with a multi-tool LangGraph agent, Groq LPU sub-second inference, and dual vector stores with automated keep-alive probes.
+    \item Built a decoupled monorepo architecture featuring a multi-tool LangGraph agent, Groq LPU sub-second inference, and dual vector stores with automated keep-alive probes.
 \end{itemize}
+}
+
+\vspace{1.5pt}
 
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
-\textbf{RAG Playground} \faExternalLink* & \textit{\textcolor{subtitle}{Next.js, FastAPI, Qdrant, OpenAI, Groq}}
+{\small\textbf{RAG Playground}}
+& {\footnotesize\textit{\textcolor{subtitle}{Next.js, FastAPI, Qdrant, OpenAI, Groq}}}
 \end{tabular*}
+{\footnotesize
 \begin{itemize}
-    \setlength{\itemsep}{1pt}
-    \setlength{\parskip}{0pt}
-    \item Interactive 9-stage RAG pipeline demo with visual stage-by-stage exploration using React Flow and multi-provider evaluation metrics.
+    \item Engineered an interactive 9-stage RAG pipeline visualizer with stage-by-stage React Flow inspection and multi-provider evaluation metrics.
 \end{itemize}
+}
 
-% Education
+% ==================== EDUCATION ====================
 \sectiontitle{Education}
+{\footnotesize
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
-\textbf{Government Engineering College Bikaner} & \textcolor{subtitle}{Rajasthan, India} \\
-Bachelor of Technology (B.Tech) & \textcolor{subtitle}{Graduated: 2021}
+\textbf{Government Engineering College Bikaner} --- Bachelor of Technology (B.Tech) & \textcolor{subtitle}{Rajasthan, India \textbar\ Graduated: 2021}
 \end{tabular*}
-
-% Technical Skills
-\sectiontitle{Technical Skills}
-\begin{tabularx}{\textwidth}{@{}p{3.2cm}X@{}}
-\textbf{AI/ML \& Agents:} & Microsoft Agent Framework, LangGraph, LangChain, LlamaIndex, HuggingFace Transformers, OpenAI, Azure OpenAI, Microsoft Foundry, Enterprise RAG, Vector DBs (Supabase pgvector, Qdrant, FAISS) \\
-\textbf{Mobile Engineering:} & Flutter 3.x, Native Android (Kotlin 2.4), Dart, Jetpack Compose, Android Studio, Xcode (iOS target), Room DB (WAL mode), SQLite, WorkManager, Scoped Storage, Android Keystore TEE, GPU \texttt{dart:ui} Canvas \\
-\textbf{Languages:} & Python 3.12, Kotlin, Dart, JavaScript/TypeScript, Node.js, SQL, KQL \\
-\textbf{Cloud \& DevOps:} & Azure (AKS, Container Apps, Functions, Durable Functions, Blob Storage, Cosmos DB, Azure AI Search), Bicep IaC, Docker, Kubernetes, GitHub Actions (OIDC) \\
-\textbf{Frameworks \& Web:} & FastAPI, React, Vite, Next.js 15, Node.js, Flask, Streamlit, NGINX \\
-\textbf{Databases \& Data:} & PostgreSQL Flexible Server, ServiceNow CMDB, Supabase, Cosmos DB, Redis, MongoDB \\
-\textbf{Security \& Tools:} & Microsoft Entra ID (SSO, MSAL), Key Vault, Android Studio, Xcode, Git, Postman, pytest, Power BI \\
-\end{tabularx}
+}
 
 \end{document}
