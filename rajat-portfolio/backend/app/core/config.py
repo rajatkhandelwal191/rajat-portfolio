@@ -27,6 +27,10 @@ class Settings(BaseSettings):
     auto_ingest_on_startup: bool = True
     use_local_embeddings: bool = True
     use_faiss: bool = True
+    enable_keepalive: bool = True
+    supabase_keepalive_hours: float = 6.0
+    groq_keepalive_hours: float = 48.0
+    keepalive_run_on_startup: bool = True
 
     @field_validator("allowed_origins", mode="before")
     @classmethod

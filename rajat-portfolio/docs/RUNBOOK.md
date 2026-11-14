@@ -196,6 +196,47 @@ Navigate in your browser to:
 `http://localhost:3000/contact/admin` (or `https://rajat-portfolio-ten.vercel.app/contact/admin`)
 Enter the configured `CONTACT_ADMIN_PASSWORD` to inspect submitted contact inquiries.
 
+### 5.4 Test Automated Keep-Alive Probes (Supabase & Groq)
+
+Check the real-time background probe status:
+```bash
+curl http://localhost:8000/health/keepalive
+```
+*Expected response:*
+```json
+{
+  "enabled": true,
+  "running": true,
+  "supabase": {
+    "interval_hours": 6.0,
+    "last_result": {
+      "status": "ok",
+      "timestamp": "...",
+      "duration_ms": 240.5,
+      "chunk_count": 66,
+      "error": null
+    },
+    "next_run": "..."
+  },
+  "groq": {
+    "interval_hours": 48.0,
+    "last_result": {
+      "status": "ok",
+      "timestamp": "...",
+      "duration_ms": 1137.2,
+      "response": "pong",
+      "error": null
+    },
+    "next_run": "..."
+  }
+}
+```
+
+Trigger an on-demand probe immediately:
+```bash
+curl -X POST "http://localhost:8000/api/keepalive/trigger?target=all"
+```
+
 ---
 
 ## 6. Production Deployment

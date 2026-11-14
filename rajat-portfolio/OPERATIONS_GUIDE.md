@@ -58,10 +58,19 @@ poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 * **Source File:** `backend/app/data/rajat_khandelwal_profile.md`
 * **Embedding Model:** `sentence-transformers/all-MiniLM-L6-v2` (384 dimensions)
-* **Total Chunks:** **29 chunks**
+* **Total Chunks:** **66 chunks** (expanded with 17 sections covering TCS, Enbridge, Exelon, Outokumpu)
 * **Chunk Splitter:** Paragraph-aware chunking with 900-character upper limit (`app.services.knowledge_base`).
-* **Supabase Table:** `rajat_profile_embeddings` (with pgvector index and full-text search tsvector).
+* **Supabase Table:** `rajat_profile_embeddings` with HNSW vector index (`USING hnsw (embedding vector_cosine_ops)`) and full-text search tsvector. HNSW replaced legacy IVFFLAT to ensure 100% recall on smaller datasets.
+* **Keep-Alive Background Service (`keepalive_service.py`):**
+  - Supabase query every 6 hours (`SELECT COUNT(*) FROM rajat_profile_embeddings;`) prevents project auto-pausing.
+  - Groq LLM query every 48 hours / 2 days (`Health check ping. Reply with 'pong'.`) keeps connection warm.
+  - Diagnostic endpoints: `GET /health/keepalive` and `POST /api/keepalive/trigger`.
 * **Supabase Transaction Pooler Fix:** Supabase PgBouncer pooler (port 6543) requires `prepare_threshold=None` in `psycopg.connect(...)` to prevent `DuplicatePreparedStatement: prepared statement "_pg3_0" already exists`. Configured in `vector_repository.py` and `contact_repository.py`.
+
+### Dependency Installation Modes (Poetry)
+* **Fly.io Production / Default (Lean Runtime):** `poetry install --no-root`
+* **Local Ingestion Mode (With FAISS & Transformers):** `poetry install --with local --no-root`
+* **Clean Old ML Packages from Local venv:** `poetry install --no-root --sync`
 
 ### How to Re-Vectorize (Re-ingest) Profile:
 Whenever you edit `rajat_khandelwal_profile.md` or want to force a refresh:
@@ -71,7 +80,7 @@ poetry run python -c "from app.services.retrieval_service import retrieval_servi
 ```
 Or via HTTP:
 ```bash
-curl -X POST http://localhost:8000/api/chat/ingest
+curl -X POST http://localhost:8000/api/chat/ingest -H "Content-Type: application/json" -d "{\"reset\": true}"
 ```
 
 ---
@@ -94,11 +103,11 @@ curl -X POST http://localhost:8000/api/chat/ingest
 
 1. **`FATAL: tenant/user postgres.hboesngotiorbxrywlsk not found`**
    - **Cause:** Supabase project paused due to inactivity.
-   - **Fix:** Log in to supabase.com/dashboard and unpause the project.
+   - **Fix:** Log in to supabase.com/dashboard and unpause the project. Note: The automated `KeepAliveService` queries Supabase every 6 hours to prevent this from occurring.
 
 2. **`Error code: 404 - model_not_found` from Groq**
    - **Cause:** Model name in `.env` (`GROQ_MODEL`) was removed or deprecated.
-   - **Fix:** Keep `GROQ_MODEL=openai/gpt-oss-120b` (or `openai/gpt-oss-20b`) in `.env` and `config.py`.
+   - **Fix:** Keep `GROQ_MODEL=openai/gpt-oss-120b` (or `openai/gpt-oss-20b`) in `.env` and `config.py`. Groq keepalive pings every 48 hours to confirm responsiveness.
 
 3. **`DuplicatePreparedStatement: prepared statement _pg3_0 already exists`**
    - **Cause:** Psycopg 3 prepared statements conflicting with Supabase PgBouncer pooler.

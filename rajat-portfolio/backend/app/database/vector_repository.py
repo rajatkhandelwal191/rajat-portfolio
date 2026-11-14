@@ -55,12 +55,12 @@ class VectorRepository:
                     ON {self.table_name}(source, chunk_id);
                     """
                 )
+                cur.execute(f"DROP INDEX IF EXISTS idx_{self.table_name}_embedding;")
                 cur.execute(
                     f"""
-                    CREATE INDEX IF NOT EXISTS idx_{self.table_name}_embedding
+                    CREATE INDEX IF NOT EXISTS idx_{self.table_name}_embedding_hnsw
                     ON {self.table_name}
-                    USING ivfflat (embedding vector_cosine_ops)
-                    WITH (lists = 50);
+                    USING hnsw (embedding vector_cosine_ops);
                     """
                 )
                 cur.execute(

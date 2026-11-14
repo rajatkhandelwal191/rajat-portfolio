@@ -142,3 +142,27 @@ This document chronicles the major technical, architectural, and operational dec
   2. *Consolidate under TCS with explicit client engagements:* State clearly that Rajat is a Lead AI Engineer / Full Stack Developer at TCS, highlighting his specific contributions to client platforms (e.g. Enbridge EOL Agent Platform, Exelon ITIS Operations, Outokumpu OTK Chatbot).
 * **Decision:** Represent all enterprise engagements under Tata Consultancy Services (TCS) in the profile knowledge base, system prompt, and UI chips.
 * **Consequences:** 100% accurate, professional presentation aligned with Rajat's official employment history and resume.
+
+---
+
+### ADR-011: HNSW Vector Indexing for pgvector Embeddings
+
+* **Status:** Accepted
+* **Context:** `ivfflat (lists=50)` was initially created on the `rajat_profile_embeddings` table. On smaller datasets (such as 66 profile chunks), ivfflat with default `probes=1` frequently resulted in queries falling into empty partition lists, returning 0 retrieved chunks.
+* **Alternatives Considered:**
+  1. *Tune `ivfflat.probes`:* Requires executing `SET ivfflat.probes = 50;` on every pooled connection session, which is fragile across connection poolers.
+  2. *HNSW (`USING hnsw (embedding vector_cosine_ops)`):* Builds a hierarchical navigable small-world graph that provides high recall regardless of dataset size and requires no connection-level session settings or list pre-training.
+* **Decision:** Drop `ivfflat` and create `hnsw` index on `rajat_profile_embeddings(embedding vector_cosine_ops)`.
+* **Consequences:** Immediate, deterministic vector similarity retrieval from Supabase with 100% recall.
+
+---
+
+### ADR-012: Background Keep-Alive Service for Supabase and Groq
+
+* **Status:** Accepted
+* **Context:** Supabase free-tier PostgreSQL automatically pauses after 7 days of inactivity, causing application connection errors. Similarly, intermittent cold connections to the Groq LLM API benefit from periodic health validation.
+* **Alternatives Considered:**
+  1. *External Cron Job / Third-Party Uptime Monitor:* Introduces external infrastructure dependencies and credentials exposure.
+  2. *Application Lifespan Background Service (`KeepAliveService`):* FastAPI launches an async background task on boot. It pings Supabase every 6 hours (`SELECT COUNT(*) FROM rajat_profile_embeddings;`) and Groq every 48 hours / 2 days (`Health check ping. Reply with 'pong'.`), while exposing `/health/keepalive` and `/api/keepalive/trigger`.
+* **Decision:** Implement `KeepAliveService` integrated into FastAPI lifespan with non-blocking concurrent startup probes (`asyncio.gather`).
+* **Consequences:** Completely prevents Supabase project auto-pausing, maintains verified LLM connectivity, and provides diagnostic endpoints with zero external dependencies.

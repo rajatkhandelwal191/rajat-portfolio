@@ -62,7 +62,9 @@ backend/
 
 | Method | Endpoint | Description | Sample Response |
 | :--- | :--- | :--- | :--- |
-| `GET` | `/health` | Liveness & health check for Fly.io / uptime monitors | `{"status": "ok"}` |
+| `GET` | `/health` | Lean liveness check for container orchestrators (Fly.io) | `{"status": "ok"}` |
+| `GET` | `/health/keepalive` | Metrics & status for recurring Supabase & Groq background probes | `{"enabled": true, "running": true, "supabase": {"chunk_count": 66}, "groq": {"response": "pong"}}` |
+| `POST` | `/api/keepalive/trigger` | On-demand execution of keepalive probes (`?target=all|supabase|groq`) | `{"supabase": {"status": "ok"}, "groq": {"status": "ok"}}` |
 | `GET` | `/bootstrap` | Returns startup initialization details of vector stores | `{"faiss_loaded": true, "auto_ingested": true, "embedding_provider": "local"}` |
 
 ### 3.2 Chat & Retrieval (`/api/chat`)
@@ -108,6 +110,7 @@ flowchart LR
 ### 5.1 `vector_repository.py` (Supabase pgvector)
 * **Table:** `rajat_profile_embeddings`
 * **Schema:** `id`, `source`, `chunk_id`, `content`, `metadata` (JSONB), `embedding` (VECTOR(384)), `search_vector` (TSVECTOR).
+* **Vector Index:** `USING hnsw (embedding vector_cosine_ops)`. HNSW replaced the legacy `ivfflat (lists=50)` index to ensure high recall without requiring cluster pre-training or empty probe partition issues on smaller profile datasets (66 chunks).
 * **Pooler Compatibility:** Uses `prepare_threshold=None` in `psycopg.connect(...)` to prevent prepared statement collisions on Supabase PgBouncer (port `6543`).
 * **Search:** Performs cosine distance queries `<=>` with fallback to full-text search (`to_tsquery`) if vector distance fails.
 
@@ -169,3 +172,29 @@ poetry run python -c "from app.services.chat_service import generate_chat_respon
 # 6. Check embedding status probe
 poetry run python scripts\check_embedding_status.py --base-url http://localhost:8000
 ```
+
+---
+
+## 8. Automated Keep-Alive & Wake-Up Service
+
+To prevent free-tier inactivity pausing and keep LLM endpoints responsive, `keepalive_service.py` runs a background task managed within FastAPI's lifespan:
+
+```mermaid
+flowchart TD
+    Boot["FastAPI Lifespan Startup"] --> KA["KeepAliveService.start()"]
+    KA --> InitProbe["Concurrent Startup Probe<br/>(Supabase + Groq)"]
+    InitProbe --> Loop["Periodic Timer Loop<br/>(asyncio.sleep 60s)"]
+    Loop --> SupaCheck{"Current Time >= Next Supabase?<br/>(Every 6 Hours)"}
+    Loop --> GroqCheck{"Current Time >= Next Groq?<br/>(Every 48 Hours / 2 Days)"}
+    SupaCheck -- Yes --> PingSupa["ping_supabase()<br/>SELECT COUNT(*) FROM rajat_profile_embeddings"]
+    GroqCheck -- Yes --> PingGroq["ping_groq()<br/>Ping prompt -> Groq LLM"]
+    PingSupa --> SupaMetrics["Log latency & chunk count<br/>Schedule Next Run (+6h)"]
+    PingGroq --> GroqMetrics["Log latency & response token<br/>Schedule Next Run (+48h)"]
+```
+
+### Configuration Parameters (`.env` / `settings`):
+* `ENABLE_KEEPALIVE`: Boolean flag (default: `true`).
+* `SUPABASE_KEEPALIVE_HOURS`: Query interval for Supabase (default: `6.0` hours; Supabase free tier pauses after 7 days).
+* `GROQ_KEEPALIVE_HOURS`: Query interval for Groq LLM (default: `48.0` hours / 2 days).
+* `KEEPALIVE_RUN_ON_STARTUP`: Boolean flag (default: `true`) to run concurrent probe immediately upon server boot.
+

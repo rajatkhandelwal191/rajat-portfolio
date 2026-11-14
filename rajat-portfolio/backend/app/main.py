@@ -11,6 +11,7 @@ from app.core.config import settings
 from app.database.contact_repository import contact_repository
 from app.core.logging_config import configure_logging
 from app.services.chat_service import initialize_chat_service
+from app.services.keepalive_service import keepalive_service
 
 configure_logging()
 logger = logging.getLogger("app.main")
@@ -30,7 +31,16 @@ async def lifespan(app: FastAPI):
     except Exception as exc:  # pragma: no cover - startup fallback path
         app.state.bootstrap = {"error": str(exc)}
         logger.exception("Bootstrap failed: %s", exc)
-    yield
+
+    try:
+        keepalive_service.start()
+    except Exception as ka_exc:  # pragma: no cover - non-blocking keepalive failure
+        logger.exception("Failed to start keepalive service: %s", ka_exc)
+
+    try:
+        yield
+    finally:
+        await keepalive_service.stop()
 
 
 app = FastAPI(title="Rajat Portfolio API", version="0.1.0", lifespan=lifespan)
@@ -75,6 +85,16 @@ async def log_requests(request: Request, call_next):
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
+
+
+@app.get("/health/keepalive")
+def keepalive_status() -> dict[str, object]:
+    return keepalive_service.get_status()
+
+
+@app.post("/api/keepalive/trigger")
+async def trigger_keepalive(target: str = "all") -> dict[str, object]:
+    return await keepalive_service.trigger_check(target=target)
 
 
 @app.get("/bootstrap")

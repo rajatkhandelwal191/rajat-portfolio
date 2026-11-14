@@ -11,6 +11,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.5.0] - 2026-11-14
+
+### Added
+- **Automated Keep-Alive Service (`keepalive_service.py`):** Implemented an asynchronous background heartbeat service integrated into FastAPI's lifespan context manager.
+  - **Supabase Heartbeat:** Executes every 6 hours (`SELECT COUNT(*) FROM rajat_profile_embeddings;`) to guarantee active connection traffic and prevent Supabase free tier from auto-pausing after 7 days of inactivity.
+  - **Groq LLM Heartbeat:** Executes every 48 hours (2 days) with a lightweight token probe (`Health check ping. Reply with 'pong'`) to keep the Groq inference endpoint warm and validate API key health.
+  - **Concurrent Startup Probe:** Uses `asyncio.gather` on server startup to verify both Supabase and Groq immediately upon boot.
+- **Diagnostics & Probing Endpoints:**
+  - `GET /health/keepalive`: Returns real-time status, execution latency (ms), next scheduled run timestamps, and probe outcomes.
+  - `POST /api/keepalive/trigger`: Allows triggering on-demand probes (`target=all|supabase|groq`) for testing or operations.
+- **Automated Keep-Alive Test Suite:** Created `backend/tests/test_keepalive.py` covering health endpoints, on-demand triggers, and direct database queries.
+
+### Changed
+- **Upgraded pgvector Index to HNSW:** Replaced legacy `ivfflat (lists=50)` index on `rajat_profile_embeddings` with `hnsw (embedding vector_cosine_ops)`, resolving partitioned probe dropouts and ensuring 100% recall across all 66 chunks in Supabase.
+- **Synchronized Vector Store:** Stored all 66 profile chunks into Supabase PostgreSQL `rajat_profile_embeddings` and verified similarity retrieval matches FAISS results.
+
+---
+
 ## [0.4.0] - 2026-11-14
 
 ### Added
