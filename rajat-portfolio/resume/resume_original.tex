@@ -1,0 +1,161 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[top=1.8cm,bottom=1.8cm,left=1.6cm,right=1.6cm]{geometry}
+\usepackage[dvipsnames,svgnames,x11names]{xcolor}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{fontawesome5}
+\usepackage{tabularx}
+\usepackage{booktabs}
+
+\hypersetup{
+    colorlinks=true,
+    urlcolor=SteelBlue,
+    linkcolor=SteelBlue,
+    pdfauthor={Rajat Khandelwal},
+    pdftitle={Rajat Khandelwal - Resume}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\definecolor{primary}{RGB}{35, 78, 126}
+\definecolor{subtitle}{RGB}{95, 105, 115}
+\definecolor{tagbg}{RGB}{230, 233, 238}
+\definecolor{tagtxt}{RGB}{50, 50, 50}
+
+\newcommand{\sectiontitle}[1]{%
+    \vspace{6pt}
+    {\large\textbf{\textcolor{primary}{#1}}}
+    \vspace{-2pt}
+    \par\textcolor{primary}{\rule{\textwidth}{0.6pt}}
+    \vspace{2pt}
+}
+
+\newcommand{\skilltag}[1]{%
+    \colorbox{tagbg}{\footnotesize\textcolor{tagtxt}{\textsf{#1}}}\hspace{2pt}%
+}
+
+\begin{document}
+
+% Header
+\begin{center}
+    {\Huge\textbf{\textcolor{primary}{Rajat Khandelwal}}}\\[4pt]
+    {\normalsize\textcolor{subtitle}{AI Engineer --- GenAI \& LLM Specialist --- Azure Cloud \& DevOps}}\\[5pt]
+    {\footnotesize
+        \faEnvelope\ \href{mailto:rajatkhandelwal191@gmail.com}{rajatkhandelwal191@gmail.com} \quad\textbar\quad
+        \faPhone*\ +91-9461115167 \quad\textbar\quad
+        \faLinkedin\ \href{https://linkedin.com/in/rajatkhandelwal27}{linkedin.com/in/rajatkhandelwal27} \quad\textbar\quad
+        \faGithub\ \href{https://github.com/rajatkhandelwal191}{github.com/rajatkhandelwal191}
+    }
+\end{center}
+
+\vspace{-2pt}
+
+% Professional Summary
+\sectiontitle{Professional Summary}
+Lead AI Engineer with \textbf{4.29+ years} of experience architecting and deploying enterprise-grade AI systems. Specialized in \textbf{Agentic AI workflows}, \textbf{RAG pipelines}, \textbf{LLM orchestration} using LangChain/LangGraph, and \textbf{Azure cloud infrastructure}. Proven track record of reducing manual operations effort by \textbf{70-80\%} through intelligent automation and delivering zero-SLA-breach production systems for Fortune 500 clients.
+
+% Core Competencies
+\sectiontitle{Core Competencies}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lll@{}}
+$\bullet$ Generative AI \& LLMs & $\bullet$ Agentic AI Systems & $\bullet$ Machine Learning / NLP \\
+$\bullet$ LangChain / LangGraph & $\bullet$ Azure Cloud (AKS, Functions) & $\bullet$ DevOps \& CI/CD \\
+$\bullet$ RAG \& Vector Search & $\bullet$ Python \& Node.js & $\bullet$ Microservices Architecture
+\end{tabular*}
+
+% Professional Experience
+\sectiontitle{Professional Experience}
+
+{\textbf{\textcolor{primary}{Tata Consultancy Services Ltd}}}
+
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
+\textbf{Lead AI Engineer} & \textcolor{subtitle}{August 2025 -- Present} \\
+\textit{Agentic AI Workflow for Infra Operations (ITIS)} & \textit{\textcolor{subtitle}{Current Role}}
+\end{tabular*}
+\begin{itemize}
+    \setlength{\itemsep}{1pt}
+    \setlength{\parskip}{0pt}
+    \item Architected and implemented a complete \textbf{Agentic AI ecosystem} spanning heatmap analysis, incident management, patch compliance, and drive cleanup workflows using \textbf{LangGraph} and Python
+    \item Built automated audit-ready reporting pipelines (daily/weekly/monthly) with \textbf{FPDF}, \textbf{Azure Blob Storage}, and schema-driven AI outputs
+    \item Implemented resilient orchestration with token chunking, retry logic, and idempotent execution using blob leasing/locking to prevent race conditions
+    \item Achieved \textbf{70-80\% reduction} in manual Infra Ops effort while improving stability, governance, and triage standardization
+    \item Delivered production AI agents: Heatmap Analysis Agent, Patching Analysis Agent, Incident Analysis Agent, Drive Cleanup Agent
+\end{itemize}
+\skilltag{LangGraph} \skilltag{LangChain} \skilltag{Python} \skilltag{Azure Blob Storage} \skilltag{Streamlit} \skilltag{Plotly} \skilltag{FPDF} \skilltag{GitHub Actions}
+
+\vspace{6pt}
+
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
+\textbf{Lead Developer} & \textcolor{subtitle}{November 2024 -- August 2025} \\
+\textit{User Analysis Project (TCS Innovista)} & 
+\end{tabular*}
+\begin{itemize}
+    \setlength{\itemsep}{1pt}
+    \setlength{\parskip}{0pt}
+    \item Built end-to-end AI automation pipeline for ITSM user analysis: from file upload to dashboard insights
+    \item Designed \textbf{Azure Blob event-driven workflows} with Azure Functions for scalable asynchronous processing of $\sim$100K ticket datasets
+    \item Implemented NLP-powered ticket classification, sentiment analysis, and summarization using \textbf{HuggingFace Transformers} (BART, T5, Pegasus)
+    \item Cut manual analysis timelines from weeks to automated runs; enabled automation opportunity discovery and recurring incident pattern detection
+    \item Integrated \textbf{Cosmos DB} for metadata storage and \textbf{Power BI} for analytics visualization
+\end{itemize}
+\skilltag{Python} \skilltag{HuggingFace} \skilltag{Azure Functions} \skilltag{Cosmos DB} \skilltag{Power BI} \skilltag{AKS} \skilltag{Docker}
+
+\vspace{6pt}
+
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
+\textbf{Developer / Core Chatbot Developer} & \textcolor{subtitle}{December 2021 -- October 2024} \\
+\textit{OTK Chatbot Implementation (Outokumpu)} & 
+\end{tabular*}
+\begin{itemize}
+    \setlength{\itemsep}{1pt}
+    \setlength{\parskip}{0pt}
+    \item Developed multilingual enterprise chatbot with \textbf{GenAI} and \textbf{RAG-based retrieval} capabilities using OpenAI APIs and vector embeddings
+    \item Integrated \textbf{LangChain} workflows for knowledge-driven responses, prompt automation, and action-oriented conversational flows
+    \item Built Node.js chatbot backend with Python Flask ML services in a \textbf{microservice architecture}
+    \item Delivered enterprise integrations across \textbf{ServiceNow}, \textbf{Genesys Chat}, \textbf{Twilio}, \textbf{Redis}, and Microsoft Adaptive Cards
+    \item Owned \textbf{Azure deployment} and CI/CD execution with \textbf{zero SLA breaches} over 3 years
+\end{itemize}
+\skilltag{Yellow.ai} \skilltag{Node.js} \skilltag{Python} \skilltag{LangChain} \skilltag{OpenAI} \skilltag{Azure DevOps} \skilltag{Redis} \skilltag{ServiceNow}
+
+% Featured Projects
+\sectiontitle{Featured Projects}
+
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
+\textbf{RAG Playground} \faExternalLink* & \textit{\textcolor{subtitle}{Next.js, FastAPI, Qdrant, OpenAI}}
+\end{tabular*}
+\begin{itemize}
+    \setlength{\itemsep}{1pt}
+    \setlength{\parskip}{0pt}
+    \item Interactive 9-stage RAG pipeline demo with visual stage-by-stage exploration using React Flow
+    \item Multi-provider support: Google Gemini, OpenAI embeddings (768/1536/3072-dim) and GPT/Gemini/Groq LLMs
+\end{itemize}
+
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
+\textbf{Capstone: Enterprise Assistant} \faExternalLink* & \textit{\textcolor{subtitle}{LangGraph, Streamlit, RAG, FAISS/Qdrant}}
+\end{tabular*}
+\begin{itemize}
+    \setlength{\itemsep}{1pt}
+    \setlength{\parskip}{0pt}
+    \item Agentic AI platform with supervisor node routing requests across RAG, tool automation, and RFP drafting
+\end{itemize}
+
+% Education
+\sectiontitle{Education}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
+\textbf{Government Engineering College Bikaner} & \textcolor{subtitle}{Rajasthan, India} \\
+Bachelor of Technology (B.Tech) & \textcolor{subtitle}{Graduated: 2021}
+\end{tabular*}
+
+% Technical Skills
+\sectiontitle{Technical Skills}
+\begin{tabularx}{\textwidth}{@{}p{2.6cm}X@{}}
+\textbf{AI/ML:} & LangChain, LangGraph, LlamaIndex, HuggingFace Transformers, OpenAI, RAG, Vector DBs (Qdrant, FAISS) \\
+\textbf{Languages:} & Python, JavaScript/TypeScript, Node.js, SQL \\
+\textbf{Cloud:} & Azure (AKS, Functions, Blob Storage, Cosmos DB, DevOps), Docker, Kubernetes \\
+\textbf{Frameworks:} & FastAPI, Flask, Next.js, React, Streamlit \\
+\textbf{Databases:} & PostgreSQL, MongoDB, Redis, Cosmos DB \\
+\textbf{Tools:} & Git, GitHub Actions, CI/CD, Power BI, Jupyter \\
+\end{tabularx}
+
+\end{document}
